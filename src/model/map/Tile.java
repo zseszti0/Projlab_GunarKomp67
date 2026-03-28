@@ -35,6 +35,10 @@ public class Tile implements IAutomatic {
         return neighbors;
     }
 
+    public void closeLane() {
+        //TODO
+    }
+
     public void update() {
         if (isSalted) {
             state.snowMelt();
