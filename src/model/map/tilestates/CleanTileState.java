@@ -1,8 +1,27 @@
 package model.map.tilestates;
 
-import model.shop.attachements.SweeperHead;
 
 public class CleanTileState extends TileState {
 
-    public TileState cleanTile(SweeperHead swh){return new CleanTileState();}
+    private static CleanTileState instance;
+
+    private CleanTileState() {}
+
+    public static CleanTileState getInstance() {
+        if (instance == null) {
+            instance = new CleanTileState();
+        }
+        return instance;
+    }
+
+    @Override
+    public TileState snowFall() {
+        return ShallowSnowyTileState.getInstance();
+    }
+
+    @Override
+    public TileState snowMelt() {
+        return this;
+    }
+
 }
