@@ -61,32 +61,32 @@ public class Tile implements IAutomatic {
 
     public boolean cleanTile(SweeperHead a) {
         if (state == null) return false;
-        this.state = state.cleanTile(a);
+        this.state = state.cleanedBy(a);
         return true;
     }
 
     public boolean cleanTile(BlowerHead a) {
         if (state == null) return false;
-        this.state = state.cleanTile(a);
+        this.state = state.cleanedBy(a);
         return true;
     }
 
     public boolean cleanTile(IcebreakerHead a) {
         if (state == null) return false;
-        this.state = state.cleanTile(a);
+        this.state = state.cleanedBy(a);
         return true;
     }
 
     public boolean cleanTile(SalterHead a) {
         if (state == null) return false;
-        this.state = state.cleanTile(a);
+        this.state = state.cleanedBy(a);
         this.isSalted = true;
         return true;
     }
 
     public boolean cleanTile(DragonHead a) {
         if (state == null) return false;
-        this.state = state.cleanTile(a);
+        this.state = state.cleanedBy(a);
         return true;
     }
 }
