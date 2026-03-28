@@ -1,0 +1,19 @@
+package model.shop.consumables;
+
+import shop.attachements.SalterHead;
+
+public class Salt extends Consumable {
+    public Salt(final int id, int amount){
+        super(id, amount);
+    }
+
+    public boolean use(SalterHead s){
+        amount--;
+        return true;
+    }
+
+    @Override
+    public void addAmount(Salt s){
+        this.amount = this.getAmount() + s.getAmount();
+    }
+}
