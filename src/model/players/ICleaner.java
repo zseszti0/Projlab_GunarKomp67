@@ -1,8 +1,9 @@
 package model.players;
 
-import vehicles.SnowShovel;
-import shop.attachements.Attachment;
-import shop.base.Shop;
+import model.map.Tile;
+import model.vehicles.SnowShovel;
+import model.shop.attachements.Attachment;
+import model.shop.base.Shop;
 
 public interface ICleaner {
     boolean drive(SnowShovel vehicle, Tile position);

@@ -1,7 +1,7 @@
 package model.shop.consumables;
 
-import shop.attachements.Attachment;
-import shop.base.Purchasable;
+import model.shop.attachements.Attachment;
+import model.shop.base.Purchasable;
 
 abstract public class Consumable extends Purchasable {
     protected int amount;

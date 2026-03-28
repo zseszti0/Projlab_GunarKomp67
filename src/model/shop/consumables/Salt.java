@@ -1,6 +1,6 @@
 package model.shop.consumables;
 
-import shop.attachements.SalterHead;
+import model.shop.attachements.SalterHead;
 
 public class Salt extends Consumable {
     public Salt(final int id, int amount){

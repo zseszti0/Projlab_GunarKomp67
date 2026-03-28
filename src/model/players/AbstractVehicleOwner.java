@@ -1,8 +1,19 @@
 package model.players;
 
-import vehicles.Vehicle;
+import model.vehicles.Vehicle;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractVehicleOwner<T extends Vehicle> {
-    protected List<T> vehicles;
+    protected String name;
+    protected List<T> vehicles=new ArrayList<>();
+
+    public AbstractVehicleOwner(String name){
+        this.name=name;
+    }
+
+    public String getName(){
+        return name;
+    }
 }

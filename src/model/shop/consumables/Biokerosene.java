@@ -1,6 +1,6 @@
 package model.shop.consumables;
 
-import shop.attachements.DragonHead;
+import model.shop.attachements.DragonHead;
 
 public class Biokerosene extends Consumable{
     public Biokerosene(final int id, int amount){
