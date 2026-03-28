@@ -1,5 +1,7 @@
 package model.map;
 
+import model.map.tilestates.BlockedTileState;
+
 import java.util.List;
 
 public class Lane {
@@ -18,7 +20,7 @@ public class Lane {
 
     void blockAllTilesInLane(){
         for(Tile tile : tiles){
-            //TODO
+            tile.setState(BlockedTileState.getInstance());
         }
     }
 }

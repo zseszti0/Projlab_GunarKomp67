@@ -1,6 +1,5 @@
 package model.map.tilestates;
 
-
 public class DeepSnowyTileState extends SnowyTileState {
     private static DeepSnowyTileState instance;
     public static DeepSnowyTileState getInstance() {

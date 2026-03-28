@@ -13,6 +13,10 @@ public class Tile implements IAutomatic {
     private int compressionIndex;
     private int saltMeltingIndex;
 
+    public void setState(TileState state) {
+        this.state = state;
+    }
+
     private TileState state;
 
     private List<Tile> neighbors;
