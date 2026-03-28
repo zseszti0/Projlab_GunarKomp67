@@ -1,7 +1,9 @@
 package model.shop.attachements;
-import shop.base.Purchasable;
-import shop.consumables.Biokerosene;
-import shop.consumables.Salt;
+import model.shop.base.Purchasable;
+import model.shop.consumables.Biokerosene;
+import model.shop.consumables.Salt;
+import model.vehicles.SnowShovel;
+
 
 abstract public class Attachment extends Purchasable {
     private SnowShovel snowShovel;
