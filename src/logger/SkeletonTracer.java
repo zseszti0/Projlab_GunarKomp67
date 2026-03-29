@@ -7,14 +7,16 @@ import com.sun.jdi.request.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 public class SkeletonTracer {
     private static int level = 0;
+    private static final Scanner scanner = new Scanner(System.in);
 
-    // The package you want to monitor (ignoring java.lang, etc.)
+
     private static final String PACKAGE_FILTER = "model.*";
-    // The actual main class of your MVC project
     private static final String TARGET_MAIN_CLASS = "skeleton.Skeleton";
+
 
     public static void main(String[] args) throws Exception {
 
@@ -33,22 +35,19 @@ public class SkeletonTracer {
         EventRequestManager erm = vm.eventRequestManager();
 
 
-        // Request to listen for Method Entries
         MethodEntryRequest entryReq = erm.createMethodEntryRequest();
         entryReq.addClassFilter(PACKAGE_FILTER);
         entryReq.setSuspendPolicy(EventRequest.SUSPEND_EVENT_THREAD);
         entryReq.enable();
 
-        // Request to listen for Method Exits
         MethodExitRequest exitReq = erm.createMethodExitRequest();
         exitReq.addClassFilter(PACKAGE_FILTER);
         exitReq.setSuspendPolicy(EventRequest.SUSPEND_EVENT_THREAD);
         exitReq.enable();
 
-
-        // --- NEW CODE: Add a special listener just for the Logger ---
+        //Listen for the skeleton's logs
         MethodEntryRequest logReq = erm.createMethodEntryRequest();
-        logReq.addClassFilter("skeleton.TestForTheLogger"); // Listen ONLY to this specific class
+        logReq.addClassFilter(TARGET_MAIN_CLASS); // Listen ONLY to this specific class
         logReq.setSuspendPolicy(EventRequest.SUSPEND_EVENT_THREAD);
         logReq.enable();
         // ------------------------------------------------------------
@@ -70,7 +69,6 @@ public class SkeletonTracer {
                     connected = false;
                 }
             }
-            // Let the target program continue running!
             eventSet.resume();
         }
     }
@@ -79,19 +77,47 @@ public class SkeletonTracer {
         Method method = event.method();
         String className = method.declaringType().name();
 
-        // --- NEW CODE: Intercept our special log method ---
-        if (className.equals(TARGET_MAIN_CLASS) && method.name().equals("log")) {
+        //Communication with the vm's console
+        boolean isSkeletonFunc = className.equals(TARGET_MAIN_CLASS);
+        if (isSkeletonFunc && method.name().equals("log")) {
             try {
-                // Grab the string they passed in
                 Value msgArg = event.thread().frame(0).getArgumentValues().get(0);
-                // Remove the quotes around the JDI string value
                 String cleanMsg = msgArg.toString().replace("\"", "");
                 System.out.println(cleanMsg);
             } catch (Exception e) {}
-            return; // Don't print the normal >>> [CALL] for this
+            return;
         }
-        else if (method.name().equals("<init>") || method.isSynthetic() || (className.equals(TARGET_MAIN_CLASS) && !method.name().equals("log"))) return;
+        else if(isSkeletonFunc && method.name().equals("askBoolQuestion")) {
+            try {
+                // 1. Grab the question string passed from the skeleton
+                Value msgArg = event.thread().frame(0).getArgumentValues().get(0);
+                String question = msgArg.toString().replace("\"", "");
 
+                // 2. Print the question to the Tracer's console and get the user's answer
+                System.out.print(question);
+                String userInput = scanner.nextLine().trim().toLowerCase();
+                boolean answer = userInput.equals("i") || userInput.equals("I") || userInput.equals("Igen");
+
+                // 3. Convert our local boolean into a JDI VirtualMachine boolean
+                Value jdiAnswer = event.virtualMachine().mirrorOf(answer);
+
+                // 4. THE MAGIC: Force the target VM to immediately return our answer!
+                event.thread().forceEarlyReturn(jdiAnswer);
+
+            } catch (Exception e) {
+                System.out.println("   [ERROR] Failed to force return: " + e.getMessage());
+            }
+
+            return; // Stop processing so we don't print the >>> [CALL] log
+        }
+        else if (method.name().equals("<init>") || method.isSynthetic() || isSkeletonFunc) return;
+
+
+
+
+
+
+        //Normal function calls
         level++;
         System.out.println(writeOutFullMethod(event));
     }
@@ -102,6 +128,7 @@ public class SkeletonTracer {
 
         Value returnValue = event.returnValue();
 
+        //Normal function calls
         System.out.println(writeOutFullMethod(event) + " visszatért " +
                 (returnValue.toString() == "<void value>" ? ": void" : (returnValue.toString() + " : " + returnValue.type().name()))
             + " értékkel.");
@@ -115,7 +142,8 @@ public class SkeletonTracer {
         String className = method.declaringType().name();
         String ret = "";
 
-        for(int i=0; i < level; i++) ret += "       "; // Indent based on call depth
+        //indentation
+        for(int i=0; i < level; i++) ret += "       ";
         ret += "-> ";
 
         try {
@@ -125,14 +153,13 @@ public class SkeletonTracer {
 
             ret += method.name() + "(";
 
-            // Attempt to print argument values
             List<Value> args = event.thread().frame(0).getArgumentValues();
             for (int i = 0; i < args.size(); i++) {
                 ret += (args.get(i));
                 if (i < args.size() - 1) ret +=(", ");
             }
         } catch (IncompatibleThreadStateException e) {
-            System.out.print("?"); // Thread wasn't suspended properly
+            System.out.print("?");
         }
         ret +=(")");
         return ret;
@@ -143,7 +170,8 @@ public class SkeletonTracer {
         String className = method.declaringType().name();
         String ret = "";
 
-        for(int i=0; i < level; i++) ret += "       "; // Indent based on call depth
+        //indentation
+        for(int i=0; i < level; i++) ret += "       ";
         ret += "<- ";
 
         try {
@@ -153,14 +181,14 @@ public class SkeletonTracer {
             ret += (callerName+ ".");
             ret += method.name() + "(";
 
-            // Attempt to print argument values
+
             List<Value> args = event.thread().frame(0).getArgumentValues();
             for (int i = 0; i < args.size(); i++) {
                 ret += (args.get(i));
                 if (i < args.size() - 1) ret +=(", ");
             }
         } catch (IncompatibleThreadStateException e) {
-            System.out.print("?"); // Thread wasn't suspended properly
+            System.out.print("?");
         }
         ret +=(")");
         return ret;
@@ -168,15 +196,13 @@ public class SkeletonTracer {
 
     // Helper to extract the "name" attribute from any object in memory
     private static String getInstanceName(ObjectReference obj, String className) {
-        if (obj == null) return className; // It's a static method, just use the class name
+        if (obj == null) return className; //in case of static methods
 
         try {
-            // Look for the attribute literally named "name"
             Field nameField = obj.referenceType().fieldByName("name");
             if (nameField != null) {
                 Value nameValue = obj.getValue(nameField);
 
-                // If the name is set, clean off the JDI quotes and return it!
                 if (nameValue instanceof StringReference) {
                     return ((StringReference) nameValue).value();
                 } else if (nameValue != null) {
@@ -184,10 +210,8 @@ public class SkeletonTracer {
                 }
             }
         } catch (Exception e) {
-            // If anything goes wrong, we will just fall through to the fallback below
         }
 
-        // Fallback just in case a class forgot to set its name
         return className + "_" + obj.uniqueID();
     }
 }

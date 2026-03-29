@@ -5,11 +5,14 @@ import model.shop.consumables.Salt;
 import model.vehicles.SnowShovel;
 import model.map.Tile;
 
-abstract public class Attachment extends Purchasable {
+abstract public class Attachment implements Purchasable {
+    private final String name;
+    int id;
     private SnowShovel snowShovel;
 
-    public Attachment(final int id){
-        super(id);
+    public Attachment(final String name, final int id) {
+        this.id = id;
+        this.name = name;
     }
 
     public boolean consume(Salt s){
@@ -17,5 +20,13 @@ abstract public class Attachment extends Purchasable {
     }
     public boolean consume(Biokerosene b){
         return true;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public void setSnowShovel(SnowShovel snowShovel){
+        this.snowShovel = snowShovel;
     }
 }

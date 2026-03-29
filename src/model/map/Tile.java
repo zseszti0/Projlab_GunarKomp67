@@ -14,6 +14,9 @@ import model.vehicles.Vehicle;
  */
 public class Tile implements IAutomatic {
     /**
+     * A logger számára használatos név, egyelőre csak a skeleton fázisban használatos*/
+    private final String name;
+    /**
      * Jelzi, hogy a mezo fel lett-e sozva, ami megakadalyozza a ho megmaradasat, es olvasztja azt
      */
     private boolean isSalted;
@@ -54,7 +57,8 @@ public class Tile implements IAutomatic {
      * @param state a mezo kezdeti allapota
      * @param lane a sav, amelyhez a mezo tartozik
      */
-    public Tile(TileState state, Lane lane) {
+    public Tile(String name, TileState state, Lane lane) {
+        this.name = name;
         this.state = state;
         this.lane = lane;
         this.isSalted = false;
@@ -63,11 +67,27 @@ public class Tile implements IAutomatic {
     }
 
     /**
+     * Visszaadja a mezo nevet.
+     * Elorelathatolag csak a skeletonban kell
+     * */
+    public String getName() {
+        return name;
+    }
+
+    /**
      * Beallitja a mezo allapotat.
      * @param state az uj TileState allapot
      */
     public void setState(TileState state) {
         this.state = state;
+    }
+
+    /**
+     * Beallitja a mezo szomszedjait.
+     * @param neighbors egy mezokbol allo lista
+     */
+    public void setNeighbors(List<Tile> neighbors) {
+        this.neighbors = neighbors;
     }
 
     /**

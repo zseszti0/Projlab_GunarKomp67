@@ -10,6 +10,26 @@ import java.util.List;
  * Az automatikus mozgast vegzo entitasok (jelen esetben NPCDriver) hasznaljak a navigalashoz.
  */
 public class PathFinder {
+    /**
+     * A logger számára használatos név, egyelőre csak a skeleton fázisban használatos*/
+    private final String name;
+
+    /**
+     * Visszaadja az objektum nevet.
+     * Elorelathatolag csak a skeletonban kell
+     * */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Konstruktor a PathFinder osztályhoz.
+     * @param name az objektum nevet ado string*/
+    public PathFinder(String name) {
+        this.name = name;
+    }
+
+
 
     /**
      * Legrovidebb utkereso algoritmussal megtalalja a legrovidebb utat a poziciobol a celba,
@@ -21,10 +41,13 @@ public class PathFinder {
      * @return a kivalasztott szomszedos mezo, ahova a lepes tortenik
      */
     public Tile findNextStep(Tile position, Tile destination){
-        List<Object> options = new ArrayList<>(position.getNeighbors());
+        List<String> options = new ArrayList<>();
+        for (Tile t : position.getNeighbors()) {
+            options.add(t.getName());
+        }
 
         int answerIndex = Skeleton.askListQuestion("Hova szeretnél lépni?", options);
 
-        return (Tile) options.get(answerIndex);
+        return position.getNeighbors().get(answerIndex);
     }
 }

@@ -4,8 +4,8 @@ import model.map.Tile;
 import model.shop.consumables.Biokerosene;
 
 public class DragonHead extends Attachment{
-    public DragonHead(final int id) {
-        super(id);
+    public DragonHead(final String name, final int id) {
+        super(name, id);
     }
 
     public boolean consume(Biokerosene b){
