@@ -6,12 +6,13 @@ import model.vehicles.SnowShovel;
 import model.map.Tile;
 
 abstract public class Attachment implements Purchasable {
+    private final String name;
     int id;
     private SnowShovel snowShovel;
 
-    public Attachment(final int id){
-        super();
+    public Attachment(final int id, String name) {
         this.id = id;
+        this.name = name;
     }
 
     public boolean consume(Salt s){
@@ -19,5 +20,9 @@ abstract public class Attachment implements Purchasable {
     }
     public boolean consume(Biokerosene b){
         return true;
+    }
+
+    public String getName(){
+        return name;
     }
 }

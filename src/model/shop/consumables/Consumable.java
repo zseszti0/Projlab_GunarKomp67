@@ -5,10 +5,11 @@ import model.shop.base.Purchasable;
 
 abstract public class Consumable implements Purchasable {
     protected int amount;
+    private final String name;
 
-    public Consumable(final int id, int amount) {
-        super();
+    public Consumable(final int id, int amount, String name) {
         this.amount = amount;
+        this.name = name;
     }
 
     public boolean use(Attachment a){
@@ -22,4 +23,8 @@ abstract public class Consumable implements Purchasable {
 
     }
     public int getAmount(){return amount;}
+
+    public String getName(){
+        return name;
+    }
 }

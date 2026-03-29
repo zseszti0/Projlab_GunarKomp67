@@ -1,3 +1,5 @@
 package model.shop.base;
 
-public interface Purchasable {}
+public interface Purchasable {
+    String getName();
+}

@@ -24,7 +24,7 @@ public class Lane {
     }
 
     /**
-     * Hozzaad egy uj mezot a savhoz es kiterjeszti a savot.
+     * Hozzaad egsy uj mezot a savhoz e kiterjeszti a savot.
      * @param tile a hozzaadando mezo
      */
     public void addTile(Tile tile){
