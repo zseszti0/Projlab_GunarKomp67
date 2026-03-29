@@ -1,6 +1,7 @@
 package model.shop.attachements;
 
 import model.map.Tile;
+import model.shop.consumables.Consumable;
 import model.shop.consumables.Salt;
 
 /**
@@ -18,21 +19,18 @@ public class SalterHead extends Attachment{
     }
 
     /**
-     * Felulirja az alapertelmezett metodust, sokiurites tortenik.
-     * @param s a felhasznalando so
-     * @return true, ha sikeres volt a fogyasztas
+     * A latogatasi metodus felulirasa hanyofejre.
+     * @param tile a tisztitando mezo
+     * @return sikeres volt-e a takaritas
      */
-    public boolean consume(Salt s){
-        s.use(this);
-        return true;
+
+    @Override
+    public boolean cleansOn(Tile tile) {
+        return tile.cleanTile(this);
     }
 
-    /**
-     * A latogatasi metodus felulirasa soszoro fejre.
-     * @param tile a tisztitando (sozando) mezo
-     * @return sikeres volt-e a sozas
-     */
-    public boolean cleanWith(Tile tile){
-        return tile.cleanTile(this);
+    @Override
+    public boolean use(Consumable c){
+        return c.consume(this);
     }
 }

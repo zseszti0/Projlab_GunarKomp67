@@ -167,9 +167,9 @@ public class Tile implements IAutomatic {
      * @return true, ha tortent allapotvaltozas
      */
     public boolean cleanTile(SweeperHead a) {
-        if (state == null) return false;
+        TileState oldState = state;
         this.state = state.cleanedBy(a);
-        return true;
+        return oldState != state;
     }
 
     /**
@@ -178,9 +178,9 @@ public class Tile implements IAutomatic {
      * @return true, ha tortent allapotvaltozas
      */
     public boolean cleanTile(BlowerHead a) {
-        if (state == null) return false;
+        TileState oldState = state;
         this.state = state.cleanedBy(a);
-        return true;
+        return oldState != state;
     }
 
     /**
@@ -189,9 +189,9 @@ public class Tile implements IAutomatic {
      * @return true, ha tortent allapotvaltozas
      */
     public boolean cleanTile(IcebreakerHead a) {
-        if (state == null) return false;
+        TileState oldState = state;
         this.state = state.cleanedBy(a);
-        return true;
+        return oldState != state;
     }
 
     /**
@@ -200,10 +200,9 @@ public class Tile implements IAutomatic {
      * @return true, ha tortent allapotvaltozas
      */
     public boolean cleanTile(SalterHead a) {
-        if (state == null) return false;
         this.state = state.cleanedBy(a);
         this.isSalted = true;
-        return true;
+        return false;
     }
 
     /**
@@ -212,9 +211,9 @@ public class Tile implements IAutomatic {
      * @return true, ha tortent allapotvaltozas
      */
     public boolean cleanTile(DragonHead a) {
-        if (state == null) return false;
+        TileState oldState = state;
         this.state = state.cleanedBy(a);
-        return true;
+        return oldState != state;
     }
 
     //tesztelési inithez segédfüggvény

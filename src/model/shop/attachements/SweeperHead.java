@@ -1,6 +1,7 @@
 package model.shop.attachements;
 
 import model.map.Tile;
+import model.shop.consumables.Consumable;
 
 /**
  * A soprofej implementalasa.
@@ -17,11 +18,18 @@ public class SweeperHead extends Attachment{
     }
 
     /**
-     * A latogatasi metodus felulirasa soprofejre.
+     * A latogatasi metodus felulirasa hanyofejre.
      * @param tile a tisztitando mezo
      * @return sikeres volt-e a takaritas
      */
-    public boolean cleanWith(Tile tile){
+
+    @Override
+    public boolean cleansOn(Tile tile) {
         return tile.cleanTile(this);
+    }
+
+    @Override
+    public boolean use(Consumable c){
+        return c.consume(this);
     }
 }

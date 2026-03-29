@@ -1,6 +1,6 @@
 package model.shop.consumables;
 
-import model.shop.attachements.Attachment;
+import model.shop.attachements.*;
 import model.shop.base.Purchasable;
 
 /**
@@ -32,13 +32,46 @@ abstract public class Consumable implements Purchasable {
 
 
     /**
-     * Absztraktnak szant metodus az uzemanyag aktivalasara (latogato minta resze).
+     * Absztraktnak szant metodus az uzemanyag aktivalasara Söprő fejjel (latogato minta resze).
      * @param a a fej, ami a fogyoeszkzozt hasznalja
      * @return true alapertelmezetten
      */
-    public boolean use(Attachment a){
+    public boolean consume(SweeperHead a){
         return true;
     }
+    /**
+     * Absztraktnak szant metodus az uzemanyag aktivalasara Hányó fejjel (latogato minta resze).
+     * @param a a fej, ami a fogyoeszkzozt hasznalja
+     * @return true alapertelmezetten
+     */
+    public boolean consume(BlowerHead a){
+        return true;
+    }
+    /**
+     * Absztraktnak szant metodus az uzemanyag aktivalasara Jlgtörő fejjel (latogato minta resze).
+     * @param a a fej, ami a fogyoeszkzozt hasznalja
+     * @return true alapertelmezetten
+     */
+    public boolean consume(IcebreakerHead a){
+        return true;
+    }
+    /**
+     * Absztraktnak szant metodus az uzemanyag aktivalasara Sószóró fejjel (latogato minta resze).
+     * @param a a fej, ami a fogyoeszkzozt hasznalja
+     * @return true alapertelmezetten
+     */
+    public boolean consume(SalterHead a){
+        return true;
+    }
+    /**
+     * Absztraktnak szant metodus az uzemanyag aktivalasara Sárkány fejjel (latogato minta resze).
+     * @param a a fej, ami a fogyoeszkzozt hasznalja
+     * @return true alapertelmezetten
+     */
+    public boolean consume(DragonHead a){
+        return true;
+    }
+
 
     /**
      * Tipus-specifikus keszletnoveles so eseten. Leszarmazottak felulirjak.

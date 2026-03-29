@@ -2,6 +2,7 @@ package model.shop.attachements;
 
 import model.map.Tile;
 import model.shop.consumables.Biokerosene;
+import model.shop.consumables.Consumable;
 
 /**
  * A sarkanyfej takaritasanak implementalasa.
@@ -19,21 +20,18 @@ public class DragonHead extends Attachment{
     }
 
     /**
-     * Felulirja az alapertelmezett metodust, meghivja a biokerozin egysegcsokkenteset.
-     * @param b a felhasznalando biokerozin
-     * @return true, ha sikeres volt a fogyasztas
-     */
-    public boolean consume(Biokerosene b){
-        b.use(this);
-        return true;
-    }
-
-    /**
-     * A latogatasi metodus felulirasa sarkanyfejre.
+     * A latogatasi metodus felulirasa hanyofejre.
      * @param tile a tisztitando mezo
      * @return sikeres volt-e a takaritas
      */
-    public boolean cleanWith(Tile tile){
+
+    @Override
+    public boolean cleansOn(Tile tile) {
         return tile.cleanTile(this);
+    }
+
+    @Override
+    public boolean use(Consumable c){
+        return c.consume(this);
     }
 }

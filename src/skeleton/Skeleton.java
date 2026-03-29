@@ -18,7 +18,7 @@ public class Skeleton {
     private static void menuPrint(){
         log("Válasszon opciót:");
         for(int i = 0; i < models.size(); i++){
-            log((i+1) + ". " + models.keySet().toArray()[i]);
+            log((i+1) + ". " + keys.get(i));
         }
     }
 
@@ -65,9 +65,16 @@ public class Skeleton {
         switch (answer) {
             case 1,2,3,4,5,6:{
                 Cleaner cleaner = model.cleaners.get(0);
-                String[] tiles = model.tiles.get(0).getNeighbors().stream().map(Tile::getName).toArray(String[]::new);
+
+                String[] tiles = new String[model.tiles.size()];
+
+                for (int i = 0; i < model.tiles.size(); i++) {
+                    tiles[i] = model.tiles.get(i).getName();
+                }
+
                 int listNumber = askListQuestion("Hova lépjen?", tiles);
-                cleaner.drive(cleaner.getVehicles().get(0), model.tiles.get(listNumber));
+
+                cleaner.drive(cleaner.getVehicles().get(0), model.tiles.get(listNumber-1));
                 break;
             }
             case 7: {

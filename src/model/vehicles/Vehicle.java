@@ -38,7 +38,12 @@ public abstract class Vehicle {
      * @return A mezőn álló jármű, ha van ütközés, egyébként null
      */
     public Vehicle moveTo(Tile target) {
-        return position.moveToNeighbor(target, this);
+        Vehicle collided = position.moveToNeighbor(target, this);
+        if(collided == null){
+            position = target;
+            return this;
+        }
+        return collided;
     }
 
     public abstract void getHitByCar();

@@ -1,6 +1,7 @@
 package model.shop.consumables;
 
 import model.shop.attachements.SalterHead;
+import skeleton.Skeleton;
 
 /**
  * Feladata a rendelkezesre allo somennyiseg nyilvantartasa es a felhasznalasi kiserletek validalasa.
@@ -21,7 +22,9 @@ public class Salt extends Consumable {
      * @param s a soszorofej, ami felhasznalja
      * @return true, jelezve a sikeres felhasznalast
      */
-    public boolean use(SalterHead s){
+    public boolean consume(SalterHead s){
+        boolean answer = Skeleton.askBoolQuestion("Van-e elég só?");
+        if(!answer) return false;
         amount--;
         return true;
     }
