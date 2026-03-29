@@ -24,7 +24,7 @@ Inventory {
 
     public boolean addMoney(int amount){
         if (amount < 0) {
-            return skeleton.Skeleton.askBoolQuestion("[?] Van elég pénz? (I/N)");
+            return skeleton.Skeleton.askBoolQuestion("Van elég pénz?");
         }
         return true;
     }

@@ -14,5 +14,5 @@ public class Bus extends RoutedVehicle {
     }
 
     public boolean isStunned(){
-        return skeleton.Skeleton.askBoolQuestion("[?] Le van bénulva a busz? (I/N)");    }
+        return skeleton.Skeleton.askBoolQuestion("Le van bénulva a busz?");    }
 }

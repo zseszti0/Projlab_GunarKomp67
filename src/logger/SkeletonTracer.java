@@ -94,7 +94,7 @@ public class SkeletonTracer {
                 String question = msgArg.toString().replace("\"", "");
 
                 // 2. Print the question to the Tracer's console and get the user's answer
-                System.out.print(question);
+                System.out.print("[?] "+ question + " (I/N):\n");
                 String userInput = scanner.nextLine().trim().toLowerCase();
                 boolean answer = userInput.equals("i") || userInput.equals("I") || userInput.equals("Igen");
 
@@ -115,7 +115,7 @@ public class SkeletonTracer {
                 Value msgArg = event.thread().frame(0).getArgumentValues().get(0);
                 String question = msgArg.toString().replace("\"", "");
 
-                System.out.print(question);
+                System.out.print("[?] "+ question + " (Opció száma):\n");
 
                 //Get this options
                 Value arrayArg = event.thread().frame(0).getArgumentValues().get(1);
