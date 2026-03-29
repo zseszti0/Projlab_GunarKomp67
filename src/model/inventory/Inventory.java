@@ -107,7 +107,8 @@ public class Inventory {
      */
     public boolean useHead(Attachment head){
         for(Consumable c : consumables){
-            c.use(head);
+            if(!head.use(c))
+                return false;
         }
         return true;
     }

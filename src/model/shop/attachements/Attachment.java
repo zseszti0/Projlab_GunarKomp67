@@ -1,6 +1,7 @@
 package model.shop.attachements;
 import model.shop.base.Purchasable;
 import model.shop.consumables.Biokerosene;
+import model.shop.consumables.Consumable;
 import model.shop.consumables.Salt;
 import model.vehicles.SnowShovel;
 import model.map.Tile;
@@ -41,25 +42,9 @@ abstract public class Attachment implements Purchasable {
      * @param tile az utfelulet, amellyel interakcioba lep
      * @return sikeres volt-e az allapotvaltozas
      */
-    public abstract boolean cleanWith(Tile tile);
+    public abstract boolean cleansOn(Tile tile);
 
-    /**
-     * So felhasznalasat ellenorzi es hajtja vegre.
-     * @param s a felhasznalando so
-     * @return sikeres volt-e a felhasznalas (alapertelmezetten true)
-     */
-    public boolean consume(Salt s){
-        return true;
-    }
-
-    /**
-     * Biokerozin felhasznalasat ellenorzi es hajtja vegre.
-     * @param b a felhasznalando biokerozin
-     * @return sikeres volt-e a felhasznalas (alapertelmezetten true)
-     */
-    public boolean consume(Biokerosene b){
-        return true;
-    }
+    public abstract boolean use(Consumable c);
 
     /**
      * Visszaadja a fej nevet.

@@ -30,7 +30,7 @@ public class SnowShovel extends Vehicle implements Purchasable {
      */
     public boolean clean(Inventory inventory){
         inventory.useHead(currentAttachment);
-        return currentAttachment.cleanWith(position);
+        return currentAttachment.cleansOn(position);
     }
 
     /**

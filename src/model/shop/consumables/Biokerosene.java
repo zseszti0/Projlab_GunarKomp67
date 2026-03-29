@@ -1,6 +1,8 @@
 package model.shop.consumables;
 
 import model.shop.attachements.DragonHead;
+import model.shop.attachements.SalterHead;
+import skeleton.Skeleton;
 
 /**
  * A rendelkezesre allo biokerozinmennyiseg nyilvantartasa es a felhasznalasi kiserletek validalasa.
@@ -21,7 +23,9 @@ public class Biokerosene extends Consumable{
      * @param d a sarkanyfej, ami felhasznalja
      * @return true, jelezve a sikeres felhasznalast
      */
-    public boolean use(DragonHead d){
+    public boolean consume(DragonHead d){
+        boolean answer = Skeleton.askBoolQuestion("Van-e elég biokerozin?");
+        if(!answer) return false;
         amount--;
         return true;
     }
