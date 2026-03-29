@@ -5,14 +5,28 @@ import model.vehicles.Vehicle;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Absztrakt osztály, amely a játékosok közös őse, akik járműveket birtokolnak.
+ * @param <T> A birtokolt járművek típusa, amelynek a Vehicle leszármazottjának kell lennie
+ */
 public abstract class AbstractVehicleOwner<T extends Vehicle> {
+    /** A játékos neve. */
     protected String name;
+    /** A játékos által birtokolt járművek listája. */
     protected List<T> vehicles=new ArrayList<>();
 
+    /**
+     * Konstruktor, amely létrehoz egy új járműtulajdonost a megadott névvel.
+     * @param name A játékos neve
+     */
     public AbstractVehicleOwner(String name){
         this.name=name;
     }
 
+    /**
+     * Visszaadja a játékos nevét.
+     * @return A játékos neve
+     */
     public String getName(){
         return name;
     }

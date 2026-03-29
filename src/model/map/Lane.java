@@ -11,6 +11,18 @@ import java.util.List;
  */
 public class Lane {
     /**
+     * A logger számára használatos név, egyelőre csak a skeleton fázisban használatos*/
+    private final String name;
+
+    /**
+     * Visszaadja az objektum nevet.
+     * Elorelathatolag csak a skeletonban kell
+     * */
+    public String getName() {
+        return name;
+    }
+
+    /**
      * A savhoz tartozo mezok listaja.
      */
     private List<Tile> tiles;
@@ -24,7 +36,7 @@ public class Lane {
     }
 
     /**
-     * Hozzaad egy uj mezot a savhoz es kiterjeszti a savot.
+     * Hozzaad egsy uj mezot a savhoz e kiterjeszti a savot.
      * @param tile a hozzaadando mezo
      */
     public void addTile(Tile tile){
@@ -35,7 +47,10 @@ public class Lane {
      * Konstruktor a Lane osztalyhoz.
      * @param tiles a savot alkoto mezok listaja
      */
-    public Lane(List<Tile> tiles) {this.tiles = tiles;}
+    public Lane(List<Tile> tiles, String name) {
+        this.tiles = tiles;
+        this.name = name;
+    }
 
     /**
      * Lezarja az osszes mezot a savon.
