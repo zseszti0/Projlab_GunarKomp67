@@ -20,7 +20,6 @@ public class Cleaner extends AbstractVehicleOwner<SnowShovel> implements ICleane
         this.inventory=inventory;
     }
 
-
     @Override
     public boolean drive(SnowShovel vehicle, Tile position) {
         vehicle.moveTo(position);

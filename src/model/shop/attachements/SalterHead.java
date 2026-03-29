@@ -4,8 +4,8 @@ import model.map.Tile;
 import model.shop.consumables.Salt;
 
 public class SalterHead extends Attachment{
-    public SalterHead(final int id, final String name) {
-        super(id, name);
+    public SalterHead(final String name, final int id) {
+        super(name, id);
     }
 
     public boolean consume(Salt s){

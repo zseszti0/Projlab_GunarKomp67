@@ -10,7 +10,7 @@ abstract public class Attachment implements Purchasable {
     int id;
     private SnowShovel snowShovel;
 
-    public Attachment(final int id, String name) {
+    public Attachment(final String name, final int id) {
         this.id = id;
         this.name = name;
     }
@@ -24,5 +24,9 @@ abstract public class Attachment implements Purchasable {
 
     public String getName(){
         return name;
+    }
+
+    public void setSnowShovel(SnowShovel snowShovel){
+        this.snowShovel = snowShovel;
     }
 }

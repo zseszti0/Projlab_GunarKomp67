@@ -9,7 +9,7 @@ public class NPCDriver extends AbstractVehicleOwner<Car> implements IAutomatic {
 
     private PathFinder pathFinder;
 
-    public NPCDriver(String name,PathFinder pathFinder){
+    public NPCDriver(String name, PathFinder pathFinder){
         super(name);
         this.pathFinder=pathFinder;
     }
@@ -27,5 +27,9 @@ public class NPCDriver extends AbstractVehicleOwner<Car> implements IAutomatic {
                 }
             }
         }
+    }
+
+    public void addCar(Car car){
+        vehicles.add(car);
     }
 }
