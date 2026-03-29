@@ -1,7 +1,7 @@
 package model.map.tilestates;
 
 /**
- * A blokkolt (jarhatatlan) mezoallapot. Baleset eseten jon letre a savban.
+ * A blokkolt mezoallapot (blokad). Utkozes eseten jon letre a savban.
  * Ebben az allapotban semmilyen hoeses vagy olvadas nem valtoztatja meg az allapotot.
  * Singleton tervezesi mintat hasznal.
  */
