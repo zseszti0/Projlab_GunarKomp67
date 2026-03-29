@@ -211,4 +211,9 @@ public class Tile implements IAutomatic {
         this.state = state.cleanedBy(a);
         return true;
     }
+
+    //tesztelési inithez segédfüggvény
+    public void setSalted(){
+        isSalted = true;
+    }
 }

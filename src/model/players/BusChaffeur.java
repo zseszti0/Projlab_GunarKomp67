@@ -14,4 +14,8 @@ public class BusChaffeur extends AbstractVehicleOwner<Bus> implements IDrivable<
         vehicle.moveTo(position);
         return true;
     }
+
+    public void addBus(Bus bus){
+        vehicles.add(bus);
+    }
 }

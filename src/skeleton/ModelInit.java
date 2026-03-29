@@ -4,10 +4,7 @@ import model.inventory.Inventory;
 import model.map.Lane;
 import model.map.PathFinder;
 import model.map.Tile;
-import model.map.tilestates.CleanTileState;
-import model.map.tilestates.IcyTileState;
-import model.map.tilestates.ShallowSnowyTileState;
-import model.map.tilestates.TileState;
+import model.map.tilestates.*;
 import model.players.BusChaffeur;
 import model.players.Cleaner;
 import model.players.NPCDriver;
@@ -16,6 +13,7 @@ import model.shop.base.Purchasable;
 import model.shop.base.Shop;
 import model.shop.consumables.Biokerosene;
 import model.shop.consumables.Salt;
+import model.vehicles.Bus;
 import model.vehicles.Car;
 import model.vehicles.SnowShovel;
 
@@ -48,10 +46,19 @@ public class ModelInit {
                 break;
             case "BuySalt": initBuySalt();
                 break;
-            case "BuySnowShovel": initBuySnowShovel();initChangeSweeperToBlower()
+            case "BuySnowShovel": initBuySnowShovel();
                 break;
-            case "ChangeSweeperToBlower": ;initChangeSweeperToBlower();
+            case "ChangeSweeperToBlower": initChangeSweeperToBlower();
                 break;
+            case "CarMoveWithoutCrash": initCarMoveWithoutCrash();
+                break;
+            case "CarMoveWithCrash": initCarMoveWithCrash();
+                break;
+            case "UnsaltedUpdate": initUnsaltedUpdate();
+                break;
+            case "SaltedUpdate": initSaltedUpdate();
+                break;
+            default: initStuckCar();
         }
     }
 
@@ -144,19 +151,56 @@ public class ModelInit {
         cleanerInit("Sweeper", true);
     }
 
-    private void mapInit(String whichTileState){
-        Lane lane1 = new Lane(new ArrayList<>());
-        Lane lane2 = new Lane(new ArrayList<>());
+    private void initCarMoveWithoutCrash(){
+        //map inicializálás
+        mapInit2("Clean");
 
-        Tile tile1 = new Tile(CleanTileState.getInstance(), lane1);
+        //npc játékos inicializálás
+        npcDriverInit();
+    }
+
+    private void initCarMoveWithCrash(){
+        //map inicializálás
+        mapInit2("Icy");
+
+        //npc játékos inicializálás
+        npcDriverInit();
+
+        //buszsofőr játékos inicializálása
+        BusChaffeurInit();
+    }
+
+    private void initUnsaltedUpdate(){
+        //map inicializálás
+        mapInit3(false);
+    }
+
+    private void initSaltedUpdate(){
+        //map inicializálás
+        mapInit3(true);
+    }
+
+    private void initStuckCar(){
+        //map inicializálás
+        mapInit2("DeepSnow");
+
+        //npc játékos inicializálás
+        npcDriverInit();
+    }
+
+    private void mapInit(String whichTileState){
+        Lane lane1 = new Lane(new ArrayList<>(), "Lane1");
+        Lane lane2 = new Lane(new ArrayList<>(), "Lane2");
+
+        Tile tile1 = new Tile("Tile1", CleanTileState.getInstance(), lane1);
         TileState ts;
         switch (whichTileState) {
             case "Shallow Snowy" -> ts = ShallowSnowyTileState.getInstance();
             case "Icy" -> ts = IcyTileState.getInstance();
             default -> ts = CleanTileState.getInstance();
         }
-        Tile tile2 = new Tile(ts, lane1);
-        Tile tile3 = new Tile(CleanTileState.getInstance(), lane2);
+        Tile tile2 = new Tile("Tile2", ts, lane1);
+        Tile tile3 = new Tile("Tile3", CleanTileState.getInstance(), lane2);
 
         lane1.addTile(tile1); lane1.addTile(tile2); lane2.addTile(tile3);
 
@@ -171,6 +215,72 @@ public class ModelInit {
 
         tiles = new ArrayList<>(List.of(tile1, tile2, tile3));
         lanes = new ArrayList<>(List.of(lane1, lane2));
+    }
+
+    private void mapInit2(String whichTileState){
+        Lane lane1 = new Lane(new ArrayList<>(), "Lane1");
+
+        TileState ts1;
+        if (whichTileState.equals("Icy")) {
+            ts1 = IcyTileState.getInstance();
+        } else {
+            ts1 = CleanTileState.getInstance();
+        }
+
+        TileState ts2;
+        if (whichTileState.equals("DeepSnow")) {
+            ts2 = IcyTileState.getInstance();
+        } else {
+            ts2 = CleanTileState.getInstance();
+        }
+
+        Tile tile1 = new Tile("Tile1", ts1, lane1);
+        Tile tile2 = new Tile("Tile2", ts2, lane1);
+        Tile tile3 = new Tile("Tile3", CleanTileState.getInstance(), lane1);
+
+        lane1.addTile(tile1); lane1.addTile(tile2); lane1.addTile(tile3);
+
+        List<Tile> tile1Neighbours = new ArrayList<>(List.of(tile2));
+        tile1.setNeighbors(tile1Neighbours);
+
+        List<Tile> tile2Neighbours = new ArrayList<>(List.of(tile1, tile3));
+        tile1.setNeighbors(tile2Neighbours);
+
+        List<Tile> tile3Neighbours = new ArrayList<>(List.of(tile2));
+        tile1.setNeighbors(tile3Neighbours);
+
+        tiles = new ArrayList<>(List.of(tile1, tile2, tile3));
+        lanes = new ArrayList<>(List.of(lane1));
+    }
+
+    private void mapInit3(boolean salted){
+        Lane lane1 = new Lane(new ArrayList<>(), "Lane1");
+
+        Tile tile1 = new Tile("Tile1", CleanTileState.getInstance(), lane1); tile1.setSalted();
+        Tile tile2 = new Tile("Tile2", ShallowSnowyTileState.getInstance(), lane1); tile2.setSalted();
+        Tile tile3 = new Tile("Tile3", DeepSnowyTileState.getInstance(), lane1); tile3.setSalted();
+        Tile tile4 = new Tile("Tile4", IcyTileState.getInstance(), lane1); tile4.setSalted();
+        Tile tile5 = new Tile("Tile5", BlockedTileState.getInstance(), lane1); tile5.setSalted();
+
+        lane1.addTile(tile1); lane1.addTile(tile2); lane1.addTile(tile3); lane1.addTile(tile4); lane1.addTile(tile5);
+
+        List<Tile> tile1Neighbours = new ArrayList<>(List.of(tile2));
+        tile1.setNeighbors(tile1Neighbours);
+
+        List<Tile> tile2Neighbours = new ArrayList<>(List.of(tile1, tile3));
+        tile1.setNeighbors(tile2Neighbours);
+
+        List<Tile> tile3Neighbours = new ArrayList<>(List.of(tile2, tile4));
+        tile1.setNeighbors(tile3Neighbours);
+
+        List<Tile> tile4Neighbours = new ArrayList<>(List.of(tile3, tile5));
+        tile1.setNeighbors(tile4Neighbours);
+
+        List<Tile> tile5Neighbours = new ArrayList<>(List.of(tile4));
+        tile1.setNeighbors(tile5Neighbours);
+
+        tiles = new ArrayList<>(List.of(tile1, tile2, tile3, tile4, tile5));
+        lanes = new ArrayList<>(List.of(lane1));
     }
 
     private void cleanerInit(String whichAttachment, boolean notEmptyInventory){
@@ -202,11 +312,20 @@ public class ModelInit {
         cleaners = new ArrayList<>(List.of(cleaner));
     }
 
+    //mapInit2-nél a legelsőre rakja a Car-t
+    private void npcDriverInit(){
+        NPCDriver npcDriver1 = new NPCDriver("NPCDriver", new PathFinder("PathFinder"));
+        npcDriver1.addCar(new Car("Car1", tiles.getFirst()));
 
-    private void npcDriverInit(String carAmount){
-        npcDriver = new NPCDriver("NPCDriver", new PathFinder());
+        npcDriver = npcDriver1;
+    }
 
-        npcDriver.addCar(new Car("Car1", ));
+    //mapInit2-nél a legutolsóra rakja a Bus-t
+    private void BusChaffeurInit(){
+        BusChaffeur chaffeur = new BusChaffeur("BusChaffeur");
+        chaffeur.addBus(new Bus("Bus", tiles.getLast()));
+
+        chaffeurs.add(chaffeur);
     }
 
     private void shopInit(String whichPurcahasable){
