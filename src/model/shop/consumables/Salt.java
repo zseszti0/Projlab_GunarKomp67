@@ -3,8 +3,8 @@ package model.shop.consumables;
 import model.shop.attachements.SalterHead;
 
 public class Salt extends Consumable {
-    public Salt(final int id, int amount){
-        super(id, amount);
+    public Salt(final int id, int amount, String name){
+        super(id, amount, name);
     }
 
     public boolean use(SalterHead s){

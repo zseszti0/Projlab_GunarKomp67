@@ -3,8 +3,8 @@ package model.shop.consumables;
 import model.shop.attachements.DragonHead;
 
 public class Biokerosene extends Consumable{
-    public Biokerosene(final int id, int amount){
-        super(id, amount);
+    public Biokerosene(final int id, int amount, String name){
+        super(id, amount,  name);
     }
 
     public boolean use(DragonHead d){
