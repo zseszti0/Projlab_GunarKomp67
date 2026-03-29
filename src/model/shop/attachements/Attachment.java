@@ -15,6 +15,8 @@ abstract public class Attachment implements Purchasable {
         this.name = name;
     }
 
+    public abstract boolean cleanWith(Tile tile);
+
     public boolean consume(Salt s){
         return true;
     }

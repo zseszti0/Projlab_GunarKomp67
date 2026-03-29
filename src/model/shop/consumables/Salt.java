@@ -13,7 +13,8 @@ public class Salt extends Consumable {
     }
 
     @Override
-    public void addAmount(Salt s){
+    public boolean addAmount(Salt s){
         this.amount = this.getAmount() + s.getAmount();
+        return true;
     }
 }

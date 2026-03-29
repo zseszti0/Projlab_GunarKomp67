@@ -13,7 +13,8 @@ public class Biokerosene extends Consumable{
     }
 
     @Override
-    public void addAmount(Biokerosene b){
+    public boolean addAmount(Biokerosene b){
         this.amount = this.getAmount() + b.getAmount();
+        return true;
     }
 }

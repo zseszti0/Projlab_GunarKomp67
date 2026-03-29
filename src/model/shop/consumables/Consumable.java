@@ -16,11 +16,11 @@ abstract public class Consumable implements Purchasable {
         return true;
     }
 
-    public void addAmount(Salt s){
-
+    public boolean addAmount(Salt s){
+        return false;
     }
-    public void addAmount(Biokerosene b){
-
+    public boolean addAmount(Biokerosene b){
+        return false;
     }
     public int getAmount(){return amount;}
 
