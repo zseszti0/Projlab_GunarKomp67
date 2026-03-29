@@ -24,7 +24,7 @@ public class IcyTileState extends TileState {
     }
 
     /**
-     * Kezeli a hoeses esemenyet. Jeges mezon a hoeses nem valtoztat az allapoton, jeges marad.
+     * Kezeli a hoesest. Jeges mezon a hoeses nem valtoztat az allapoton, jeges marad.
      * @return onmaga (IcyTileState)
      */
     @Override
