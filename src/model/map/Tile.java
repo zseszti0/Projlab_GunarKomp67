@@ -168,7 +168,10 @@ public class Tile implements IAutomatic {
      */
     public boolean cleanTile(SweeperHead a) {
         if (state == null) return false;
-        this.state = state.cleanedBy(a);
+        TileState oldState = this.state;
+        TileState newState = state.cleanedBy(a);
+        this.state = newState;
+
         return true;
     }
 
