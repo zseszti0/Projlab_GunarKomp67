@@ -124,7 +124,7 @@ public class Tile implements IAutomatic {
      * @param ssts a kapott sekely ho allapot
      */
     public void acceptSweptSnow(ShallowSnowyTileState ssts) {
-        state.acceptSweptSnow(ssts);
+        this.state = state.acceptSweptSnow(ssts);
     }
 
     /**
@@ -132,7 +132,7 @@ public class Tile implements IAutomatic {
      * @param dsts a kapott mely ho allapot
      */
     public void acceptSweptSnow(DeepSnowyTileState dsts) {
-        state.acceptSweptSnow(dsts);
+        this.state = state.acceptSweptSnow(dsts);
     }
 
     /**
