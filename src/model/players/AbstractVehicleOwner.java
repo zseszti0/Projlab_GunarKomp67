@@ -4,6 +4,7 @@ import model.vehicles.Vehicle;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Absztrakt osztály, amely a játékosok közös őse, akik járműveket birtokolnak.
@@ -29,5 +30,13 @@ public abstract class AbstractVehicleOwner<T extends Vehicle> {
      */
     public String getName(){
         return name;
+    }
+
+    /**
+     * Visszaadja a játékos nevét.
+     * @return A játékos járműveit
+     */
+    public List<T> getVehicles() {
+        return vehicles;
     }
 }

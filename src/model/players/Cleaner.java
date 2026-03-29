@@ -11,6 +11,7 @@ import model.shop.base.Shop;
 import model.vehicles.Vehicle;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Takarító játékos osztály, amely a hókotrók irányításáért és az utak takarításáért felelős.
@@ -75,5 +76,9 @@ public class Cleaner extends AbstractVehicleOwner<SnowShovel> implements ICleane
 
     public boolean shop(String item, Shop shop) {
         return true;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
     }
 }

@@ -112,4 +112,7 @@ public class Inventory {
         return true;
     }
 
+    public List<Attachment> getAttachments() {
+        return attachments;
+    }
 }

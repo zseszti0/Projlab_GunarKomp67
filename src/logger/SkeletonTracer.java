@@ -108,7 +108,7 @@ public class SkeletonTracer {
                 System.out.println("   [ERROR] Failed to force return: " + e.getMessage());
             }
 
-            return; // Stop processing so we don't print the >>> [CALL] log
+            return; // Stop processing so we don't print the call log
         }
         else if(isSkeletonFunc && method.name().equals("askListQuestion")) {
             try {
@@ -129,6 +129,22 @@ public class SkeletonTracer {
                 }
 
                 //Get the user's answer'
+                String userInput = scanner.nextLine().trim().toLowerCase();
+                int answer = Integer.parseInt(userInput);
+
+                Value jdiAnswer = event.virtualMachine().mirrorOf(answer);
+
+                event.thread().forceEarlyReturn(jdiAnswer);
+
+            } catch (Exception e) {
+                System.out.println("   [ERROR] Failed to force return: " + e.getMessage());
+            }
+
+            return;
+        }
+        else if(isSkeletonFunc && method.name().equals("scan")) {
+            try {
+                                //Get the user's answer'
                 String userInput = scanner.nextLine().trim().toLowerCase();
                 int answer = Integer.parseInt(userInput);
 

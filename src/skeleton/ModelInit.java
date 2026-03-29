@@ -296,9 +296,9 @@ public class ModelInit {
                 break;
             case "IcebreakerHead": a = new IcebreakerHead("Icebreaker", 1);
                 break;
-            case "SalterHead": a = new SalterHead("Salter", 1); inventory.addConsumable(new Salt(1, 1));
+            case "SalterHead": a = new SalterHead("Salter", 1); inventory.addConsumable(new Salt(1, 1,"só1"));
                 break;
-            case "DragonHead": a = new DragonHead("Dragon", 1); inventory.addConsumable(new Biokerosene(1, 1));
+            case "DragonHead": a = new DragonHead("Dragon", 1); inventory.addConsumable(new Biokerosene(1, 1,"biokerosene1"));
                 break;
             default: a = new SweeperHead("Sweeper", 1);
         }
@@ -334,7 +334,7 @@ public class ModelInit {
         List<Integer> purchasablePrices = new ArrayList<>();
 
         switch (whichPurcahasable) {
-            case "Salt": purchasableNames.add("Salt"); purchasables.add(new Salt(1, 1)); purchasablePrices.add(1);
+            case "Salt": purchasableNames.add("Salt"); purchasables.add(new Salt(1, 1, "só1")); purchasablePrices.add(1);
                 break;
             case "SalterHead": purchasableNames.add("SnowShovel"); purchasables.add(new SnowShovel("NewSnowShovel", tiles.getLast())); purchasablePrices.add(1);
                 break;
