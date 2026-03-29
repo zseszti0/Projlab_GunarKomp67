@@ -40,16 +40,19 @@ public class PathFinder {
      *                    ezt a parametert a tesztelo altali kivalasztas miatt
      * @return a kivalasztott szomszedos mezo, ahova a lepes tortenik
      */
-    public Tile findNextStep(Tile position, Tile destination){
-        List<String> options = new ArrayList<>();
-        for (Tile t : position.getNeighbors()) {
-            options.add(t.getName());
+    public Tile findNextStep(Tile position, Tile destination) {
+        List<Tile> neighbors = position.getNeighbors();
+
+        String[] options = new String[neighbors.size()];
+
+        for (int i = 0; i < neighbors.size(); i++) {
+            options[i] = neighbors.get(i).getName();
         }
 
         String[] optionsArray = options.toArray(new String[0]);
 
         int answerIndex = Skeleton.askListQuestion("Hova szeretnél lépni?", optionsArray);
 
-        return position.getNeighbors().get(answerIndex);
+        return neighbors.get(answerIndex);
     }
 }
