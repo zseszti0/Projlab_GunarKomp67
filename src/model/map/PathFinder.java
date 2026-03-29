@@ -49,9 +49,7 @@ public class PathFinder {
             options[i] = neighbors.get(i).getName();
         }
 
-        String[] optionsArray = options.toArray(new String[0]);
-
-        int answerIndex = Skeleton.askListQuestion("Hova szeretnél lépni?", optionsArray);
+        int answerIndex = Skeleton.askListQuestion("Hova szeretnél lépni?", options);
 
         return neighbors.get(answerIndex);
     }
