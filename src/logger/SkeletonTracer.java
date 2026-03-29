@@ -19,7 +19,6 @@ public class SkeletonTracer {
 
 
     public static void main(String[] args) throws Exception {
-
         // 1. Get the JDI Launcher
         VirtualMachineManager vmm = Bootstrap.virtualMachineManager();
         LaunchingConnector connector = vmm.defaultConnector();
@@ -47,7 +46,7 @@ public class SkeletonTracer {
 
         //Listen for the skeleton's logs
         MethodEntryRequest logReq = erm.createMethodEntryRequest();
-        logReq.addClassFilter(TARGET_MAIN_CLASS); // Listen ONLY to this specific class
+        logReq.addClassFilter(TARGET_MAIN_CLASS);
         logReq.setSuspendPolicy(EventRequest.SUSPEND_EVENT_THREAD);
         logReq.enable();
         // ------------------------------------------------------------
@@ -74,6 +73,7 @@ public class SkeletonTracer {
     }
 
     private static void handleMethodEntry(MethodEntryEvent event) {
+
         Method method = event.method();
         String className = method.declaringType().name();
 
@@ -110,10 +110,35 @@ public class SkeletonTracer {
 
             return; // Stop processing so we don't print the >>> [CALL] log
         }
+        else if(isSkeletonFunc && method.name().equals("askListQuestion")) {
+            try {
+                Value msgArg = event.thread().frame(0).getArgumentValues().get(0);
+                String question = msgArg.toString().replace("\"", "");
+
+                System.out.print(question);
+
+                //Get this options
+                Value optionsArg = event.thread().frame(0).getArgumentValues().get(1);
+                List<String> options = optionsArg.toString().replace("\"", "").lines().toList();
+                for( int i = 0; i < options.size(); i++){
+                    System.out.println(i + ": " + options.get(i));
+                }
+
+                //Get the user's answer'
+                String userInput = scanner.nextLine().trim().toLowerCase();
+                int answer = Integer.parseInt(userInput);
+
+                Value jdiAnswer = event.virtualMachine().mirrorOf(answer);
+
+                event.thread().forceEarlyReturn(jdiAnswer);
+
+            } catch (Exception e) {
+                System.out.println("   [ERROR] Failed to force return: " + e.getMessage());
+            }
+
+            return;
+        }
         else if (method.name().equals("<init>") || method.isSynthetic() || isSkeletonFunc) return;
-
-
-
 
 
 
