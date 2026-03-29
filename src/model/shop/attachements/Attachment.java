@@ -3,7 +3,7 @@ import model.shop.base.Purchasable;
 import model.shop.consumables.Biokerosene;
 import model.shop.consumables.Salt;
 import model.vehicles.SnowShovel;
-
+import model.map.Tile;
 
 abstract public class Attachment extends Purchasable {
     private SnowShovel snowShovel;
@@ -17,8 +17,5 @@ abstract public class Attachment extends Purchasable {
     }
     public boolean consume(Biokerosene b){
         return true;
-    }
-    public boolean Tile cleanWith(Tile tile){
-        tile.cleanTile(this);
     }
 }
