@@ -118,10 +118,14 @@ public class SkeletonTracer {
                 System.out.print(question);
 
                 //Get this options
-                Value optionsArg = event.thread().frame(0).getArgumentValues().get(1);
-                List<String> options = optionsArg.toString().replace("\"", "").lines().toList();
-                for( int i = 0; i < options.size(); i++){
-                    System.out.println(i + ": " + options.get(i));
+                Value arrayArg = event.thread().frame(0).getArgumentValues().get(1);
+                ArrayReference arrayRef = (ArrayReference) arrayArg; // JDI natively understands arrays!
+
+                // 3. Loop through the JDI array and print them
+                List<Value> jdiValues = arrayRef.getValues();
+                for (int i = 0; i < jdiValues.size(); i++) {
+                    String optionString = jdiValues.get(i).toString().replace("\"", "");
+                    System.out.println("      " + (i + 1) + ". " + optionString);
                 }
 
                 //Get the user's answer'

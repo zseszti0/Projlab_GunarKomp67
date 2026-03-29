@@ -15,7 +15,8 @@ public class Skeleton {
     public static boolean askBoolQuestion(String question){
         return true;
     }
-    public static int askListQuestion(String question, List<String> options){
+    public static int askListQuestion(String question, String[] options){
+
         return 0;
     }
 }
