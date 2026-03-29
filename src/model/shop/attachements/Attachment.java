@@ -5,11 +5,13 @@ import model.shop.consumables.Salt;
 import model.vehicles.SnowShovel;
 import model.map.Tile;
 
-abstract public class Attachment extends Purchasable {
+abstract public class Attachment implements Purchasable {
+    int id;
     private SnowShovel snowShovel;
 
     public Attachment(final int id){
-        super(id);
+        super();
+        this.id = id;
     }
 
     public boolean consume(Salt s){

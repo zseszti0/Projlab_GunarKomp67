@@ -74,6 +74,10 @@ public class Tile implements IAutomatic {
      * Visszaadja a szomszedos mezoket.
      * @return a szomszedos Tile objektumok listaja
      */
+    public void setNeighbors(List<Tile> neighbors) {
+        this.neighbors = neighbors;
+    }
+
     public List<Tile> getNeighbors() {
         return neighbors;
     }
