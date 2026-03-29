@@ -8,14 +8,12 @@ import model.players.ICleaner;
 import model.players.NPCDriver;
 import model.shop.attachements.Attachment;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Skeleton {
 
     private static Map<String, ModelInit> models = new HashMap<>();
+    private static List<String> keys = new ArrayList<>();
 
     private static void menuPrint(){
         log("Válasszon opciót:");
@@ -27,30 +25,49 @@ public class Skeleton {
     public static void main(String[] args) {
         //init the usecases
         models.put("Lépés söprő fejjel tiszta mezőre", new ModelInit("MoveWithSweeperToCleanTile"));
+        keys.add("Lépés söprő fejjel tiszta mezőre");
         models.put("Lépés söprő fejjel sekély havas mezőre", new ModelInit("MoveWithSweeperToShallowSnowyTile"));
+        keys.add("Lépés söprő fejjel sekély havas mezőre");
         models.put("Lépés hányó fejjel sekély havas mezőre", new ModelInit("MoveWithBlowerToShallowSnowyTile"));
+        keys.add("Lépés hányó fejjel sekély havas mezőre");
         models.put("Lépés jégtörő fejjel jeges mezőre", new ModelInit("MoveWithIcebreakerToIcyTile"));
+        keys.add("Lépés jégtörő fejjel jeges mezőre");
         models.put("Lépés sószóró fejjel sekély havas mezőre", new ModelInit("MoveWithSalterToShallowSnowyTile"));
+        keys.add("Lépés sószóró fejjel sekély havas mezőre");
         models.put("Lépés sárkány fejjel sekély havas mezőre", new ModelInit("MoveWithDragonToShallowSnowyTile"));
+        keys.add("Lépés sárkány fejjel sekély havas mezőre");
         models.put("Söprő fej vásárlása", new ModelInit("BuySweeper"));
+        keys.add("Söprő fej vásárlása");
         models.put("Só vásárlása", new ModelInit("BuySalt"));
+        keys.add("Só vásárlása");
         models.put("Hókotró vásárlása", new ModelInit("BuySnowShovel"));
+        keys.add("Hókotró vásárlása");
         models.put("Söprő fej cseréje hányó fejre", new ModelInit("ChangeSweeperToBlower"));
+        keys.add("Söprő fej cseréje hányó fejre");
         models.put("Autó lépése karambol nélkül", new ModelInit("CarMoveWithoutCrash"));
+        keys.add("Autó lépése karambol nélkül");
         models.put("Autó lépése karambollal", new ModelInit("CarMoveWithCrash"));
+        keys.add("Autó lépése karambollal");
         models.put("Sómentes mezők állapotának frissítése", new ModelInit("UnsaltedUpdate"));
+        keys.add("Sómentes mezők állapotának frissítése");
         models.put("Sózott mezők állapotának frissítése", new ModelInit("SaltedUpdate"));
+        keys.add("Sózott mezők állapotának frissítése");
         models.put("Autó elakadás", new ModelInit("CarMoveWithCrash"));
+        keys.add("Autó elakadás");
 
+        startLogging();
         menuPrint();
 
         int answer = scan();
-        answer = 1;
-        ModelInit model = models.get(models.keySet().toArray()[answer-1]);
+
+        ModelInit model = models.get(keys.get(answer-1));
+
         switch (answer) {
             case 1,2,3,4,5,6:{
                 Cleaner cleaner = model.cleaners.get(0);
-                cleaner.drive(cleaner.getVehicles().get(0), model.tiles.get(0));
+                String[] tiles = model.tiles.get(0).getNeighbors().stream().map(Tile::getName).toArray(String[]::new);
+                int listNumber = askListQuestion("Hova lépjen?", tiles);
+                cleaner.drive(cleaner.getVehicles().get(0), model.tiles.get(listNumber));
                 break;
             }
             case 7: {
@@ -101,5 +118,9 @@ public class Skeleton {
 
     public static int scan(){
         return 0;
+    }
+
+    public static void startLogging(){
+
     }
 }

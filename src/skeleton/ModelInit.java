@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ModelInit {
-    List<Cleaner> cleaners;
+    List<Cleaner> cleaners = new ArrayList<>();
     List<BusChaffeur> chaffeurs = new ArrayList<>();
     NPCDriver npcDriver;
     List<Tile> tiles;

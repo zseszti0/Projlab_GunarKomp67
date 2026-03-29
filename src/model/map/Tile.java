@@ -6,6 +6,7 @@ import model.map.tilestates.*;
 import model.players.IAutomatic;
 import model.shop.attachements.*;
 import model.vehicles.Vehicle;
+import skeleton.Skeleton;
 
 /**
  * A modellbeli mezo, a varos uthalozatanak egy egysege.
@@ -152,7 +153,11 @@ public class Tile implements IAutomatic {
      * @return a jarmu, amivel utkozott (null, ha nem tortent utkozes)
      */
     public Vehicle moveToNeighbor(Tile t, Vehicle v) {
-        //TODO
+        boolean valid = Skeleton.askBoolQuestion("Érvényes-e a lépés?");
+        if(valid){
+            acceptVehicle(v);
+            return null;
+        }
         return v;
     }
 

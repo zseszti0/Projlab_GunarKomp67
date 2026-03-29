@@ -12,6 +12,7 @@ import java.util.Scanner;
 public class SkeletonTracer {
     private static int level = 0;
     private static final Scanner scanner = new Scanner(System.in);
+    private static boolean doLogs = false;
 
 
     private static final String PACKAGE_FILTER = "model.*";
@@ -73,112 +74,140 @@ public class SkeletonTracer {
     }
 
     private static void handleMethodEntry(MethodEntryEvent event) {
-
         Method method = event.method();
         String className = method.declaringType().name();
-
-        //Communication with the vm's console
-        boolean isSkeletonFunc = className.equals(TARGET_MAIN_CLASS);
-        if (isSkeletonFunc && method.name().equals("log")) {
-            try {
-                Value msgArg = event.thread().frame(0).getArgumentValues().get(0);
-                String cleanMsg = msgArg.toString().replace("\"", "");
-                System.out.println(cleanMsg);
-            } catch (Exception e) {}
-            return;
+        if(className.equals(TARGET_MAIN_CLASS) && method.name().equals("startLogging")){
+            doLogs = true;
         }
-        else if(isSkeletonFunc && method.name().equals("askBoolQuestion")) {
-            try {
-                // 1. Grab the question string passed from the skeleton
-                Value msgArg = event.thread().frame(0).getArgumentValues().get(0);
-                String question = msgArg.toString().replace("\"", "");
+        if(doLogs){
 
-                // 2. Print the question to the Tracer's console and get the user's answer
-                System.out.print("[?] "+ question + " (I/N):\n");
-                String userInput = scanner.nextLine().trim().toLowerCase();
-                boolean answer = userInput.equals("i") || userInput.equals("I") || userInput.equals("Igen");
 
-                // 3. Convert our local boolean into a JDI VirtualMachine boolean
-                Value jdiAnswer = event.virtualMachine().mirrorOf(answer);
+            //Communication with the vm's console
+            boolean isSkeletonFunc = className.equals(TARGET_MAIN_CLASS);
+            if (isSkeletonFunc && method.name().equals("log")) {
+                try {
+                    Value msgArg = event.thread().frame(0).getArgumentValues().get(0);
+                    String cleanMsg = msgArg.toString().replace("\"", "");
+                    System.out.println(cleanMsg);
+                } catch (Exception e) {
+                }
+                return;
+            } else if (isSkeletonFunc && method.name().equals("askBoolQuestion")) {
+                try {
+                    // 1. Grab the question string passed from the skeleton
+                    Value msgArg = event.thread().frame(0).getArgumentValues().get(0);
+                    String question = msgArg.toString().replace("\"", "");
 
-                // 4. THE MAGIC: Force the target VM to immediately return our answer!
-                event.thread().forceEarlyReturn(jdiAnswer);
+                    // 2. Print the question to the Tracer's console and get the user's answer
+                    System.out.print("[?] " + question + " (I/N):\n");
+                    String userInput = scanner.nextLine().trim().toLowerCase();
+                    boolean answer = userInput.equals("i") || userInput.equals("I") || userInput.equals("Igen");
 
-            } catch (Exception e) {
-                System.out.println("   [ERROR] Failed to force return: " + e.getMessage());
-            }
+                    // 3. Convert our local boolean into a JDI VirtualMachine boolean
+                    Value jdiAnswer = event.virtualMachine().mirrorOf(answer);
 
-            return; // Stop processing so we don't print the call log
-        }
-        else if(isSkeletonFunc && method.name().equals("askListQuestion")) {
-            try {
-                Value msgArg = event.thread().frame(0).getArgumentValues().get(0);
-                String question = msgArg.toString().replace("\"", "");
+                    // 4. THE MAGIC: Force the target VM to immediately return our answer!
+                    event.thread().forceEarlyReturn(jdiAnswer);
 
-                System.out.print("[?] "+ question + " (Opció száma):\n");
-
-                //Get this options
-                Value arrayArg = event.thread().frame(0).getArgumentValues().get(1);
-                ArrayReference arrayRef = (ArrayReference) arrayArg; // JDI natively understands arrays!
-
-                // 3. Loop through the JDI array and print them
-                List<Value> jdiValues = arrayRef.getValues();
-                for (int i = 0; i < jdiValues.size(); i++) {
-                    String optionString = jdiValues.get(i).toString().replace("\"", "");
-                    System.out.println("      " + (i + 1) + ". " + optionString);
+                } catch (Exception e) {
+                    System.out.println("   [ERROR] Failed to force return: " + e.getMessage());
                 }
 
-                //Get the user's answer'
-                String userInput = scanner.nextLine().trim().toLowerCase();
-                int answer = Integer.parseInt(userInput);
+                return; // Stop processing so we don't print the call log
+            } else if (isSkeletonFunc && method.name().equals("askListQuestion")) {
+                try {
+                    Value msgArg = event.thread().frame(0).getArgumentValues().get(0);
+                    String question = msgArg.toString().replace("\"", "");
 
-                Value jdiAnswer = event.virtualMachine().mirrorOf(answer);
+                    System.out.print("[?] " + question + " (Opció száma):\n");
 
-                event.thread().forceEarlyReturn(jdiAnswer);
+                    //Get this options
+                    Value arrayArg = event.thread().frame(0).getArgumentValues().get(1);
+                    ArrayReference arrayRef = (ArrayReference) arrayArg; // JDI natively understands arrays!
 
-            } catch (Exception e) {
-                System.out.println("   [ERROR] Failed to force return: " + e.getMessage());
-            }
+                    // 3. Loop through the JDI array and print them
+                    List<Value> jdiValues = arrayRef.getValues();
+                    for (int i = 0; i < jdiValues.size(); i++) {
+                        String optionString = jdiValues.get(i).toString().replace("\"", "");
+                        System.out.println("      " + (i + 1) + ". " + optionString);
+                    }
 
-            return;
+                    //Get the user's answer'
+                    String userInput = scanner.nextLine().trim().toLowerCase();
+                    int answer = Integer.parseInt(userInput);
+
+                    Value jdiAnswer = event.virtualMachine().mirrorOf(answer);
+
+                    event.thread().forceEarlyReturn(jdiAnswer);
+
+                } catch (Exception e) {
+                    System.out.println("   [ERROR] Failed to force return: " + e.getMessage());
+                }
+
+                return;
+            } else if (isSkeletonFunc && method.name().equals("scan")) {
+                try {
+                    //Get the user's answer'
+                    String userInput = scanner.nextLine().trim().toLowerCase();
+                    int answer = Integer.parseInt(userInput);
+
+                    Value jdiAnswer = event.virtualMachine().mirrorOf(answer);
+
+                    event.thread().forceEarlyReturn(jdiAnswer);
+
+                } catch (Exception e) {
+                    System.out.println("   [ERROR] Failed to force return: " + e.getMessage());
+                }
+
+                return;
+            } else if (method.name().equals("<init>") || method.isSynthetic() || isSkeletonFunc) return;
+
+
+            //Normal function calls
+            level++;
+            System.out.println(writeOutFullMethod(event));
         }
-        else if(isSkeletonFunc && method.name().equals("scan")) {
-            try {
-                                //Get the user's answer'
-                String userInput = scanner.nextLine().trim().toLowerCase();
-                int answer = Integer.parseInt(userInput);
-
-                Value jdiAnswer = event.virtualMachine().mirrorOf(answer);
-
-                event.thread().forceEarlyReturn(jdiAnswer);
-
-            } catch (Exception e) {
-                System.out.println("   [ERROR] Failed to force return: " + e.getMessage());
-            }
-
-            return;
-        }
-        else if (method.name().equals("<init>") || method.isSynthetic() || isSkeletonFunc) return;
-
-
-
-        //Normal function calls
-        level++;
-        System.out.println(writeOutFullMethod(event));
     }
 
     private static void handleMethodExit(MethodExitEvent event) {
-        Method method = event.method();
-        if (method.name().equals("<init>") || method.isSynthetic()) return;
+        if(doLogs){
+            Method method = event.method();
+            if (method.name().equals("<init>") || method.isSynthetic()) return;
 
-        Value returnValue = event.returnValue();
+            Value returnValue = event.returnValue();
+            String formattedReturn;
 
-        //Normal function calls
-        System.out.println(writeOutFullMethod(event) + " visszatért " +
-                (returnValue.toString() == "<void value>" ? ": void" : (returnValue.toString() + " : " + returnValue.type().name()))
-            + " értékkel.");
+                // 1. Is it void?
+            if (returnValue == null || returnValue.type().name().equals("void")) {
+                formattedReturn = "null";
+            }
+                // 2. Is it an Object? (Your model classes, Strings, Lists, etc.)
+            else if (returnValue instanceof ObjectReference) {
+                if (returnValue instanceof StringReference) {
+                    // Special case: If it returns a standard String, just get the text
+                    formattedReturn = "\"" + ((StringReference) returnValue).value() + "\"";
+                } else {
+                    // It is a complex object! Let's reuse that helper method to get its "name" attribute
+                    ObjectReference objRef = (ObjectReference) returnValue;
+                    String objClassName = objRef.referenceType().name();
 
-        level--;
+                    // Use the getInstanceName helper we wrote earlier!
+                    formattedReturn = getInstanceName(objRef, objClassName);
+                }
+            }
+                // 3. Is it a Primitive? (int, boolean, double, etc.)
+            else {
+                // For primitives, toString() works perfectly and just gives the real value (e.g., "true" or "42")
+                formattedReturn = returnValue.toString();
+            }
+
+                 // Write it out in your format!
+            System.out.println(writeOutFullMethod(event) + " visszatért " +
+                    (formattedReturn == "null" ? "null : void" : (formattedReturn + " : " + returnValue.type().name()))
+                    + " értékkel.");
+
+            level--;
+        }
     }
 
     private static String writeOutFullMethod(MethodEntryEvent event){
@@ -200,7 +229,9 @@ public class SkeletonTracer {
 
             List<Value> args = event.thread().frame(0).getArgumentValues();
             for (int i = 0; i < args.size(); i++) {
-                ret += (args.get(i));
+
+                String argName = getInstanceName(thisObject, args.get(i).type().name());
+                ret += (argName);
                 if (i < args.size() - 1) ret +=(", ");
             }
         } catch (IncompatibleThreadStateException e) {
@@ -229,7 +260,8 @@ public class SkeletonTracer {
 
             List<Value> args = event.thread().frame(0).getArgumentValues();
             for (int i = 0; i < args.size(); i++) {
-                ret += (args.get(i));
+                String argName = getInstanceName(thisObject, args.get(i).type().name());
+                ret += (argName);
                 if (i < args.size() - 1) ret +=(", ");
             }
         } catch (IncompatibleThreadStateException e) {
