@@ -22,7 +22,7 @@ import java.util.List;
 
 public class ModelInit {
     List<Cleaner> cleaners;
-    List<BusChaffeur> chaffeurs;
+    List<BusChaffeur> chaffeurs = new ArrayList<>();
     NPCDriver npcDriver;
     List<Tile> tiles;
     List<Lane> lanes;
@@ -289,7 +289,7 @@ public class ModelInit {
             inventory.addAttachment(new BlowerHead("Blower", 2));
         }
 
-        SnowShovel ss = new SnowShovel("Cleaner1", tiles.getFirst());
+        SnowShovel ss = new SnowShovel("Cleaner1", tiles.get(0));
         Attachment a;
         switch (whichAttachment) {
             case "BlowerHead": a = new BlowerHead("Blower", 1);
@@ -307,7 +307,7 @@ public class ModelInit {
 
         Cleaner cleaner = new Cleaner("Cleaner", inventory);
 
-        cleaner.addToFleet(ss, tiles.getFirst());
+        cleaner.addToFleet(ss, tiles.get(0));
 
         cleaners = new ArrayList<>(List.of(cleaner));
     }
@@ -315,7 +315,7 @@ public class ModelInit {
     //mapInit2-nél a legelsőre rakja a Car-t
     private void npcDriverInit(){
         NPCDriver npcDriver1 = new NPCDriver("NPCDriver", new PathFinder("PathFinder"));
-        npcDriver1.addCar(new Car("Car1", tiles.getFirst()));
+        npcDriver1.addCar(new Car("Car1", tiles.get(0)));
 
         npcDriver = npcDriver1;
     }
@@ -323,7 +323,7 @@ public class ModelInit {
     //mapInit2-nél a legutolsóra rakja a Bus-t
     private void BusChaffeurInit(){
         BusChaffeur chaffeur = new BusChaffeur("BusChaffeur");
-        chaffeur.addBus(new Bus("Bus", tiles.getLast()));
+        chaffeur.addBus(new Bus("Bus", tiles.get(tiles.size()-1)));
 
         chaffeurs.add(chaffeur);
     }
@@ -336,7 +336,7 @@ public class ModelInit {
         switch (whichPurcahasable) {
             case "Salt": purchasableNames.add("Salt"); purchasables.add(new Salt(1, 1, "só1")); purchasablePrices.add(1);
                 break;
-            case "SalterHead": purchasableNames.add("SnowShovel"); purchasables.add(new SnowShovel("NewSnowShovel", tiles.getLast())); purchasablePrices.add(1);
+            case "SalterHead": purchasableNames.add("SnowShovel"); purchasables.add(new SnowShovel("NewSnowShovel", tiles.get(tiles.size()-1))); purchasablePrices.add(1);
                 break;
             default: purchasableNames.add("SweeperHead"); purchasables.add(new SweeperHead("Sweeper", 1)); purchasablePrices.add(1);
         }

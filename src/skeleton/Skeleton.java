@@ -45,7 +45,7 @@ public class Skeleton {
         menuPrint();
 
         int answer = scan();
-
+        answer = 1;
         ModelInit model = models.get(models.keySet().toArray()[answer-1]);
         switch (answer) {
             case 1,2,3,4,5,6:{
