@@ -31,6 +31,10 @@ public class Tile implements IAutomatic {
         this.saltMeltingIndex = 0;
     }
 
+    public void setNeighbors(List<Tile> neighbors) {
+        this.neighbors = neighbors;
+    }
+
     public List<Tile> getNeighbors() {
         return neighbors;
     }

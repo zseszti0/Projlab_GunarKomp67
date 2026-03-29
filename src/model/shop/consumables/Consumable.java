@@ -3,11 +3,11 @@ package model.shop.consumables;
 import model.shop.attachements.Attachment;
 import model.shop.base.Purchasable;
 
-abstract public class Consumable extends Purchasable {
+abstract public class Consumable implements Purchasable {
     protected int amount;
 
     public Consumable(final int id, int amount) {
-        super(id);
+        super();
         this.amount = amount;
     }
 
