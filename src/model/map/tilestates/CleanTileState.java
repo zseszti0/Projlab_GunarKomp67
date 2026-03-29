@@ -5,6 +5,7 @@ package model.map.tilestates;
  * Singleton tervezesi mintat hasznal.
  */
 public class CleanTileState extends TileState {
+    private static final String name = "CleanTileState";
 
     private static CleanTileState instance;
 

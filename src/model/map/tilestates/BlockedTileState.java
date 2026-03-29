@@ -6,6 +6,7 @@ package model.map.tilestates;
  * Singleton tervezesi mintat hasznal.
  */
 public class BlockedTileState extends TileState {
+    private static final String name = "BlockedTileState";
 
     private static BlockedTileState instance;
 

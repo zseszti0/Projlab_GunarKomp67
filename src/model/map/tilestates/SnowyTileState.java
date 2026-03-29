@@ -9,6 +9,7 @@ import model.shop.attachements.SweeperHead;
  * Felelossege a kozos takaritasi esemenyek lekezelese.
  */
 public abstract class SnowyTileState extends TileState {
+    private static final String name = "SnowyTileState";
     /**
      * Kezeli a soprofej (SweeperHead) altali tisztitast.
      * A soprofej a havas mezoket tisztava alakitja.

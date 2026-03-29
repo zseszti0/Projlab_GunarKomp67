@@ -5,6 +5,7 @@ package model.map.tilestates;
  * Singleton tervezesi mintat hasznal.
  */
 public class DeepSnowyTileState extends SnowyTileState {
+    private static final String name = "DeepSnowyTileState";
 
     private static DeepSnowyTileState instance;
 

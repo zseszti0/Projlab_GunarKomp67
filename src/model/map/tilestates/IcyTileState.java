@@ -7,6 +7,7 @@ import model.shop.attachements.IcebreakerHead;
  * Singleton tervezesi mintat hasznal.
  */
 public class IcyTileState extends TileState {
+    private static final String name = "IcyTileState";
 
     private static IcyTileState instance;
 

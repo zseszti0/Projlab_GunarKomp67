@@ -223,16 +223,38 @@ public class SkeletonTracer {
         try {
             ObjectReference thisObject = event.thread().frame(0).thisObject();
             String callerName = getInstanceName(thisObject, className);
-            ret += (callerName+ ".");
-
+            ret += (callerName + ".");
             ret += method.name() + "(";
 
             List<Value> args = event.thread().frame(0).getArgumentValues();
             for (int i = 0; i < args.size(); i++) {
+                Value arg = args.get(i);
 
-                String argName = getInstanceName(thisObject, args.get(i).type().name());
-                ret += (argName);
-                if (i < args.size() - 1) ret +=(", ");
+                // 1. Is it null?
+                if (arg == null) {
+                    ret += "null";
+                }
+                // 2. Is it a String? (We usually want strings to show up cleanly with quotes)
+                else if (arg instanceof StringReference) {
+                    ret += "\"" + ((StringReference) arg).value() + "\"";
+                }
+                // 3. Is it a complex Object? (Your model classes)
+                else if (arg instanceof ObjectReference) {
+                    ObjectReference objRef = (ObjectReference) arg;
+                    // Get the class name but strip out the package name so it looks cleaner
+                    String argClassName = arg.type().name();
+                    ret += getInstanceName(objRef, argClassName);
+                }
+                // 4. Is it a Primitive? (int, boolean, double)
+                else {
+                    // Primitives print perfectly with just toString()
+                    ret += arg.toString();
+                }
+
+                // Add comma if it's not the last argument
+                if (i < args.size() - 1) {
+                    ret += ", ";
+                }
             }
         } catch (IncompatibleThreadStateException e) {
             System.out.print("?");
@@ -251,18 +273,40 @@ public class SkeletonTracer {
         ret += "<- ";
 
         try {
-
             ObjectReference thisObject = event.thread().frame(0).thisObject();
             String callerName = getInstanceName(thisObject, className);
-            ret += (callerName+ ".");
+            ret += (callerName + ".");
             ret += method.name() + "(";
-
 
             List<Value> args = event.thread().frame(0).getArgumentValues();
             for (int i = 0; i < args.size(); i++) {
-                String argName = getInstanceName(thisObject, args.get(i).type().name());
-                ret += (argName);
-                if (i < args.size() - 1) ret +=(", ");
+                Value arg = args.get(i);
+
+                // 1. Is it null?
+                if (arg == null) {
+                    ret += "null";
+                }
+                // 2. Is it a String? (We usually want strings to show up cleanly with quotes)
+                else if (arg instanceof StringReference) {
+                    ret += "\"" + ((StringReference) arg).value() + "\"";
+                }
+                // 3. Is it a complex Object? (Your model classes)
+                else if (arg instanceof ObjectReference) {
+                    ObjectReference objRef = (ObjectReference) arg;
+                    // Get the class name but strip out the package name so it looks cleaner
+                    String argClassName = arg.type().name();
+                    ret += getInstanceName(objRef, argClassName);
+                }
+                // 4. Is it a Primitive? (int, boolean, double)
+                else {
+                    // Primitives print perfectly with just toString()
+                    ret += arg.toString();
+                }
+
+                // Add comma if it's not the last argument
+                if (i < args.size() - 1) {
+                    ret += ", ";
+                }
             }
         } catch (IncompatibleThreadStateException e) {
             System.out.print("?");
@@ -289,6 +333,6 @@ public class SkeletonTracer {
         } catch (Exception e) {
         }
 
-        return className + "_" + obj.uniqueID();
+        return className;
     }
 }

@@ -284,12 +284,12 @@ public class ModelInit {
     }
 
     private void cleanerInit(String whichAttachment, boolean notEmptyInventory){
-        Inventory inventory = new Inventory("Cleaner");
+        Inventory inventory = new Inventory("inventory");
         if(notEmptyInventory){
             inventory.addAttachment(new BlowerHead("Blower", 2));
         }
 
-        SnowShovel ss = new SnowShovel("Cleaner1", tiles.get(0));
+        SnowShovel ss = new SnowShovel("snowShovel", tiles.get(0));
         Attachment a;
         switch (whichAttachment) {
             case "BlowerHead": a = new BlowerHead("Blower", 1);
