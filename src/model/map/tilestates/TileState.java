@@ -1,6 +1,7 @@
 package model.map.tilestates;
 
 import model.shop.attachements.*;
+import model.vehicles.Car;
 
 /**
  * A modellbeli mezoallapotok kozos absztrakt ose (State tervezesi minta).
@@ -81,4 +82,6 @@ public abstract class TileState {
      * @return az uj mezoallapot a jarmu athaladasa utan
      */
     public TileState acceptVehicle(int compressionIndex) {return this;}
+
+    public void affectCar(Car c){c.setSlipping(false);}
 }

@@ -1,5 +1,6 @@
 package model.shop.consumables;
 
+import model.inventory.Inventory;
 import model.shop.attachements.*;
 import model.shop.base.Purchasable;
 

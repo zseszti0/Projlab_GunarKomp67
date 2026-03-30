@@ -7,6 +7,7 @@ import model.players.Cleaner;
 import model.players.ICleaner;
 import model.players.NPCDriver;
 import model.shop.attachements.Attachment;
+import java.util.Scanner;
 
 import java.util.*;
 
@@ -60,7 +61,7 @@ public class Skeleton {
 
         int answer = scan();
 
-        ModelInit model = models.get(keys.get(answer-1));
+        ModelInit model = models.get(keys.get(answer - 1));
 
         switch (answer) {
             case 1,2,3,4,5,6:{
@@ -124,7 +125,14 @@ public class Skeleton {
     }
 
     public static int scan(){
-        return 0;
+        Scanner sc = new Scanner(System.in);
+
+        if (sc.hasNextInt()) {
+            return sc.nextInt();
+        } else {
+            log("Hiba: Kérjük, számot adjon meg!");
+            return 0;
+        }
     }
 
     public static void startLogging(){

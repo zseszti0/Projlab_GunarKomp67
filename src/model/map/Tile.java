@@ -5,6 +5,7 @@ import java.util.List;
 import model.map.tilestates.*;
 import model.players.IAutomatic;
 import model.shop.attachements.*;
+import model.vehicles.Car;
 import model.vehicles.Vehicle;
 import skeleton.Skeleton;
 
@@ -244,5 +245,9 @@ public class Tile implements IAutomatic {
     //tesztelési inithez segédfüggvény
     public void setSalted(){
         isSalted = true;
+    }
+
+    public void affectCar(Car c){
+        state.affectCar(c);
     }
 }

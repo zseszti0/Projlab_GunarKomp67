@@ -156,7 +156,7 @@ public class ModelInit {
         mapInit2("Clean");
 
         //npc játékos inicializálás
-        npcDriverInit();
+        npcDriverInit(1);
     }
 
     private void initCarMoveWithCrash(){
@@ -164,10 +164,7 @@ public class ModelInit {
         mapInit2("Icy");
 
         //npc játékos inicializálás
-        npcDriverInit();
-
-        //buszsofőr játékos inicializálása
-        BusChaffeurInit();
+        npcDriverInit(2);
     }
 
     private void initUnsaltedUpdate(){
@@ -185,7 +182,7 @@ public class ModelInit {
         mapInit2("DeepSnow");
 
         //npc játékos inicializálás
-        npcDriverInit();
+        npcDriverInit(1);
     }
 
     private void mapInit(String whichTileState){
@@ -208,10 +205,10 @@ public class ModelInit {
         tile1.setNeighbors(tile1Neighbours);
 
         List<Tile> tile2Neighbours = new ArrayList<>(List.of(tile1, tile3));
-        tile1.setNeighbors(tile2Neighbours);
+        tile2.setNeighbors(tile2Neighbours);
 
         List<Tile> tile3Neighbours = new ArrayList<>(List.of(tile2));
-        tile1.setNeighbors(tile3Neighbours);
+        tile3.setNeighbors(tile3Neighbours);
 
         tiles = new ArrayList<>(List.of(tile1, tile2, tile3));
         lanes = new ArrayList<>(List.of(lane1, lane2));
@@ -244,10 +241,10 @@ public class ModelInit {
         tile1.setNeighbors(tile1Neighbours);
 
         List<Tile> tile2Neighbours = new ArrayList<>(List.of(tile1, tile3));
-        tile1.setNeighbors(tile2Neighbours);
+        tile2.setNeighbors(tile2Neighbours);
 
         List<Tile> tile3Neighbours = new ArrayList<>(List.of(tile2));
-        tile1.setNeighbors(tile3Neighbours);
+        tile3.setNeighbors(tile3Neighbours);
 
         tiles = new ArrayList<>(List.of(tile1, tile2, tile3));
         lanes = new ArrayList<>(List.of(lane1));
@@ -268,16 +265,16 @@ public class ModelInit {
         tile1.setNeighbors(tile1Neighbours);
 
         List<Tile> tile2Neighbours = new ArrayList<>(List.of(tile1, tile3));
-        tile1.setNeighbors(tile2Neighbours);
+        tile2.setNeighbors(tile2Neighbours);
 
         List<Tile> tile3Neighbours = new ArrayList<>(List.of(tile2, tile4));
-        tile1.setNeighbors(tile3Neighbours);
+        tile3.setNeighbors(tile3Neighbours);
 
         List<Tile> tile4Neighbours = new ArrayList<>(List.of(tile3, tile5));
-        tile1.setNeighbors(tile4Neighbours);
+        tile4.setNeighbors(tile4Neighbours);
 
         List<Tile> tile5Neighbours = new ArrayList<>(List.of(tile4));
-        tile1.setNeighbors(tile5Neighbours);
+        tile5.setNeighbors(tile5Neighbours);
 
         tiles = new ArrayList<>(List.of(tile1, tile2, tile3, tile4, tile5));
         lanes = new ArrayList<>(List.of(lane1));
@@ -313,19 +310,14 @@ public class ModelInit {
     }
 
     //mapInit2-nél a legelsőre rakja a Car-t
-    private void npcDriverInit(){
+    private void npcDriverInit(int carAmount){
         NPCDriver npcDriver1 = new NPCDriver("NPCDriver", new PathFinder("PathFinder"));
-        npcDriver1.addCar(new Car("Car1", tiles.get(0)));
+        npcDriver1.addCar(new Car("Car1", tiles.get(0), List.of(tiles.get(0),tiles.get(tiles.size()-1))));
+        if(carAmount > 1){
+            npcDriver1.addCar(new Car("Car2", tiles.get(tiles.size()-1), List.of(tiles.get(tiles.size()-1),tiles.get(tiles.size()-1))));
+        }
 
         npcDriver = npcDriver1;
-    }
-
-    //mapInit2-nél a legutolsóra rakja a Bus-t
-    private void BusChaffeurInit(){
-        BusChaffeur chaffeur = new BusChaffeur("BusChaffeur");
-        chaffeur.addBus(new Bus("Bus", tiles.get(tiles.size()-1)));
-
-        chaffeurs.add(chaffeur);
     }
 
     private void shopInit(String whichPurcahasable){
@@ -336,7 +328,7 @@ public class ModelInit {
         switch (whichPurcahasable) {
             case "Salt": purchasableNames.add("Salt"); purchasables.add(new Salt(1, 1, "só1")); purchasablePrices.add(1);
                 break;
-            case "SalterHead": purchasableNames.add("SnowShovel"); purchasables.add(new SnowShovel("NewSnowShovel", tiles.get(tiles.size()-1))); purchasablePrices.add(1);
+            case "SnowShovel": purchasableNames.add("Hókotró"); purchasables.add(new SnowShovel("NewSnowShovel", tiles.get(tiles.size()-1))); purchasablePrices.add(1);
                 break;
             default: purchasableNames.add("SweeperHead"); purchasables.add(new SweeperHead("Sweeper", 1)); purchasablePrices.add(1);
         }
