@@ -342,7 +342,7 @@ public class ModelInit {
         switch (whichPurcahasable) {
             case "Salt": purchasableNames.add("Salt"); purchasables.add(new Salt(1, 1, "só1")); purchasablePrices.add(1);
                 break;
-            case "SnowShovel": purchasableNames.add("Hókotró"); purchasables.add(new SnowShovel("NewSnowShovel", tiles.get(tiles.size()-1))); purchasablePrices.add(1);
+            case "SnowShovel": purchasableNames.add("SnowShovel"); purchasables.add(new SnowShovel("NewSnowShovel", tiles.get(tiles.size()-1))); purchasablePrices.add(1);
                 break;
             default: purchasableNames.add("SweeperHead"); purchasables.add(new SweeperHead("Sweeper", 1)); purchasablePrices.add(1);
         }

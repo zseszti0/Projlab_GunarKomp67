@@ -64,8 +64,10 @@ abstract public class Attachment implements Purchasable {
     }
 
 
-    @Override
     public void addToInventory(Inventory inventory){
         inventory.addAttachment(this);
     }
+
+    public SnowShovel addToBoard(Tile tile){return null;}
+
 }

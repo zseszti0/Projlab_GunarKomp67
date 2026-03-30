@@ -1,8 +1,10 @@
 package model.shop.consumables;
 
 import model.inventory.Inventory;
+import model.map.Tile;
 import model.shop.attachements.*;
 import model.shop.base.Purchasable;
+import model.vehicles.SnowShovel;
 
 /**
  * Uzemanyagok es egyeb fogyoeszkozok absztrakt alaposztalya.
@@ -109,4 +111,6 @@ abstract public class Consumable implements Purchasable {
     }
 
     public abstract void addToInventory(Inventory inventory);
+
+    public SnowShovel addToBoard(Tile tile){return null;}
 }

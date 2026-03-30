@@ -57,7 +57,7 @@ public class Skeleton {
         startLogging();
         menuPrint();
 
-        int answer = scan();;
+        int answer = scan();
 
         ModelInit model = models.get(keys.get(answer - 1));
 

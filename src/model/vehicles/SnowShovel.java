@@ -57,4 +57,10 @@ public class SnowShovel extends Vehicle implements Purchasable {
     public void addToInventory(Inventory inventory) {
 
     }
+    @Override
+    public SnowShovel addToBoard(Tile tile) {
+        tile.setVehicle(this);
+        position=tile;
+        return this;
+    }
 }

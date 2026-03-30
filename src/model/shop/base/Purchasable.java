@@ -1,6 +1,8 @@
 package model.shop.base;
 
 import model.inventory.Inventory;
+import model.map.Tile;
+import model.vehicles.SnowShovel;
 
 /**
  * A megvasarolhato arucikkek kozos interfesze.
@@ -14,4 +16,5 @@ public interface Purchasable {
     String getName();
 
     public void addToInventory(Inventory inventory);
+    public SnowShovel addToBoard(Tile tile);
 }
