@@ -4,6 +4,7 @@ import model.shop.attachements.*;
 import model.vehicles.Bus;
 import model.vehicles.Car;
 import model.vehicles.SnowShovel;
+import model.vehicles.Vehicle;
 
 /**
  * A modellbeli mezoallapotok kozos absztrakt ose (State tervezesi minta).
@@ -90,19 +91,5 @@ public abstract class TileState {
      * @param c az érkező jármű
      * @return az uj mezoallapot a jarmu athaladasa utan
      */
-    public boolean acceptVehicle(Car c) {return true;}
-
-    /**
-     * Kezeli a jarmu mezore erkezeset, jelez ha érvénytelen lépés
-     * @param c az érkező jármű
-     * @return az uj mezoallapot a jarmu athaladasa utan
-     */
-    public boolean acceptVehicle(SnowShovel c) {return true;}
-
-    /**
-     * Kezeli a jarmu mezore erkezeset, jelez ha érvénytelen lépés
-     * @param c az érkező jármű
-     * @return az uj mezoallapot a jarmu athaladasa utan
-     */
-    public boolean acceptVehicle(Bus c) {return true;}
+    public <T extends Vehicle> boolean acceptVehicle(T c) {return true;}
 }

@@ -2,6 +2,7 @@ package model.map.tilestates;
 
 import model.shop.attachements.IcebreakerHead;
 import model.vehicles.Car;
+import skeleton.Skeleton;
 
 /**
  * A jeges mezoallapot. Sekely hobol jarmu athaladasakor keletkezik, es csuszasveszelyes a rajta haladok szamara.
@@ -56,6 +57,8 @@ public class IcyTileState extends TileState {
 
     @Override
     public TileState acceptVehicle(int compressionIndex) {
-        return this;
+        boolean willTurnToIce= Skeleton.askBoolQuestion("Jéggé tömörül-e?");
+        if(willTurnToIce) return IcyTileState.getInstance();
+        else return this;
     }
 }

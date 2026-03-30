@@ -5,9 +5,13 @@ import java.util.List;
 import model.map.tilestates.*;
 import model.players.IAutomatic;
 import model.shop.attachements.*;
+import model.vehicles.Bus;
 import model.vehicles.Car;
+import model.vehicles.SnowShovel;
 import model.vehicles.Vehicle;
 import skeleton.Skeleton;
+
+import javax.xml.transform.Templates;
 
 /**
  * A modellbeli mezo, a varos uthalozatanak egy egysege.
@@ -144,10 +148,21 @@ public class Tile implements IAutomatic {
      * @param v az erkezo jarmu
      * @return a rajta allo jarmu (vagy null, ha nincs rajta)
      */
-    public Vehicle acceptVehicle(Vehicle v) {
+
+    public <T extends Vehicle> Vehicle acceptVehicle(T v) {
+        if(vehicle != null)
+            return vehicle;
         boolean isValid = state.acceptVehicle(v);
-        state = state.acceptVehicle(compressionIndex);
-        return vehicle;
+
+        if(isValid) {
+            vehicle = v;
+            state = state.acceptVehicle(compressionIndex);
+            vehicle = v;
+            return null;
+        }
+        else{
+            return vehicle;
+        }
     }
 
     /**
