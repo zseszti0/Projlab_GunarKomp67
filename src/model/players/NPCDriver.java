@@ -33,17 +33,15 @@ public class NPCDriver extends AbstractVehicleOwner<Car> implements IAutomatic {
             Tile nt = pathFinder.findNextStep(c.getPosition(), null);
 
             if(nt != null){
-                if(c.calcSlipping()){
-                    nt = pathFinder.findNextStep(c.getPosition(), null);
-                }
                 Vehicle collided = c.moveTo(nt);
-                if(collided != null){
-                    nt.closeLane();
-                    collided.getHitByCar();
-
-                    //elpusztulnak, emiatt üres a Car-ban a getHitByCar
+                if(collided.equals(c)){
+                    //érvénytelen lépés
+                }
+                else if(collided != null){
                     vehicles.remove(collided);
                     vehicles.remove(c);
+
+                    nt.closeLane();
                 }
             }
         }

@@ -55,5 +55,7 @@ public class IcyTileState extends TileState {
     }
 
     @Override
-    public void affectCar(Car c){c.setSlipping(true);}
+    public TileState acceptVehicle(int compressionIndex) {
+        return this;
+    }
 }

@@ -145,7 +145,7 @@ public class Tile implements IAutomatic {
      * @return a rajta allo jarmu (vagy null, ha nincs rajta)
      */
     public Vehicle acceptVehicle(Vehicle v) {
-        //TODO
+        boolean isValid = state.acceptVehicle(v);
         state = state.acceptVehicle(compressionIndex);
         return vehicle;
     }
@@ -246,9 +246,5 @@ public class Tile implements IAutomatic {
     //tesztelési inithez segédfüggvény
     public void setSalted(){
         isSalted = true;
-    }
-
-    public void affectCar(Car c){
-        state.affectCar(c);
     }
 }

@@ -31,8 +31,4 @@ public class Car extends RoutedVehicle {
     public void getHitByCar() {
 
     }
-
-    public void setSlipping(boolean value){slipping = value;}
-
-    public boolean calcSlipping(){position.affectCar(this); return slipping;}
 }
