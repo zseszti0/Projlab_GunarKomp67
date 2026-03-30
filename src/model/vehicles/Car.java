@@ -29,6 +29,7 @@ public class Car extends RoutedVehicle {
 
     @Override
     public void getHitByCar() {
+
     }
 
     public void setSlipping(boolean value){slipping = value;}

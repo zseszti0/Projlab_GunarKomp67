@@ -14,7 +14,7 @@ public abstract class AbstractVehicleOwner<T extends Vehicle> {
     /** A játékos neve. */
     protected String name;
     /** A játékos által birtokolt járművek listája. */
-    protected List<T> vehicles=new ArrayList<>();
+    protected List<T> vehicles = new ArrayList<>();
 
     /**
      * Konstruktor, amely létrehoz egy új járműtulajdonost a megadott névvel.

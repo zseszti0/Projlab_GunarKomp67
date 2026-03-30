@@ -107,7 +107,8 @@ public class Tile implements IAutomatic {
      * TODO
      */
     public void closeLane() {
-        //TODO
+        state = BlockedTileState.getInstance();
+        //kell még a sávbezárás
     }
 
     /**
