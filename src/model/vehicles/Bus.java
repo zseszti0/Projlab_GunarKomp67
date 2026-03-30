@@ -8,7 +8,7 @@ import java.util.List;
  * Busz jármű osztály, amelyet a buszsofőr játékos irányít.
  */
 public class Bus extends RoutedVehicle {
-
+    boolean isStunned;
     /**
      * Konstruktor, amely létrehoz egy új buszt a megadott névvel és pozícióval.
      * @param name A busz neve
@@ -23,7 +23,7 @@ public class Bus extends RoutedVehicle {
      */
     @Override
     public void getHitByCar() {
-        this.isStunned();
+        isStunned = true;
     }
 
     /**
@@ -32,5 +32,6 @@ public class Bus extends RoutedVehicle {
      * @return true, ha a busz le van bénulva
      */
     public boolean isStunned(){
-        return skeleton.Skeleton.askBoolQuestion("Le van bénulva a busz?");    }
+        return isStunned;
+    }
 }

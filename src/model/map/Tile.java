@@ -174,8 +174,7 @@ public class Tile implements IAutomatic {
     public Vehicle moveToNeighbor(Tile t, Vehicle v) {
         boolean valid = Skeleton.askBoolQuestion("Érvényes-e a lépés?");
         if(valid){
-            acceptVehicle(v);
-            return null;
+            return t.acceptVehicle(v);
         }
         return v;
     }
@@ -261,5 +260,9 @@ public class Tile implements IAutomatic {
     //tesztelési inithez segédfüggvény
     public void setSalted(){
         isSalted = true;
+    }
+
+    public void setVehicle(Vehicle c1) {
+        vehicle = c1;
     }
 }

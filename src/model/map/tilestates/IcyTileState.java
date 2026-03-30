@@ -54,11 +54,4 @@ public class IcyTileState extends TileState {
     public TileState cleanedBy(IcebreakerHead ih) {
         return ShallowSnowyTileState.getInstance();
     }
-
-    @Override
-    public TileState acceptVehicle(int compressionIndex) {
-        boolean willTurnToIce= Skeleton.askBoolQuestion("Jéggé tömörül-e?");
-        if(willTurnToIce) return IcyTileState.getInstance();
-        else return this;
-    }
 }

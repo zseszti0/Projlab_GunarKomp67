@@ -1,5 +1,7 @@
 package model.map.tilestates;
 
+import skeleton.Skeleton;
+
 /**
  * A sekely havas mezoallapot. Ebben az allapotban a jarmuvek at tudnak haladni, de tomorithetik a havat.
  * Singleton tervezesi mintat hasznal.
@@ -42,6 +44,8 @@ public class ShallowSnowyTileState extends SnowyTileState {
      */
     @Override
     public TileState acceptVehicle(int compressionIndex) {
-        return IcyTileState.getInstance();
+        boolean willTurnToIce= Skeleton.askBoolQuestion("Jéggé tömörül-e?");
+        if(willTurnToIce) return IcyTileState.getInstance();
+        else return this;
     }
 }

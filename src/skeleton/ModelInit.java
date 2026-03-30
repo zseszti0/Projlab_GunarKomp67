@@ -17,6 +17,7 @@ import model.vehicles.Bus;
 import model.vehicles.Car;
 import model.vehicles.SnowShovel;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,7 +59,6 @@ public class ModelInit {
                 break;
             case "SaltedUpdate": initSaltedUpdate();
                 break;
-            default: initStuckCar();
         }
     }
 
@@ -153,15 +153,15 @@ public class ModelInit {
 
     private void initCarMoveWithoutCrash(){
         //map inicializálás
-        mapInit2("Clean");
+        mapInit2("Shallow Snowy");
 
         //npc játékos inicializálás
-        npcDriverInit(1);
+        npcDriverInitForNotSlipping(1);
     }
 
     private void initCarMoveWithCrash(){
         //map inicializálás
-        mapInit2("Icy");
+        mapInit2("Shallow Snowy");
 
         //npc játékos inicializálás
         npcDriverInit(2);
@@ -177,13 +177,6 @@ public class ModelInit {
         mapInit3(true);
     }
 
-    private void initStuckCar(){
-        //map inicializálás
-        mapInit2("DeepSnow");
-
-        //npc játékos inicializálás
-        npcDriverInit(1);
-    }
 
     private void mapInit(String whichTileState){
         Lane lane1 = new Lane(new ArrayList<>(), "Lane1");
@@ -220,14 +213,22 @@ public class ModelInit {
         TileState ts1;
         if (whichTileState.equals("Icy")) {
             ts1 = IcyTileState.getInstance();
-        } else {
+        }
+        else if (whichTileState.equals("Shallow Snowy")) {
+            ts1 = ShallowSnowyTileState.getInstance();
+        }
+        else {
             ts1 = CleanTileState.getInstance();
         }
 
         TileState ts2;
         if (whichTileState.equals("DeepSnow")) {
             ts2 = IcyTileState.getInstance();
-        } else {
+        }
+        else if (whichTileState.equals("Shallow Snowy")) {
+            ts2 = ShallowSnowyTileState.getInstance();
+        }
+        else {
             ts2 = CleanTileState.getInstance();
         }
 
@@ -310,13 +311,26 @@ public class ModelInit {
     }
 
     //mapInit2-nél a legelsőre rakja a Car-t
-    private void npcDriverInit(int carAmount){
+    private void npcDriverInitForNotSlipping(int carAmount){
         NPCDriver npcDriver1 = new NPCDriver("NPCDriver", new PathFinder("PathFinder"));
         npcDriver1.addCar(new Car("Car1", tiles.get(0), List.of(tiles.get(0),tiles.get(tiles.size()-1))));
         if(carAmount > 1){
             npcDriver1.addCar(new Car("Car2", tiles.get(tiles.size()-1), List.of(tiles.get(tiles.size()-1),tiles.get(tiles.size()-1))));
         }
 
+        npcDriver = npcDriver1;
+    }
+
+    private void npcDriverInit(int carAmount){
+        NPCDriver npcDriver1 = new NPCDriver("NPCDriver", new PathFinder("PathFinder"));
+        Car c1 = new Car("Car1", tiles.get(0), List.of(tiles.get(0),tiles.get(tiles.size()-1)));
+        npcDriver1.addCar(c1);
+        tiles.get(0).setVehicle(c1);
+        if(carAmount > 1){
+            Car c2 = new Car("Car2", tiles.get(tiles.size()-2), List.of(tiles.get(tiles.size()-1),tiles.get(tiles.size()-1)));
+            npcDriver1.addCar(c2);
+            tiles.get(tiles.size()-2).setVehicle(c2);
+        }
         npcDriver = npcDriver1;
     }
 

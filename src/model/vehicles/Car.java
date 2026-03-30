@@ -8,7 +8,7 @@ import java.util.List;
  * Autó jármű osztály, amely egy NPC által vezetett járművet reprezentál a játékban.
  */
 public class Car extends RoutedVehicle {
-    boolean slipping;
+    boolean isCrashed;
 
     /**
      * Konstruktor, amely létrehoz egy új autót a megadott névvel és pozícióval.
@@ -29,6 +29,10 @@ public class Car extends RoutedVehicle {
 
     @Override
     public void getHitByCar() {
+        isCrashed=true;
+    }
 
+    public boolean isCrashed() {
+        return isCrashed;
     }
 }

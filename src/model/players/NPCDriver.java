@@ -5,6 +5,9 @@ import model.map.Tile;
 import model.vehicles.Car;
 import model.vehicles.Vehicle;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * NPC sofőr osztály, amely automatikusan irányítja az autókat a játékban.
  */
@@ -30,21 +33,22 @@ public class NPCDriver extends AbstractVehicleOwner<Car> implements IAutomatic {
     @Override
     public void update() {
         for (Car c : vehicles) {
-            Tile nt = pathFinder.findNextStep(c.getPosition(), null);
+            if(!c.isCrashed()) {
+                Tile nt = pathFinder.findNextStep(c.getPosition(), null);
 
-            if(nt != null){
-                Vehicle collided = c.moveTo(nt);
-                if(collided.equals(c)){
-                    //érvénytelen lépés
-                }
-                else if(collided != null){
-                    vehicles.remove(collided);
-                    vehicles.remove(c);
-
-                    nt.closeLane();
+                if (nt != null) {
+                    Vehicle collided = c.moveTo(nt);
+                    if (collided.equals(c)) {
+                        //érvénytelen lépés
+                    } else if (collided != null) {
+                        c.getHitByCar();
+                        collided.getHitByCar();
+                    }
                 }
             }
         }
+
+        vehicles.removeAll(List.of(vehicles.stream().filter(c -> c.isCrashed()).toArray(Car[]::new)));
     }
 
     /**

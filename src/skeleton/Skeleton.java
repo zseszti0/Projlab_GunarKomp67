@@ -53,8 +53,6 @@ public class Skeleton {
         keys.add("Sómentes mezők állapotának frissítése");
         models.put("Sózott mezők állapotának frissítése", new ModelInit("SaltedUpdate"));
         keys.add("Sózott mezők állapotának frissítése");
-        models.put("Autó elakadás", new ModelInit("CarMoveWithCrash"));
-        keys.add("Autó elakadás");
 
         startLogging();
         menuPrint();
@@ -116,7 +114,7 @@ public class Skeleton {
                 cleaner.changeAttachment(cleaner.getVehicles().get(chosenSnowShovel-1),cleaner.getInventory().getAttachments().get(chosenHead-1));
                 break;
             }
-            case 11, 12, 15: {
+            case 11, 12: {
                 NPCDriver npcDriver = model.npcDriver;
                 npcDriver.update();
                 break;
