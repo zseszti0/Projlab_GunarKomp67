@@ -31,11 +31,19 @@ public class NPCDriver extends AbstractVehicleOwner<Car> implements IAutomatic {
     public void update() {
         for (Car c : vehicles) {
             Tile nt = pathFinder.findNextStep(c.getPosition(), null);
-            if(nt!=null){
+
+            if(nt != null){
+                if(c.calcSlipping()){
+                    nt = pathFinder.findNextStep(c.getPosition(), null);
+                }
                 Vehicle collided = c.moveTo(nt);
-                if(collided!=null){
+                if(collided != null){
                     nt.closeLane();
                     collided.getHitByCar();
+
+                    //elpusztulnak, emiatt üres a Car-ban a getHitByCar
+                    vehicles.remove(collided);
+                    vehicles.remove(c);
                 }
             }
         }

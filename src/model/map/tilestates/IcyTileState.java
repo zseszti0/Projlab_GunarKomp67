@@ -1,6 +1,7 @@
 package model.map.tilestates;
 
 import model.shop.attachements.IcebreakerHead;
+import model.vehicles.Car;
 
 /**
  * A jeges mezoallapot. Sekely hobol jarmu athaladasakor keletkezik, es csuszasveszelyes a rajta haladok szamara.
@@ -52,4 +53,7 @@ public class IcyTileState extends TileState {
     public TileState cleanedBy(IcebreakerHead ih) {
         return ShallowSnowyTileState.getInstance();
     }
+
+    @Override
+    public void affectCar(Car c){c.setSlipping(true);}
 }

@@ -17,7 +17,8 @@ public abstract class RoutedVehicle extends Vehicle {
      * @param name A jármű neve
      * @param position A kezdő pozíció mező
      */
-    public RoutedVehicle(String name,Tile position){
+    public RoutedVehicle(String name,Tile position, List<Tile> landMarks) {
         super(name,position);
+        this.landMarks = landMarks;
     }
 }

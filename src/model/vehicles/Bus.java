@@ -2,6 +2,8 @@ package model.vehicles;
 
 import model.map.Tile;
 
+import java.util.List;
+
 /**
  * Busz jármű osztály, amelyet a buszsofőr játékos irányít.
  */
@@ -12,8 +14,8 @@ public class Bus extends RoutedVehicle {
      * @param name A busz neve
      * @param position A kezdő pozíció mező
      */
-    public Bus(String name, Tile position){
-        super(name,position);
+    public Bus(String name, Tile position, List<Tile> route){
+        super(name,position, route);
     }
     /**
      * Kezeli a busszal történő ütközést.

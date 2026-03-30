@@ -2,18 +2,21 @@ package model.vehicles;
 
 import model.map.Tile;
 
+import java.util.List;
+
 /**
  * Autó jármű osztály, amely egy NPC által vezetett járművet reprezentál a játékban.
  */
 public class Car extends RoutedVehicle {
+    boolean slipping;
 
     /**
      * Konstruktor, amely létrehoz egy új autót a megadott névvel és pozícióval.
      * @param name Az autó neve
      * @param position A kezdő pozíció mező
      */
-    public Car(String name, Tile position){
-        super(name,position);
+    public Car(String name, Tile position, List<Tile> route){
+        super(name,position, route);
     }
 
     /**
@@ -26,5 +29,10 @@ public class Car extends RoutedVehicle {
 
     @Override
     public void getHitByCar() {
+
     }
+
+    public void setSlipping(boolean value){slipping = value;}
+
+    public boolean calcSlipping(){position.affectCar(this); return slipping;}
 }

@@ -21,7 +21,7 @@ public abstract class Vehicle {
      */
     public Vehicle(String name,Tile position) {
         this.name = name;
-        this.position=position;
+        this.position = position;
     }
 
     /**
