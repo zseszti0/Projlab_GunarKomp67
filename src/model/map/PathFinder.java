@@ -51,6 +51,6 @@ public class PathFinder {
 
         int answerIndex = Skeleton.askListQuestion("Hova szeretnél lépni?", options);
 
-        return neighbors.get(answerIndex);
+        return neighbors.get(answerIndex-1);
     }
 }

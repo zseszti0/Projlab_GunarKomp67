@@ -1,5 +1,6 @@
 package model.shop.consumables;
 
+import model.inventory.Inventory;
 import model.shop.attachements.*;
 import model.shop.base.Purchasable;
 
@@ -106,4 +107,6 @@ abstract public class Consumable implements Purchasable {
     public String getName(){
         return name;
     }
+
+    public abstract void addToInventory(Inventory inventory);
 }

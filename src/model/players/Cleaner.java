@@ -71,11 +71,19 @@ public class Cleaner extends AbstractVehicleOwner<SnowShovel> implements ICleane
 
     @Override
     public boolean shop(String item, Shop shop, Tile where) {
+
         return true;
     }
 
     public boolean shop(String item, Shop shop) {
-        return true;
+
+        StoreListing purchase = shop.getListing(item);
+        if(inventory.addMoney(-purchase.getPrice())){
+            Purchasable newItem = purchase.manufacture();
+            newItem.addToInventory(inventory);
+            return true;
+        }
+        else return false;
     }
 
     public Inventory getInventory() {

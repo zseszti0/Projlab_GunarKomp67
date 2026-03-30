@@ -1,5 +1,6 @@
 package model.shop.consumables;
 
+import model.inventory.Inventory;
 import model.shop.attachements.DragonHead;
 import model.shop.attachements.SalterHead;
 import skeleton.Skeleton;
@@ -39,5 +40,10 @@ public class Biokerosene extends Consumable{
     public boolean addAmount(Biokerosene b){
         this.amount = this.getAmount() + b.getAmount();
         return true;
+    }
+
+    @Override
+    public void addToInventory(Inventory inventory){
+        inventory.addConsumable(this);
     }
 }

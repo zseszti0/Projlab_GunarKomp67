@@ -1,5 +1,6 @@
 package model.shop.consumables;
 
+import model.inventory.Inventory;
 import model.shop.attachements.SalterHead;
 import skeleton.Skeleton;
 
@@ -38,5 +39,10 @@ public class Salt extends Consumable {
     public boolean addAmount(Salt s){
         this.amount = this.getAmount() + s.getAmount();
         return true;
+    }
+
+    @Override
+    public void addToInventory(Inventory inventory){
+        inventory.addConsumable(this);
     }
 }

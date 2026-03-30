@@ -1,5 +1,8 @@
 package model.shop.base;
 
+import model.inventory.Inventory;
+import model.vehicles.SnowShovel;
+
 import java.util.function.Supplier;
 
 /**
@@ -45,4 +48,5 @@ public class StoreListing {
     public int getPrice() {
         return price;
     }
+
 }

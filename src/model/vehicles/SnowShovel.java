@@ -52,4 +52,9 @@ public class SnowShovel extends Vehicle implements Purchasable {
 
     @Override
     public void getHitByCar(){}
+
+    @Override
+    public void addToInventory(Inventory inventory) {
+
+    }
 }

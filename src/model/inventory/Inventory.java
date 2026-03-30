@@ -5,6 +5,8 @@ import model.shop.base.Purchasable;
 import model.shop.consumables.Consumable;
 import model.shop.consumables.Salt;
 import model.shop.consumables.Biokerosene;
+import skeleton.Skeleton;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,10 +50,7 @@ public class Inventory {
      * @return true, ha a művelet sikeres volt
      */
     public boolean addMoney(int amount){
-        if (amount < 0) {
-            return skeleton.Skeleton.askBoolQuestion("Van elég pénz?");
-        }
-        return true;
+        return Skeleton.askBoolQuestion("Van elég pénz?");
     }
 
 

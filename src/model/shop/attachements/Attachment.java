@@ -1,4 +1,5 @@
 package model.shop.attachements;
+import model.inventory.Inventory;
 import model.shop.base.Purchasable;
 import model.shop.consumables.Biokerosene;
 import model.shop.consumables.Consumable;
@@ -60,5 +61,11 @@ abstract public class Attachment implements Purchasable {
      */
     public void setSnowShovel(SnowShovel snowShovel){
         this.snowShovel = snowShovel;
+    }
+
+
+    @Override
+    public void addToInventory(Inventory inventory){
+        inventory.addAttachment(this);
     }
 }

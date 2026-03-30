@@ -58,7 +58,7 @@ public class Skeleton {
         startLogging();
         menuPrint();
 
-        int answer = scan();
+        int answer = scan();;
 
         ModelInit model = models.get(keys.get(answer-1));
 
@@ -79,24 +79,40 @@ public class Skeleton {
             }
             case 7: {
                 Cleaner cleaner = model.cleaners.get(0);
-                cleaner.shop("Söprő fej", model.shop);
+                cleaner.shop("SweeperHead", model.shop);
                 break;
             }
             case 8: {
                 Cleaner cleaner = model.cleaners.get(0);
-                cleaner.shop("Só", model.shop);
+                cleaner.shop("Salt", model.shop);
                 break;
             }
             case 9: {
                 Cleaner cleaner = model.cleaners.get(0);
-                cleaner.shop("Hókotró", model.shop,model.tiles.get(0));
+                cleaner.shop("SnowShovel", model.shop,model.tiles.get(0));
                 break;
             }
             case 10: {
                 Cleaner cleaner = model.cleaners.get(0);
-                Inventory inventory = cleaner.getInventory();
-                List<Attachment> attachments = inventory.getAttachments();
-                cleaner.changeAttachment(cleaner.getVehicles().get(0), attachments.get(0));
+
+                String[] snowShovels = new String[cleaner.getVehicles().size()];
+
+                for (int i = 0; i < cleaner.getVehicles().size(); i++) {
+                    snowShovels[i] = cleaner.getVehicles().get(i).getName();
+                }
+
+                int chosenSnowShovel = askListQuestion("Melyik hókotrón cseréljünk fejet?", snowShovels);
+
+                /// //
+                String[] heads = new String[cleaner.getInventory().getAttachments().size()];
+
+                for (int i = 0; i < cleaner.getInventory().getAttachments().size(); i++) {
+                    heads[i] = cleaner.getInventory().getAttachments().get(i).getName();
+                }
+
+                int chosenHead = askListQuestion("Melyik fejet választja az eszköztárból?", heads);
+
+                cleaner.changeAttachment(cleaner.getVehicles().get(chosenSnowShovel-1),cleaner.getInventory().getAttachments().get(chosenHead-1));
                 break;
             }
             case 11, 12, 15: {
