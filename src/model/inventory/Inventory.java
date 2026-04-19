@@ -1,7 +1,6 @@
 package model.inventory;
 
 import model.shop.attachements.Attachment;
-import model.shop.base.Purchasable;
 import model.shop.consumables.Consumable;
 import model.shop.consumables.Salt;
 import model.shop.consumables.Biokerosene;

@@ -50,12 +50,6 @@ public abstract class TileState {
      */
     public TileState cleanedBy(IcebreakerHead ih) {return this;}
 
-    /**
-     * Kezeli a soszoro fej (SalterHead) altali tisztitast (sozast).
-     * @param sh a sozast vegzo fej
-     * @return az uj mezoallapot sozas utan
-     */
-    public TileState cleanedBy(SalterHead sh) {return this;}
 
     /**
      * Kezeli a sarkany fej (DragonHead) altali tisztitast.

@@ -2,7 +2,6 @@ package model.map;
 
 import skeleton.Skeleton;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

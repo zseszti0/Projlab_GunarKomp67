@@ -2,7 +2,7 @@ package model.map.tilestates;
 
 import model.shop.attachements.IcebreakerHead;
 import model.vehicles.Car;
-import skeleton.Skeleton;
+
 
 /**
  * A jeges mezoallapot. Sekely hobol jarmu athaladasakor keletkezik, es csuszasveszelyes a rajta haladok szamara.

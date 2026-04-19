@@ -2,7 +2,6 @@ package model.shop.consumables;
 
 import model.inventory.Inventory;
 import model.shop.attachements.DragonHead;
-import model.shop.attachements.SalterHead;
 import skeleton.Skeleton;
 
 /**

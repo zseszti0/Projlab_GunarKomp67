@@ -10,7 +10,6 @@ import model.vehicles.Car;
 import model.vehicles.SnowShovel;
 import model.vehicles.Vehicle;
 import skeleton.Skeleton;
-
 import javax.xml.transform.Templates;
 
 /**
@@ -71,7 +70,7 @@ public class Tile implements IAutomatic {
         this.lane = lane;
         this.isSalted = false;
         this.compressionIndex = 0;
-        this.saltMeltingIndex = 0;
+
     }
 
     /**
@@ -240,8 +239,6 @@ public class Tile implements IAutomatic {
      * @return true, ha tortent allapotvaltozas
      */
     public boolean cleanTile(SalterHead a) {
-        if (state == null) return false;
-        this.state = state.cleanedBy(a);
         this.isSalted = true;
         return true;
     }
