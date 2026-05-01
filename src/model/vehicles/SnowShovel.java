@@ -23,6 +23,15 @@ public class SnowShovel extends Vehicle implements Purchasable {
     }
 
     /**
+     * Konstruktor, amit az XML parser használ: megadható a felszerelt fej is.
+     */
+    public SnowShovel(String name, Tile position, Attachment equipped){
+        super(name, position);
+        this.currentAttachment = equipped;
+        if(position != null) position.setVehicle(this);
+    }
+
+    /**
      * Végrehajtja a tisztítási folyamatot az aktuális mezőn.
      * Felhasználja a szükséges fogyóeszközöket az eszköztárból, majd meghívja a felszerelt kotrófej tisztítási metódusát.
      * @param inventory A játékos eszköztára, amelyből a fogyóeszközök kerülnek felhasználásra

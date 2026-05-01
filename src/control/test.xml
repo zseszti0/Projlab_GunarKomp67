@@ -1,0 +1,95 @@
+<game>
+    <config randomized="true">
+        <currentActor id="Cleaner1" ap="5"/>
+        <actorQueue>
+            <actor id="Cleaner1" />
+            <actor id="BusChauffeur1" />
+        </actorQueue>
+    </config>
+    <map>
+        <tile id="Tile1" type="ShallowSnowy" isSalted="true">
+            <neighbors>
+                <neighbor id="Tile2" />
+            </neighbors>
+            <lanes>
+                <lane id="Lane1"/>
+            </lanes>
+        </tile>
+        <tile id="Tile2" type="DeepSnowy">
+            <neighbors>
+                <neighbor id="Tile1" />
+                <neighbor id="Tile3" />
+                <neighbor id="Tile4" />
+            </neighbors>
+            <lanes>
+                <lane id="Lane1"/>
+                <lane id="Lane2"/>
+            </lanes>
+        </tile>
+        <tile id="Tile3" type="Icy" saltMeltingIndex="2" compressionIndex="3">
+            <neighbors>
+                <neighbor id="Tile2" />
+            </neighbors>
+            <lanes>
+                <lane id="Lane2"/>
+            </lanes>
+        </tile>
+        <tile id="Tile4" type="Clean" rubbleFadingIndex="4">
+            <neighbors>
+                <neighbor id="Tile2" />
+            </neighbors>
+            <lanes>
+                <lane id="Lane2"/>
+            </lanes>
+        </tile>
+    </map>
+    <cleaner id="Cleaner1">
+        <snowShovel id="SnowShovel1">
+            <position id="Tile1" />
+            <attachment id="Attachment1"/>
+        </snowShovel>
+        <snowShovel id="SnowShovel2" >
+            <position id="Tile2" />
+            <attachment id="Attachment3" type="SalterHead"/>
+        </snowShovel>
+        <inventory>
+            <money amount="100" />
+            <attachments>
+                <attachment id="Attachment1" type="BlowerHead" />
+                <attachment id="Attachment2" type="CobblestoneHead" />
+            </attachments>
+            <consumables>
+                <consumable id="Salt" type="Salt" amount="10" />
+                <consumable id="Rubble" type="Rubble" amount="3" />
+            </consumables>
+        </inventory>
+    </cleaner>
+    <busChauffeur id="BusChauffeur1">
+        <bus id="Bus1" isStunned="true">
+            <position id="Tile3" />
+            <landMarks>
+                <landMark id="Tile1" />
+                <landMark id="Tile4" />
+            </landMarks>
+            <destination id="Tile4" />
+        </bus>
+    </busChauffeur>
+    <NPCDriver id="NPCDriver1">
+        <car id="Car1" isCrashed="true">
+            <position id="Tile4" />
+            <landMarks>
+                <landMark id="Tile1" />
+                <landMark id="Tile2" />
+            </landMarks>
+            <destination id="Tile1" />
+        </car>
+        <car id="Car2">
+            <position id="Tile2" />
+            <landMarks>
+                <landMark id="Tile3" />
+                <landMark id="Tile4" />
+            </landMarks>
+            <destination id="Tile3" />
+        </car>
+    </NPCDriver>
+</game>

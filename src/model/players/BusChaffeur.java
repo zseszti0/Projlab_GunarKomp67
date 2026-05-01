@@ -4,6 +4,8 @@ import model.map.Tile;
 import model.vehicles.Bus;
 import model.vehicles.Vehicle;
 
+import java.util.List;
+
 /**
  * Buszsofőr játékos osztály, amely a buszok vezetéséért felelős.
  */
@@ -15,6 +17,10 @@ public class BusChaffeur extends AbstractVehicleOwner<Bus> implements IDrivable<
      */
     public BusChaffeur(String name){
         super(name);
+    }
+
+    public BusChaffeur(String id, List<Bus> fleet) {
+        super(id,fleet);
     }
 
     /**

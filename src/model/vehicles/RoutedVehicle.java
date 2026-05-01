@@ -21,7 +21,11 @@ public abstract class RoutedVehicle extends Vehicle {
     public RoutedVehicle(String name,Tile position, List<Tile> landMarks) {
         super(name,position);
         this.landMarks = landMarks;
-
+    }
+    public RoutedVehicle(String name,Tile position, List<Tile> landMarks, Tile destination) {
+        super(name,position);
+        this.landMarks = landMarks;
+        currentDestinationIndex = landMarks.indexOf(destination);
     }
 
     public void checkDestinationReached(){

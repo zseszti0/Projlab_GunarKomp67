@@ -25,6 +25,11 @@ public class NPCDriver extends AbstractVehicleOwner<Car> implements IAutomatic {
         this.pathFinder=pathFinder;
     }
 
+    public NPCDriver(String id, PathFinder pathFinder, List<Car> fleet) {
+        super(id,fleet);
+        this.pathFinder = pathFinder;
+    }
+
     /**
      * Frissíti az NPC sofőr állapotát.
      * Végigmegy az összes autón, meghatározza a következő lépést, és végrehajtja a mozgást. Ütközés esetén lezárja a sávot.

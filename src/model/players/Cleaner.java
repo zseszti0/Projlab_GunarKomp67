@@ -33,6 +33,11 @@ public class Cleaner extends AbstractVehicleOwner<SnowShovel> implements ICleane
         this.inventory=inventory;
     }
 
+    public Cleaner(String id, Inventory inventory, List<SnowShovel> fleet) {
+        super(id, fleet);
+        this.inventory = inventory;
+    }
+
     /**
      * Vezeti a megadott hókotrót a kívánt pozícióra, majd végrehajtja a tisztítást. Sikeres tisztítás esetén pénzt ír jóvá.
      * @param vehicle A vezetendő hókotró

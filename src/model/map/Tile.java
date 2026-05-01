@@ -39,6 +39,11 @@ public class Tile implements IAutomatic {
     private int saltMeltingIndex;
 
     /**
+     * A ho zuzalek fade index (rubble fading)
+     */
+    private int rubbleFadingIndex;
+
+    /**
      * A mezo aktualis allapota
      */
     private TileState state;
@@ -71,6 +76,23 @@ public class Tile implements IAutomatic {
         this.isSalted = false;
         this.compressionIndex = 0;
 
+    }
+
+    /**
+     * Teljes konstruktor, amit az XML parser hasznal: lehetoseget ad a belso mezotulajdonsagok beallitasa-ra.
+     */
+    public Tile(String name, TileState state, boolean isSalted, boolean isRubbled,
+                int compressionIndex, int saltMeltingIndex, int rubbleFadingIndex,
+                List<Tile> neighbors, Lane lane) {
+        this.name = name;
+        this.state = state != null ? state : CleanTileState.getInstance();
+        this.isSalted = isSalted;
+        this.isRubbled = isRubbled;
+        this.compressionIndex = compressionIndex;
+        this.saltMeltingIndex = saltMeltingIndex;
+        this.rubbleFadingIndex = rubbleFadingIndex;
+        this.neighbors = neighbors;
+        this.lane = lane;
     }
 
     /**

@@ -20,6 +20,11 @@ public class Car extends RoutedVehicle {
         super(name,position, route);
     }
 
+    public Car(String carId, Tile position, List<Tile> landMarks, Tile destination, boolean isCrashed) {
+        super(carId, position, landMarks, destination);
+        this.isCrashed = isCrashed;
+    }
+
     @Override
     public void getHitByCar() {
         position.closeLane();

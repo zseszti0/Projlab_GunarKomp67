@@ -24,6 +24,11 @@ public abstract class AbstractVehicleOwner<T extends Vehicle> {
         this.name=name;
     }
 
+    public AbstractVehicleOwner(String name, List<T> vehicles){
+        this.name=name;
+        this.vehicles=vehicles;
+    }
+
     /**
      * Visszaadja a játékos nevét.
      * @return A játékos neve

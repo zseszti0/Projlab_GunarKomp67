@@ -34,6 +34,16 @@ public class Inventory {
         this.money=money;
     }
 
+    /**
+     * Teljes konstruktor, amely lehetővé teszi a kezdeti tartalom beallitását (XML parserhez).
+     */
+    public Inventory(String name, int money, List<Attachment> attachments, List<Consumable> consumables){
+        this.name = name;
+        this.money = money;
+        if(attachments != null) this.attachments = attachments;
+        if(consumables != null) this.consumables = consumables;
+    }
+
 
     /**
      * Visszaadja az eszköztár nevét.
@@ -56,6 +66,10 @@ public class Inventory {
             return true;
         }
         return false;
+    }
+
+    public int getMoney(){
+        return money;
     }
 
 
@@ -133,5 +147,8 @@ public class Inventory {
         return attachments;
     }
 
+    public List<Consumable> getConsumables(){
+        return consumables;
+    }
 
 }

@@ -17,6 +17,12 @@ public class Bus extends RoutedVehicle {
     public Bus(String name, Tile position, List<Tile> route){
         super(name,position, route);
     }
+
+    public Bus(String busId, Tile position, List<Tile> landMarks, Tile destination, boolean isStunned) {
+        super(busId, position, landMarks, destination);
+        this.isStunned = isStunned;
+    }
+
     /**
      * Kezeli a busszal történő ütközést.
      * Ütközés esetén a busz megbénulhat.
