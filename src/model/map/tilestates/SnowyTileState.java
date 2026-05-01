@@ -3,6 +3,8 @@ package model.map.tilestates;
 import model.shop.attachements.BlowerHead;
 import model.shop.attachements.DragonHead;
 import model.shop.attachements.SweeperHead;
+import model.vehicles.SnowShovel;
+import model.vehicles.Vehicle;
 
 /**
  * A havas mezoallapotok (sekely es mely ho) kozos ose.
@@ -42,4 +44,5 @@ public abstract class SnowyTileState extends TileState {
     public TileState cleanedBy(DragonHead dh) {
         return CleanTileState.getInstance();
     }
+
 }

@@ -1,5 +1,11 @@
 package model.map.tilestates;
 
+import model.map.Tile;
+import model.vehicles.Car;
+import model.vehicles.SnowShovel;
+
+import java.util.List;
+
 /**
  * A tiszta mezoallapot.
  * Singleton tervezesi mintat hasznal.
@@ -40,4 +46,16 @@ public class CleanTileState extends TileState {
         return this;
     }
 
+    @Override
+    public void addToBFSSubGraph(List<Tile> subGraph, Tile tile){
+        subGraph.add(tile);
+    }
+
+    /**
+     * Kezeli a jarmu mezore erkezeset, jelez ha érvénytelen lépés
+     * @param v az érkező jármű
+     * @return elfogadta-e a járművet
+     */
+    @Override
+    public boolean acceptVehicle(Car v) {return true;}
 }

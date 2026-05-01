@@ -41,7 +41,11 @@ public class Cleaner extends AbstractVehicleOwner<SnowShovel> implements ICleane
      */
     @Override
     public boolean drive(SnowShovel vehicle, Tile position) {
-        vehicle.moveTo(position);
+        Vehicle collided = vehicle.moveTo(position);
+        //érvénytelen lépési kísérlet
+        if(collided!=null){
+            return false;
+        }
         if(vehicle.clean(inventory)){
             inventory.addMoney(10);
         }

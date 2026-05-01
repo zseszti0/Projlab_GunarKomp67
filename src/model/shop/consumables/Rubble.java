@@ -1,19 +1,20 @@
 package model.shop.consumables;
 
 import model.inventory.Inventory;
+import model.shop.attachements.CobblestoneHead;
 import model.shop.attachements.SalterHead;
 
 /**
  * Feladata a rendelkezesre allo somennyiseg nyilvantartasa es a felhasznalasi kiserletek validalasa.
  * Biztositja, hogy a soszorofej csak akkor mukodhessen, ha van so az eszkoztarban.
  */
-public class Salt extends Consumable {
+public class Rubble extends Consumable {
     /**
      * Konstruktor a so letrehozasahoz.
      * @param id a so azonositoja
      * @param amount a kezdeti mennyiseg
      */
-    public Salt(final int id, int amount, String name){
+    public Rubble(final int id, int amount, String name){
         super(id, amount, name);
     }
 
@@ -22,7 +23,7 @@ public class Salt extends Consumable {
      * @param s a soszorofej, ami felhasznalja
      * @return true, jelezve a sikeres felhasznalast
      */
-    public boolean consume(SalterHead s){
+    public boolean consume(CobblestoneHead s){
         if(amount > 0){
             amount--;
             return true;
@@ -32,13 +33,13 @@ public class Salt extends Consumable {
 
     /**
      * Keszletnoveles so eseten.
-     * @param s a hozzaadando masik so objektum
+     * @param r a hozzaadando masik so objektum
      * @return true a sikeres hozzaadas utan
      */
     @Override
-    public boolean addAmount(Salt s){
-        if(amount + s.getAmount() >= 0) {
-            this.amount = this.getAmount() + s.getAmount();
+    public boolean addAmount(Rubble r){
+        if(amount + r.getAmount() >= 0) {
+            this.amount = this.getAmount() + r.getAmount();
             return true;
         }
         return false;

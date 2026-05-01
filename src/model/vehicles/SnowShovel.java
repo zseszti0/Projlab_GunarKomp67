@@ -29,8 +29,14 @@ public class SnowShovel extends Vehicle implements Purchasable {
      * @return true, ha a tisztítás sikeres volt
      */
     public boolean clean(Inventory inventory){
-        inventory.useHead(currentAttachment);
-        return currentAttachment.cleansOn(position);
+        boolean enoughFuel = inventory.useHead(currentAttachment);
+        if(enoughFuel){
+            if(currentAttachment.cleansOn(position)){
+                inventory.addMoney(100);
+            }
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -63,4 +69,7 @@ public class SnowShovel extends Vehicle implements Purchasable {
         position=tile;
         return this;
     }
+
+    @Override
+    public boolean goToTile(Tile tile){return tile.acceptVehicle(this);}
 }

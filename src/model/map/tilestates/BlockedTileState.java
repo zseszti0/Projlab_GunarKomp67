@@ -1,5 +1,8 @@
 package model.map.tilestates;
 
+import model.vehicles.Bus;
+import model.vehicles.SnowShovel;
+
 /**
  * A blokkolt mezoallapot (blokad). Utkozes eseten jon letre a savban.
  * Ebben az allapotban semmilyen hoeses vagy olvadas nem valtoztatja meg az allapotot.
@@ -40,4 +43,20 @@ public class BlockedTileState extends TileState {
     public TileState snowMelt() {
         return this;
     }
+
+    /**
+     * Kezeli a jarmu mezore erkezeset, jelez ha érvénytelen lépés
+     * @param v az érkező jármű
+     * @return elfogadta-e a járművet
+     */
+    @Override
+    public boolean acceptVehicle(SnowShovel v) {return false;}
+
+    /**
+     * Kezeli a jarmu mezore erkezeset, jelez ha érvénytelen lépés
+     * @param v az érkező jármű
+     * @return elfogadta-e a járművet
+     */
+    @Override
+    public boolean acceptVehicle(Bus v) {return false;}
 }

@@ -1,6 +1,7 @@
 package model.vehicles;
 
 import model.map.Tile;
+import model.map.tilestates.TileState;
 
 /**
  * Absztrakt osztály, amely az összes jármű közös őse a játékban.
@@ -47,4 +48,7 @@ public abstract class Vehicle {
     }
 
     public abstract void getHitByCar();
+
+    public abstract boolean goToTile(Tile tile);
+
 }

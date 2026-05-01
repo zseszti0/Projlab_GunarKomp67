@@ -1,8 +1,6 @@
 package model.map;
 
-import skeleton.Skeleton;
-
-import java.util.List;
+import java.util.*;
 
 /**
  * Legrovidebb utkereses megvalositasaert felelos algoritmus segedoszetaly.
@@ -40,16 +38,51 @@ public class PathFinder {
      * @return a kivalasztott szomszedos mezo, ahova a lepes tortenik
      */
     public Tile findNextStep(Tile position, Tile destination) {
-        List<Tile> neighbors = position.getNeighbors();
+        return position.requestPath(position, destination, this);
+    }
 
-        String[] options = new String[neighbors.size()];
+    public Tile calculateBFS(Tile start, Tile end){
+        Queue<Tile> frontier = new LinkedList<>();
+        Map<Tile, Tile> cameFrom = new HashMap<>();
+        Set<Tile> visited = new HashSet<>();
 
-        for (int i = 0; i < neighbors.size(); i++) {
-            options[i] = neighbors.get(i).getName();
+        frontier.add(start);
+        visited.add(start);
+
+        // BFS ciklus a legrövidebb út megkeresésére
+        while (!frontier.isEmpty()) {
+            // A poll() kiveszi és visszaadja a sor első elemét
+            Tile current = frontier.poll();
+
+            if (current.equals(end)) {
+                break;
+            }
+
+            List<Tile> validNeighbors = new ArrayList<>();
+            for (Tile neighbor : current.getNeighbors()) {
+                neighbor.addToBFSSubGraph(validNeighbors);
+            }
+
+            for (Tile validNeighbor : validNeighbors) {
+                if (!visited.contains(validNeighbor)) {
+                    visited.add(validNeighbor);
+                    cameFrom.put(validNeighbor, current);
+                    frontier.add(validNeighbor);
+                }
+            }
         }
 
-        int answerIndex = Skeleton.askListQuestion("Hova szeretnél lépni?", options);
+        // Ha az úticél nincs a cameFrom kulcsai között, nem találtunk utat
+        if (!cameFrom.containsKey(end)) {
+            return start;
+        }
 
-        return neighbors.get(answerIndex-1);
+        // Visszalépkedés a start mezőig, hogy megkapjuk a legelső lépést
+        Tile step = end;
+        while (!cameFrom.get(step).equals(start)) {
+            step = cameFrom.get(step);
+        }
+
+        return step;
     }
 }

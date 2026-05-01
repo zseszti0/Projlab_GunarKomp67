@@ -2,6 +2,7 @@ package model.players;
 
 import model.map.Tile;
 import model.vehicles.Bus;
+import model.vehicles.Vehicle;
 
 /**
  * Buszsofőr játékos osztály, amely a buszok vezetéséért felelős.
@@ -24,8 +25,7 @@ public class BusChaffeur extends AbstractVehicleOwner<Bus> implements IDrivable<
      */
     @Override
     public boolean drive(Bus vehicle, Tile position) {
-        vehicle.moveTo(position);
-        return true;
+        return vehicle.moveTo(position) == null;
     }
 
     /**

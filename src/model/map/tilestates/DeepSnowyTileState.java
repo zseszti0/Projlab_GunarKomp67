@@ -1,5 +1,9 @@
 package model.map.tilestates;
 
+import model.map.Tile;
+import model.vehicles.Bus;
+import model.vehicles.SnowShovel;
+
 /**
  * A mely havas mezoallapot. A jarmuvek elakadhatnak benne.
  * Singleton tervezesi mintat hasznal.
@@ -37,4 +41,16 @@ public class DeepSnowyTileState extends SnowyTileState {
         return ShallowSnowyTileState.getInstance();
     }
 
+    @Override
+    public void sweepSnowToSide(Tile tile){
+        tile.acceptSweptSnow(DeepSnowyTileState.getInstance());
+    }
+
+    /**
+     * Kezeli a jarmu mezore erkezeset, jelez ha érvénytelen lépés
+     * @param v az érkező jármű
+     * @return elfogadta-e a járművet
+     */
+    @Override
+    public boolean acceptVehicle(Bus v) {return false;}
 }

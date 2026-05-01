@@ -58,7 +58,7 @@ public class Lane {
      */
     void blockAllTilesInLane(){
         for(Tile tile : tiles){
-            tile.setState(BlockedTileState.getInstance());
+            tile.blockTile();
         }
     }
 }

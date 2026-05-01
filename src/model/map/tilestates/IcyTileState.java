@@ -1,7 +1,12 @@
 package model.map.tilestates;
 
+import model.map.PathFinder;
+import model.map.Tile;
 import model.shop.attachements.IcebreakerHead;
 import model.vehicles.Car;
+import model.vehicles.SnowShovel;
+
+import java.util.List;
 
 
 /**
@@ -54,4 +59,24 @@ public class IcyTileState extends TileState {
     public TileState cleanedBy(IcebreakerHead ih) {
         return ShallowSnowyTileState.getInstance();
     }
+
+    @Override
+    public Tile requestPath(Tile position, Tile destination, PathFinder pf, boolean isSalted, boolean isRubbled){
+        if(isSalted || isRubbled)
+            return pf.calculateBFS(position, destination);
+        return position.getSlipTarget();
+    }
+
+    @Override
+    public void addToBFSSubGraph(List<Tile> subGraph, Tile tile){
+        subGraph.add(tile);
+    }
+
+    /**
+     * Kezeli a jarmu mezore erkezeset, jelez ha érvénytelen lépés
+     * @param v az érkező jármű
+     * @return elfogadta-e a járművet
+     */
+    @Override
+    public boolean acceptVehicle(Car v) {return false;}
 }

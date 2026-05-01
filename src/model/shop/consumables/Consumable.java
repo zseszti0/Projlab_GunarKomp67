@@ -51,11 +51,19 @@ abstract public class Consumable implements Purchasable {
         return true;
     }
     /**
-     * Absztraktnak szant metodus az uzemanyag aktivalasara Jlgtörő fejjel (latogato minta resze).
+     * Absztraktnak szant metodus az uzemanyag aktivalasara Jlóégtörő fejjel (latogato minta resze).
      * @param a a fej, ami a fogyoeszkzozt hasznalja
      * @return true alapertelmezetten
      */
     public boolean consume(IcebreakerHead a){
+        return true;
+    }
+    /**
+     * Absztraktnak szant metodus az uzemanyag aktivalasara Zuzalékszóró fejjel (latogato minta resze).
+     * @param a a fej, ami a fogyoeszkzozt hasznalja
+     * @return true alapertelmezetten
+     */
+    public boolean consume(CobblestoneHead a){
         return true;
     }
     /**
@@ -82,6 +90,15 @@ abstract public class Consumable implements Purchasable {
      * @return true ha sikeres, maskulonben false
      */
     public boolean addAmount(Salt s){
+        return false;
+    }
+
+    /**
+     * Tipus-specifikus keszletnoveles so eseten. Leszarmazottak felulirjak.
+     * @param r a hozzaadando so
+     * @return true ha sikeres, maskulonben false
+     */
+    public boolean addAmount(Rubble r){
         return false;
     }
 

@@ -15,7 +15,6 @@ public class NPCDriver extends AbstractVehicleOwner<Car> implements IAutomatic {
 
     /** Az útkereső algoritmus, amely meghatározza a következő lépést. */
     private PathFinder pathFinder;
-
     /**
      * Konstruktor, amely létrehoz egy új NPC sofőrt a megadott névvel és útkeresővel.
      * @param name Az NPC sofőr neve
@@ -34,16 +33,13 @@ public class NPCDriver extends AbstractVehicleOwner<Car> implements IAutomatic {
     public void update() {
         for (Car c : vehicles) {
             if(!c.isCrashed()) {
-                Tile nt = pathFinder.findNextStep(c.getPosition(), null);
-
-                if (nt != null) {
-                    Vehicle collided = c.moveTo(nt);
-                    if (collided.equals(c)) {
-                        //érvénytelen lépés
-                    } else if (collided != null) {
-                        c.getHitByCar();
-                        collided.getHitByCar();
-                    }
+                Tile nt = c.nextStep(pathFinder);
+                Vehicle collided = c.moveTo(nt);
+                if (collided == null) {
+                    c.checkDestinationReached();
+                } else if (collided != null) {
+                    c.getHitByCar();
+                    collided.getHitByCar();
                 }
             }
         }

@@ -2,9 +2,9 @@ package model.inventory;
 
 import model.shop.attachements.Attachment;
 import model.shop.consumables.Consumable;
+import model.shop.consumables.Rubble;
 import model.shop.consumables.Salt;
 import model.shop.consumables.Biokerosene;
-import skeleton.Skeleton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +17,7 @@ public class Inventory {
 
     /** Az eszköztár neve. */
     private String name;
+    private int money = 0;
 
     /** A tárolt kotrófejek listája. */
     private List<Attachment> attachments= new ArrayList<>();
@@ -28,8 +29,9 @@ public class Inventory {
      * Konstruktor, amely létrehoz egy új eszköztárat a megadott névvel.
      * @param name Az eszköztár neve
      */
-    public Inventory(String name){
+    public Inventory(String name, int money){
         this.name=name;
+        this.money=money;
     }
 
 
@@ -49,7 +51,11 @@ public class Inventory {
      * @return true, ha a művelet sikeres volt
      */
     public boolean addMoney(int amount){
-        return Skeleton.askBoolQuestion("Van elég pénz?");
+        if (amount + money >= 0) {
+            money += amount;
+            return true;
+        }
+        return false;
     }
 
 
@@ -83,7 +89,6 @@ public class Inventory {
         consumables.add(s);
     }
 
-
     /**
      * Hozzáad biokerozint az eszköztárhoz.
      * @param b A hozzáadandó biokerozin
@@ -94,8 +99,21 @@ public class Inventory {
                 return;
             }
         }
-        consumables.add(b);    }
+        consumables.add(b);
+    }
 
+    /**
+     * Hozzáad biokerozint az eszköztárhoz.
+     * @param r A hozzáadandó biokerozin
+     */
+    public void addConsumable(Rubble r){
+        for(Consumable c : consumables){
+            if(c.addAmount(r)){
+                return;
+            }
+        }
+        consumables.add(r);
+    }
 
     /**
      * Felhasználja a szükséges fogyóeszközöket a megadott kotrófejhez.
@@ -114,4 +132,6 @@ public class Inventory {
     public List<Attachment> getAttachments() {
         return attachments;
     }
+
+
 }

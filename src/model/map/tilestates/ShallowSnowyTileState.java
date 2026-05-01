@@ -1,7 +1,11 @@
 package model.map.tilestates;
 
 
-import skeleton.Skeleton;
+import model.map.Tile;
+import model.vehicles.Car;
+import model.vehicles.SnowShovel;
+
+import java.util.List;
 
 /**
  * A sekely havas mezoallapot. Ebben az allapotban a jarmuvek at tudnak haladni, de tomorithetik a havat.
@@ -38,15 +42,33 @@ public class ShallowSnowyTileState extends SnowyTileState {
         return CleanTileState.getInstance();
     }
 
+    @Override
+    public void addToBFSSubGraph(List<Tile> subGraph, Tile tile){
+        subGraph.add(tile);
+    }
+
+    @Override
+    public void sweepSnowToSide(Tile tile){
+        tile.acceptSweptSnow(ShallowSnowyTileState.getInstance());
+    }
+
     /**
-     * Kezeli a jarmu erkezeset. A jarmu athaladasa a sekely havas mezon jegesse alakitja azt.
-     * @param compressionIndex a ho tomorodesenek merteke
-     * @return jeges mezoallapot (IcyTileState)
+     * Kezeli a jarmu mezore erkezeset, jelez ha érvénytelen lépés
+     * @param v az érkező jármű
+     * @return elfogadta-e a járművet
      */
     @Override
-    public TileState acceptVehicle(int compressionIndex) {
-        boolean willTurnToIce= Skeleton.askBoolQuestion("Jéggé tömörül-e?");
-        if(willTurnToIce) return IcyTileState.getInstance();
-        else return this;
+    public boolean acceptVehicle(Car v) {return true;}
+
+    /**
+     * Kezeli a jarmu mezore erkezeset, ami a ho tomorodeset eredmenyezheti.
+     * @return az uj mezoallapot a jarmu athaladasa utan
+     */
+    @Override
+    public TileState compressionReached(){return IcyTileState.getInstance();}
+
+    @Override
+    public int compressByOne(int compressionIndex){
+        return compressionIndex + 1;
     }
 }

@@ -1,10 +1,14 @@
 package model.map.tilestates;
 
+import model.map.PathFinder;
+import model.map.Tile;
 import model.shop.attachements.*;
 import model.vehicles.Bus;
 import model.vehicles.Car;
 import model.vehicles.SnowShovel;
 import model.vehicles.Vehicle;
+
+import java.util.List;
 
 /**
  * A modellbeli mezoallapotok kozos absztrakt ose (State tervezesi minta).
@@ -75,15 +79,39 @@ public abstract class TileState {
 
     /**
      * Kezeli a jarmu mezore erkezeset, ami a ho tomorodeset eredmenyezheti.
-     * @param compressionIndex a ho tomorodesenek merteke
      * @return az uj mezoallapot a jarmu athaladasa utan
      */
-    public TileState acceptVehicle(int compressionIndex) {return this;}
+    public TileState compressionReached(){return this;}
+
+    public int compressByOne(int compressionIndex){
+        return compressionIndex;
+    }
 
     /**
      * Kezeli a jarmu mezore erkezeset, jelez ha érvénytelen lépés
-     * @param c az érkező jármű
-     * @return az uj mezoallapot a jarmu athaladasa utan
+     * @param v az érkező jármű
+     * @return elfogadta-e a járművet
      */
-    public <T extends Vehicle> boolean acceptVehicle(T c) {return true;}
+    public boolean acceptVehicle(SnowShovel v) {return true;}
+
+    /**
+     * Kezeli a jarmu mezore erkezeset, jelez ha érvénytelen lépés
+     * @param v az érkező jármű
+     * @return elfogadta-e a járművet
+     */
+    public boolean acceptVehicle(Bus v) {return true;}
+
+    /**
+     * Kezeli a jarmu mezore erkezeset, jelez ha érvénytelen lépés
+     * @param v az érkező jármű
+     * @return elfogadta-e a járművet
+     */
+    public boolean acceptVehicle(Car v) {return false;}
+
+    public Tile requestPath(Tile position, Tile destination, PathFinder pf, boolean isSalted, boolean isRubbled){ return pf.calculateBFS(position, destination);}
+
+    public void addToBFSSubGraph(List<Tile> subGraph, Tile tile){   }
+
+    public void sweepSnowToSide(Tile tile){    }
+
 }

@@ -24,11 +24,6 @@ abstract public class Attachment implements Purchasable {
     int id;
 
     /**
-     * A hokotro gep, amire a fej fel van szerelve.
-     */
-    private SnowShovel snowShovel;
-
-    /**
      * Konstruktor az absztrakt kotrofejhez.
      * @param name a fej neve
      * @param id a fej egyedi azonositoja
@@ -53,14 +48,6 @@ abstract public class Attachment implements Purchasable {
      */
     public String getName(){
         return name;
-    }
-
-    /**
-     * Beallitja, hogy melyik hokotron van felszerelve a fej.
-     * @param snowShovel az aktiv hokotro
-     */
-    public void setSnowShovel(SnowShovel snowShovel){
-        this.snowShovel = snowShovel;
     }
 
 

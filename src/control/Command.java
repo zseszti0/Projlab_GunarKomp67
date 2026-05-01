@@ -1,7 +1,7 @@
 package control;
 
 public class Command {
-    public void Execute() {
+    public void execute(GameManager gameManager) {
 
     }
 }

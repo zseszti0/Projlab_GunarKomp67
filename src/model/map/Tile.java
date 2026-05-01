@@ -9,8 +9,6 @@ import model.vehicles.Bus;
 import model.vehicles.Car;
 import model.vehicles.SnowShovel;
 import model.vehicles.Vehicle;
-import skeleton.Skeleton;
-import javax.xml.transform.Templates;
 
 /**
  * A modellbeli mezo, a varos uthalozatanak egy egysege.
@@ -27,6 +25,8 @@ public class Tile implements IAutomatic {
      * Jelzi, hogy a mezo fel lett-e sozva, ami megakadalyozza a ho megmaradasat, es olvasztja azt
      */
     private boolean isSalted;
+
+    private boolean isRubbled;
 
     /**
      * A sekely ho jegge valo tomorodesenek elorehaladtat tartja szamon
@@ -110,8 +110,10 @@ public class Tile implements IAutomatic {
      * TODO
      */
     public void closeLane() {
+        lane.blockAllTilesInLane();
+    }
+    public void blockTile(){
         state = BlockedTileState.getInstance();
-        //kell még a sávbezárás
     }
 
     /**
@@ -123,6 +125,7 @@ public class Tile implements IAutomatic {
             state.snowMelt();
         } else {
             state.snowFall();
+            isRubbled = false;
         }
     }
 
@@ -147,21 +150,37 @@ public class Tile implements IAutomatic {
      * @param v az erkezo jarmu
      * @return a rajta allo jarmu (vagy null, ha nincs rajta)
      */
-
-    public <T extends Vehicle> Vehicle acceptVehicle(T v) {
+    public Vehicle acceptVehicle(Vehicle v) {
         if(vehicle != null)
             return vehicle;
-        boolean isValid = state.acceptVehicle(v);
+        boolean isValid = v.goToTile(this);
 
         if(isValid) {
-            vehicle = v;
-            state = state.acceptVehicle(compressionIndex);
             vehicle = v;
             return null;
         }
         else{
-            return vehicle;
+            return v;
         }
+    }
+    public boolean acceptVehicle(SnowShovel v){
+        return state.acceptVehicle(v);
+    }
+    public boolean acceptVehicle(Bus v){
+        return state.acceptVehicle(v);
+    }
+    public boolean acceptVehicle(Car v){
+        if(state.acceptVehicle(v)){
+            compressionIndex = state.compressByOne(compressionIndex);
+            if(!isSalted && compressionIndex >= 2){
+                TileState oldState = this.state;
+                TileState newState = state.compressionReached();
+                if(oldState != newState){
+                    compressionIndex = 0;
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -171,9 +190,13 @@ public class Tile implements IAutomatic {
      * @return a jarmu, amivel utkozott (null, ha nem tortent utkozes)
      */
     public Vehicle moveToNeighbor(Tile t, Vehicle v) {
-        boolean valid = Skeleton.askBoolQuestion("Érvényes-e a lépés?");
+        boolean valid = neighbors.contains(t);
         if(valid){
-            return t.acceptVehicle(v);
+            Vehicle collided = t.acceptVehicle(v);
+            if(collided == null){
+                vehicle = null;
+            }
+            return collided;
         }
         return v;
     }
@@ -184,31 +207,16 @@ public class Tile implements IAutomatic {
      * @return true, ha tortent allapotvaltozas
      */
     public boolean cleanTile(SweeperHead a) {
-        if (state == null) return false;
         TileState oldState = this.state;
         TileState newState = state.cleanedBy(a);
-        this.state = newState;
+        state = newState;
 
-        if (oldState != newState) {
-            String[] options = new String[neighbors.size()];
-            for (int i = 0; i < neighbors.size(); i++) {
-                options[i] = neighbors.get(i).getName();
-            }
-
-            int listNumber = Skeleton.askListQuestion("Hova toljam a havat?", options);
-
-            Tile targetTile = neighbors.get(listNumber - 1);
-
-            if (oldState instanceof DeepSnowyTileState) {
-                targetTile.acceptSweptSnow((DeepSnowyTileState) oldState);
-            } else if (oldState instanceof ShallowSnowyTileState) {
-                targetTile.acceptSweptSnow((ShallowSnowyTileState) oldState);
-            }
+        boolean stateChanged = oldState != newState;
+        if(stateChanged){
+            oldState.sweepSnowToSide(neighbors.get(0));
         }
 
-        this.state = newState;
-
-        return oldState != newState;
+        return stateChanged;
     }
 
     /**
@@ -217,9 +225,11 @@ public class Tile implements IAutomatic {
      * @return true, ha tortent allapotvaltozas
      */
     public boolean cleanTile(BlowerHead a) {
-        if (state == null) return false;
-        this.state = state.cleanedBy(a);
-        return true;
+        TileState oldState = this.state;
+        TileState newState = state.cleanedBy(a);
+        state = newState;
+
+        return oldState != newState;
     }
 
     /**
@@ -228,9 +238,11 @@ public class Tile implements IAutomatic {
      * @return true, ha tortent allapotvaltozas
      */
     public boolean cleanTile(IcebreakerHead a) {
-        if (state == null) return false;
-        this.state = state.cleanedBy(a);
-        return true;
+        TileState oldState = this.state;
+        TileState newState = state.cleanedBy(a);
+        state = newState;
+
+        return oldState != newState;
     }
 
     /**
@@ -240,7 +252,17 @@ public class Tile implements IAutomatic {
      */
     public boolean cleanTile(SalterHead a) {
         this.isSalted = true;
-        return true;
+        return false;
+    }
+
+    /**
+     * Alapertelmezett takaritasi valasz soszorasra. Felzúzottkövezi a mezot.
+     * @param a a hasznalt zuzalék szóró fej
+     * @return true, ha tortent allapotvaltozas
+     */
+    public boolean cleanTile(CobblestoneHead a) {
+        this.isRubbled = true;
+        return false;
     }
 
     /**
@@ -249,9 +271,11 @@ public class Tile implements IAutomatic {
      * @return true, ha tortent allapotvaltozas
      */
     public boolean cleanTile(DragonHead a) {
-        if (state == null) return false;
-        this.state = state.cleanedBy(a);
-        return true;
+        TileState oldState = this.state;
+        TileState newState = state.cleanedBy(a);
+        state = newState;
+
+        return oldState != newState;
     }
 
     //tesztelési inithez segédfüggvény
@@ -261,5 +285,29 @@ public class Tile implements IAutomatic {
 
     public void setVehicle(Vehicle c1) {
         vehicle = c1;
+    }
+
+    public Tile requestPath(Tile position, Tile destination, PathFinder pf){
+        return state.requestPath(position, destination, pf, isSalted, isRubbled);
+    }
+
+    public Tile getSlipTarget(){
+        Tile step1 = neighbors.get(0);
+        for (Tile neighbor : neighbors) {
+            step1 = neighbor;
+            if (step1.lane == lane)
+                break;
+        }
+        Tile step2 = step1.neighbors.get(0);
+        for (Tile neighbor : step1.neighbors) {
+            step2 = neighbor;
+            if (step2.lane == lane)
+                break;
+        }
+        return step2;
+    }
+
+    public void addToBFSSubGraph(List<Tile> subGraph){
+        state.addToBFSSubGraph(subGraph, this);
     }
 }

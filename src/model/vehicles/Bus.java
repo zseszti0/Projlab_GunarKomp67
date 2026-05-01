@@ -26,12 +26,17 @@ public class Bus extends RoutedVehicle {
         isStunned = true;
     }
 
-    /**
-     * Ellenőrzi, hogy a busz le van-e bénulva.
-     * A szkeleton módban felhasználói bevitelt kér.
-     * @return true, ha a busz le van bénulva
-     */
-    public boolean isStunned(){
-        return isStunned;
+    @Override
+    public Vehicle moveTo(Tile target) {
+        if(isStunned){
+            isStunned=false;
+            return null;
+        }
+        Vehicle crashed = super.moveTo(target);
+        checkDestinationReached();
+        return crashed;
     }
+
+    @Override
+    public boolean goToTile(Tile tile){return tile.acceptVehicle(this);}
 }

@@ -2,7 +2,6 @@ package model.shop.consumables;
 
 import model.inventory.Inventory;
 import model.shop.attachements.DragonHead;
-import skeleton.Skeleton;
 
 /**
  * A rendelkezesre allo biokerozinmennyiseg nyilvantartasa es a felhasznalasi kiserletek validalasa.
@@ -24,21 +23,25 @@ public class Biokerosene extends Consumable{
      * @return true, jelezve a sikeres felhasznalast
      */
     public boolean consume(DragonHead d){
-        boolean answer = Skeleton.askBoolQuestion("Van-e elég biokerozin?");
-        if(!answer) return false;
-        amount--;
-        return true;
+        if(amount > 0){
+            amount--;
+            return true;
+        }
+        return false;
     }
 
     /**
-     * Keszletnoveles biokerozin eseten.
-     * @param b a hozzaadando masik biokerozin objektum
+     * Keszletnoveles so eseten.
+     * @param b a hozzaadando masik so objektum
      * @return true a sikeres hozzaadas utan
      */
     @Override
     public boolean addAmount(Biokerosene b){
-        this.amount = this.getAmount() + b.getAmount();
-        return true;
+        if(amount + b.getAmount() >= 0) {
+            this.amount = this.getAmount() + b.getAmount();
+            return true;
+        }
+        return false;
     }
 
     @Override

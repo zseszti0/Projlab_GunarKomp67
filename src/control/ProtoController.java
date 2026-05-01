@@ -25,7 +25,7 @@ public class ProtoController {
             }
         }
         XMLParser parser = new XMLParser();
-        gameManager = parser.LoadGame("input.xml");
+        gameManager = parser.loadGame("input.xml");
 
         commands = new HashMap<>();
         commands.put("bus", new Bus());
@@ -35,8 +35,6 @@ public class ProtoController {
         commands.put("cleaner", new Cleaner());
         commands.put("drive", new Drive());
         commands.put("exit", new Exit());
-        commands.put("load", new Load());
-        commands.put("new", new New());
         commands.put("npcdriver", new NPCDriver());
         commands.put("pass", new Pass());
         commands.put("save", new Save());
@@ -45,6 +43,6 @@ public class ProtoController {
         commands.put("switchattachment", new SwitchAttachment());
 
         Scanner scanner = new Scanner(System.in);
-        commands.get(scanner.nextLine()).Execute();
+        commands.get(scanner.nextLine()).execute(gameManager);
     }
 }
