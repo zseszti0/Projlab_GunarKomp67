@@ -12,10 +12,9 @@ public class SalterHead extends Attachment{
     /**
      * Konstruktor a soszoro fej letrehozasara.
      * @param name a fej neve
-     * @param id a fej azonositoja
      */
-    public SalterHead(final String name, final int id) {
-        super(name, id);
+    public SalterHead(final String name) {
+        super(name);
     }
 
     /**
@@ -32,5 +31,10 @@ public class SalterHead extends Attachment{
     @Override
     public boolean use(Consumable c){
         return c.consume(this);
+    }
+
+    @Override
+    public String getType(){
+        return "SalterHead";
     }
 }

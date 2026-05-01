@@ -12,10 +12,9 @@ public class IcebreakerHead extends Attachment{
     /**
      * Konstruktor a jegtoro fej letrehozasara.
      * @param name a fej neve
-     * @param id a fej azonositoja
      */
-    public IcebreakerHead(final String name, final int id) {
-        super(name, id);
+    public IcebreakerHead(final String name) {
+        super(name);
     }
 
     /**
@@ -32,5 +31,10 @@ public class IcebreakerHead extends Attachment{
     @Override
     public boolean use(Consumable c){
         return c.consume(this);
+    }
+
+    @Override
+    public String getType(){
+        return "IcebreakerHead";
     }
 }

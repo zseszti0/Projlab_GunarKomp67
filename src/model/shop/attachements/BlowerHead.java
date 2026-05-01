@@ -11,10 +11,9 @@ public class BlowerHead extends Attachment{
     /**
      * Konstruktor a hanyofej letrehozasara.
      * @param name a fej neve
-     * @param id a fej azonositoja
      */
-    public BlowerHead(final String name, final int id) {
-        super(name, id);
+    public BlowerHead(final String name) {
+        super(name);
     }
 
     /**
@@ -33,11 +32,8 @@ public class BlowerHead extends Attachment{
         return c.consume(this);
     }
 
-    /**
-     * Visszaadja a hanyofej tipusnevet.
-     * @return "BlowerHead" string
-     */
-    public String getName(){
+    @Override
+    public String getType(){
         return "BlowerHead";
     }
 }

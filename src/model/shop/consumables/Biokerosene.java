@@ -10,11 +10,11 @@ import model.shop.attachements.DragonHead;
 public class Biokerosene extends Consumable{
     /**
      * Konstruktor a biokerozin letrehozasahoz.
-     * @param id a biokerozin azonositoja
      * @param amount a kezdeti mennyiseg
+     * @param name a biokerozin neve
      */
-    public Biokerosene(final int id, int amount, String name){
-        super(id, amount,  name);
+    public Biokerosene(int amount, String name){
+        super(amount, name);
     }
 
     /**
@@ -31,8 +31,8 @@ public class Biokerosene extends Consumable{
     }
 
     /**
-     * Keszletnoveles so eseten.
-     * @param b a hozzaadando masik so objektum
+     * Keszletnoveles biokerozin eseten.
+     * @param b a hozzaadando masik biokerozin objektum
      * @return true a sikeres hozzaadas utan
      */
     @Override
@@ -47,5 +47,10 @@ public class Biokerosene extends Consumable{
     @Override
     public void addToInventory(Inventory inventory){
         inventory.addConsumable(this);
+    }
+
+    @Override
+    public String getType(){
+        return "Biokerosene";
     }
 }

@@ -33,4 +33,8 @@ public abstract class RoutedVehicle extends Vehicle {
             currentDestinationIndex = (currentDestinationIndex+1)%landMarks.size();
         }
     }
+
+    public List<Tile> getLandMarks() {
+        return landMarks;
+    }
 }

@@ -8,7 +8,7 @@ import model.vehicles.SnowShovel;
 import model.map.Tile;
 
 /**
- * A latogato tervezesi minta „latogato” szerepkoret valositja meg.
+ * A latogato tervezesi minta „latogato" szerepkoret valositja meg.
  * Egyseges feluletet biztosit a kulonbozo fejek nyersanyag fogyasztasanak kezelesere.
  * Asszociaciok: Tile, Consumable, SnowShovel.
  */
@@ -19,17 +19,10 @@ abstract public class Attachment implements Purchasable {
     private final String name;
 
     /**
-     * A kotrofej egyedi azonositoja.
-     */
-    int id;
-
-    /**
      * Konstruktor az absztrakt kotrofejhez.
      * @param name a fej neve
-     * @param id a fej egyedi azonositoja
      */
-    public Attachment(final String name, final int id) {
-        this.id = id;
+    public Attachment(final String name) {
         this.name = name;
     }
 
@@ -50,6 +43,7 @@ abstract public class Attachment implements Purchasable {
         return name;
     }
 
+    public abstract String getType();
 
     public void addToInventory(Inventory inventory){
         inventory.addAttachment(this);

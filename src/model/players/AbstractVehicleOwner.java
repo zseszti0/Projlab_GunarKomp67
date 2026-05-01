@@ -24,9 +24,12 @@ public abstract class AbstractVehicleOwner<T extends Vehicle> {
         this.name=name;
     }
 
+    /**
+     * Konstruktor, amely létrehoz egy járműtulajdonost név és flotta alapján (XML parserhez).
+     */
     public AbstractVehicleOwner(String name, List<T> vehicles){
-        this.name=name;
-        this.vehicles=vehicles;
+        this.name = name;
+        if(vehicles != null) this.vehicles = vehicles;
     }
 
     /**

@@ -11,10 +11,9 @@ public class SweeperHead extends Attachment{
     /**
      * Konstruktor a soprofej letrehozasara.
      * @param name a fej neve
-     * @param id a fej azonositoja
      */
-    public SweeperHead(final String name, final int id) {
-        super(name, id);
+    public SweeperHead(final String name) {
+        super(name);
     }
 
     /**
@@ -31,5 +30,10 @@ public class SweeperHead extends Attachment{
     @Override
     public boolean use(Consumable c){
         return c.consume(this);
+    }
+
+    @Override
+    public String getType(){
+        return "SweeperHead";
     }
 }

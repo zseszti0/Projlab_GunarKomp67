@@ -1,7 +1,9 @@
 package control;
 
-public class Command {
-    public void execute(GameManager gameManager) {
+import java.util.List;
 
+public class Command {
+    public boolean execute(GameManager gameManager, ProgramStates currentState, List<String> args) {
+        return true;
     }
 }

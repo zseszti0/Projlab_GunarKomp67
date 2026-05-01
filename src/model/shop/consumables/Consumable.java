@@ -24,11 +24,10 @@ abstract public class Consumable implements Purchasable {
 
     /**
      * Konstruktor a fogyoeszkozokhoz.
-     * @param id azonosito
      * @param amount a kezdeti mennyiseg
      * @param name a fogyoeszkoz neve
      */
-    public Consumable(final int id, int amount, String name) {
+    public Consumable(int amount, String name) {
         this.amount = amount;
         this.name = name;
     }
@@ -128,6 +127,8 @@ abstract public class Consumable implements Purchasable {
     }
 
     public abstract void addToInventory(Inventory inventory);
+
+    public abstract String getType();
 
     public SnowShovel addToBoard(Tile tile){return null;}
 }

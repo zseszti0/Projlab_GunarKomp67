@@ -10,11 +10,11 @@ import model.shop.attachements.SalterHead;
 public class Salt extends Consumable {
     /**
      * Konstruktor a so letrehozasahoz.
-     * @param id a so azonositoja
      * @param amount a kezdeti mennyiseg
+     * @param name a so neve
      */
-    public Salt(final int id, int amount, String name){
-        super(id, amount, name);
+    public Salt(int amount, String name){
+        super(amount, name);
     }
 
     /**
@@ -47,5 +47,10 @@ public class Salt extends Consumable {
     @Override
     public void addToInventory(Inventory inventory){
         inventory.addConsumable(this);
+    }
+
+    @Override
+    public String getType(){
+        return "Salt";
     }
 }

@@ -56,7 +56,7 @@ public class Tile implements IAutomatic {
     /**
      * A sav, amelyhez a mezo tartozik
      */
-    private Lane lane;
+    private List<Lane> lanes;
 
     /**
      * A mezon tartozkodo jarmu
@@ -67,12 +67,12 @@ public class Tile implements IAutomatic {
     /**
      * Konstruktor a Tile osztalyhoz.
      * @param state a mezo kezdeti allapota
-     * @param lane a sav, amelyhez a mezo tartozik
+     * @param lanes a sav, amelyhez a mezo tartozik
      */
-    public Tile(String name, TileState state, Lane lane) {
+    public Tile(String name, TileState state, List<Lane> lanes) {
         this.name = name;
         this.state = state;
-        this.lane = lane;
+        this.lanes = lanes;
         this.isSalted = false;
         this.compressionIndex = 0;
 
@@ -83,7 +83,7 @@ public class Tile implements IAutomatic {
      */
     public Tile(String name, TileState state, boolean isSalted, boolean isRubbled,
                 int compressionIndex, int saltMeltingIndex, int rubbleFadingIndex,
-                List<Tile> neighbors, Lane lane) {
+                List<Tile> neighbors, List<Lane> lanes) {
         this.name = name;
         this.state = state != null ? state : CleanTileState.getInstance();
         this.isSalted = isSalted;
@@ -92,7 +92,7 @@ public class Tile implements IAutomatic {
         this.saltMeltingIndex = saltMeltingIndex;
         this.rubbleFadingIndex = rubbleFadingIndex;
         this.neighbors = neighbors;
-        this.lane = lane;
+        this.lanes = lanes;
     }
 
     /**
@@ -101,6 +101,34 @@ public class Tile implements IAutomatic {
      * */
     public String getName() {
         return name;
+    }
+
+    public boolean isSalted(){
+        return isSalted;
+    }
+
+    public boolean isRubbled(){
+        return isRubbled;
+    }
+
+    public int getCompressionIndex(){
+        return compressionIndex;
+    }
+
+    public int getSaltMeltingIndex(){
+        return saltMeltingIndex;
+    }
+
+    public int getRubbleFadingIndex(){
+        return rubbleFadingIndex;
+    }
+
+    public TileState getState(){
+        return state;
+    }
+
+    public List<Lane> getLanes(){
+        return lanes;
     }
 
     /**
@@ -132,7 +160,8 @@ public class Tile implements IAutomatic {
      * TODO
      */
     public void closeLane() {
-        lane.blockAllTilesInLane();
+        for(Lane lane : lanes)
+            lane.blockAllTilesInLane();
     }
     public void blockTile(){
         state = BlockedTileState.getInstance();
@@ -315,16 +344,25 @@ public class Tile implements IAutomatic {
 
     public Tile getSlipTarget(){
         Tile step1 = neighbors.get(0);
+
         for (Tile neighbor : neighbors) {
             step1 = neighbor;
-            if (step1.lane == lane)
-                break;
+            for(Lane lane : lanes) {
+                for(Lane neighborLane : neighbor.lanes) {
+                    if (neighborLane == lane)
+                        break;
+                }
+            }
         }
         Tile step2 = step1.neighbors.get(0);
         for (Tile neighbor : step1.neighbors) {
             step2 = neighbor;
-            if (step2.lane == lane)
-                break;
+            for(Lane lane : lanes) {
+                for(Lane neighborLane : neighbor.lanes) {
+                    if (neighborLane == lane)
+                        break;
+                }
+            }
         }
         return step2;
     }

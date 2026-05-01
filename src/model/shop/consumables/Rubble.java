@@ -10,17 +10,17 @@ import model.shop.attachements.SalterHead;
  */
 public class Rubble extends Consumable {
     /**
-     * Konstruktor a so letrehozasahoz.
-     * @param id a so azonositoja
+     * Konstruktor a zuzalekhoz.
      * @param amount a kezdeti mennyiseg
+     * @param name a zuzalek neve
      */
-    public Rubble(final int id, int amount, String name){
-        super(id, amount, name);
+    public Rubble(int amount, String name){
+        super(amount, name);
     }
 
     /**
-     * A so felhasznalasa a soszorofej altal. Levon egy egyseget.
-     * @param s a soszorofej, ami felhasznalja
+     * A zuzalek felhasznalasa a zuzalekszoro fejjel. Levon egy egyseget.
+     * @param s a zuzalekszoro fej, ami felhasznalja
      * @return true, jelezve a sikeres felhasznalast
      */
     public boolean consume(CobblestoneHead s){
@@ -32,8 +32,8 @@ public class Rubble extends Consumable {
     }
 
     /**
-     * Keszletnoveles so eseten.
-     * @param r a hozzaadando masik so objektum
+     * Keszletnoveles zuzalek eseten.
+     * @param r a hozzaadando masik zuzalek objektum
      * @return true a sikeres hozzaadas utan
      */
     @Override
@@ -48,5 +48,10 @@ public class Rubble extends Consumable {
     @Override
     public void addToInventory(Inventory inventory){
         inventory.addConsumable(this);
+    }
+
+    @Override
+    public String getType(){
+        return "Rubble";
     }
 }

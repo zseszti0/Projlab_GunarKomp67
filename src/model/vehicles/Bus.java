@@ -9,6 +9,7 @@ import java.util.List;
  */
 public class Bus extends RoutedVehicle {
     boolean isStunned;
+
     /**
      * Konstruktor, amely létrehoz egy új buszt a megadott névvel és pozícióval.
      * @param name A busz neve
@@ -18,9 +19,21 @@ public class Bus extends RoutedVehicle {
         super(name,position, route);
     }
 
-    public Bus(String busId, Tile position, List<Tile> landMarks, Tile destination, boolean isStunned) {
-        super(busId, position, landMarks, destination);
+    /**
+     * Teljes konstruktor XML parserhez: destination és isStunned státusz megadható.
+     */
+    public Bus(String name, Tile position, List<Tile> route, Tile destination, boolean isStunned){
+        super(name, position, route);
         this.isStunned = isStunned;
+        if(destination != null && !route.isEmpty()){
+            // Meghatározza az index-et a destination alapján
+            for(int i = 0; i < route.size(); i++){
+                if(route.get(i).equals(destination)){
+                    this.currentDestinationIndex = i;
+                    break;
+                }
+            }
+        }
     }
 
     /**
@@ -45,4 +58,19 @@ public class Bus extends RoutedVehicle {
 
     @Override
     public boolean goToTile(Tile tile){return tile.acceptVehicle(this);}
+
+    public boolean isStunned(){
+        return isStunned;
+    }
+
+    public Tile getCurrentDestination(){
+        if(landMarks != null && !landMarks.isEmpty()){
+            return landMarks.get(currentDestinationIndex);
+        }
+        return null;
+    }
+
+    public Tile getPosition(){
+        return position;
+    }
 }

@@ -5,6 +5,8 @@ import model.map.Tile;
 import model.shop.attachements.Attachment;
 import model.shop.base.Purchasable;
 
+import java.util.List;
+
 /**
  * Hókotró jármű osztály, amelyet a takarító játékos irányít.
  */
@@ -62,6 +64,10 @@ public class SnowShovel extends Vehicle implements Purchasable {
      */
     public void setEquippedAttachment(Attachment attachment){
         this.currentAttachment=attachment;
+    }
+
+    public Tile getPosition(){
+        return position;
     }
 
 

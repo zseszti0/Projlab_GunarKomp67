@@ -20,9 +20,21 @@ public class Car extends RoutedVehicle {
         super(name,position, route);
     }
 
-    public Car(String carId, Tile position, List<Tile> landMarks, Tile destination, boolean isCrashed) {
-        super(carId, position, landMarks, destination);
+    /**
+     * Teljes konstruktor XML parserhez: destination és isCrashed státusz megadható.
+     */
+    public Car(String name, Tile position, List<Tile> route, Tile destination, boolean isCrashed){
+        super(name, position, route);
         this.isCrashed = isCrashed;
+        if(destination != null && !route.isEmpty()){
+            // Meghatározza az index-et a destination alapján
+            for(int i = 0; i < route.size(); i++){
+                if(route.get(i).equals(destination)){
+                    this.currentDestinationIndex = i;
+                    break;
+                }
+            }
+        }
     }
 
     @Override
@@ -41,4 +53,19 @@ public class Car extends RoutedVehicle {
 
     @Override
     public boolean goToTile(Tile tile){return tile.acceptVehicle(this);}
+
+    public Tile getCurrentDestination(){
+        if(landMarks != null && !landMarks.isEmpty()){
+            return landMarks.get(currentDestinationIndex);
+        }
+        return null;
+    }
+
+    public Tile getPosition(){
+        return position;
+    }
+
+    public List<Tile> getLandMarks(){
+        return landMarks;
+    }
 }
