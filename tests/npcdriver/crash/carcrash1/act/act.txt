@@ -1,0 +1,3 @@
+load snowfall.xml
+*várjunk 20 másodpercet*
+exit

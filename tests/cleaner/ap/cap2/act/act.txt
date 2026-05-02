@@ -1,0 +1,4 @@
+load ap_test_4tiles.xml
+buy blowerhead
+switchattachment 1 blowerhead
+exit
