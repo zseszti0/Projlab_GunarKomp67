@@ -1,0 +1,3 @@
+load two_tile_map.xml
+switchattachment 1 CobblestoneHead
+exit
