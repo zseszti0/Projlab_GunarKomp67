@@ -1,0 +1,3 @@
+load two_tile_map
+drive 1 Tile2
+exit
