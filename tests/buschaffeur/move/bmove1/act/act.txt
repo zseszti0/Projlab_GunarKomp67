@@ -1,0 +1,3 @@
+load bus_two_tile_map_clean.xml
+drive 1 tile2
+exit

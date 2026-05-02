@@ -1,0 +1,3 @@
+load bus_three_tile_map_icy.xml
+drive 1 tile2
+exit
