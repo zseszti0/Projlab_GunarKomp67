@@ -1,0 +1,3 @@
+load switch_test_2tiles_dragonhead.xml
+switchattachment 1 dragonhead
+exit

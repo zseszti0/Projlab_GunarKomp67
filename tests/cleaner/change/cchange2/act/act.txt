@@ -1,0 +1,3 @@
+load switch_test_2tiles_blowerhead.xml
+switchattachment 1 blowerhead
+exit
