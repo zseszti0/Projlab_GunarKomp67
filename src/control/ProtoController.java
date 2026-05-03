@@ -9,11 +9,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * A program lehetséges állapotait reprezentáló felsorolás (enum).
+ * Meghatározza, hogy a vezérlő éppen melyik fázisban van.
+ */
 enum ProgramStates {
     IDLE,
     CONFIG,
     GAME
 }
+
+/**
+ * A ProtoController osztály felelős a prototípus fő vezérlési ciklusának futtatásáért,
+ * a parancsok beolvasásáért és az állapotfüggő műveletek delegálásáért.
+ */
 public class ProtoController {
     private static ProgramStates state = ProgramStates.IDLE;
 
@@ -21,11 +30,28 @@ public class ProtoController {
     private static HashMap<String, ConfigCommand> configCommands;
     private static HashMap<String, GameCommand> gameCommands;
 
+    /**
+     * A program belépési pontja, amely a teljes parancsértelmező ciklust vezérli.
+     * Lépései:
+     * 1. Beállítja a bemeneti/kimeneti csatornákat. Alapértelmezetten a konzolt használja,
+     * de parancssori argumentumok esetén fájl alapú működésre is képes.
+     * 2. Inicializálja a konfigurációs (CONFIG) és a játék alatti (GAME) parancsokhoz
+     * tartozó szótárakat (HashMap).
+     * 3. Egy végtelen ciklusban olvassa a bemenetről érkező parancsokat.
+     * 4. A beolvasott parancsokat az aktuális állapot (IDLE, CONFIG, GAME) alapján értelmezi:
+     * - IDLE: Új játék létrehozása vagy meglévő betöltése.
+     * - CONFIG: Entitások hozzáadása és beállítása, majd a játék indítása.
+     * - GAME: Játékosok akcióinak végrehajtása, vagy kilépés.
+     * 5. Kezeli a hibás vagy nem az adott állapothoz tartozó parancsokat.
+     *
+     * @param args Opcionális parancssori argumentumok.
+     * args[0]: a bemeneti (input) txt fájl elérési útja.
+     * args[1]: a kimeneti (output) txt fájl elérési útja.
+     */
     public static void main(String[] args) {
         InputStream inputStream = System.in;
         OutputStream outputStream = System.out;
         if (args.length > 0) {
-            //first arg is input txt, second is output txt
             try {
                 inputStream = new FileInputStream(args[0]);
                 outputStream = new FileOutputStream(args[1]);

@@ -31,7 +31,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Az XML fájlok feldolgozásáért felelős osztály.
+ * Lehetővé teszi a térképek és a teljes játékállás betöltését,
+ * valamint a jelenlegi játékállás elmentését XML formátumban.
+ */
 public class XMLParser {
+    /**
+     * Betölti a játéktáblát (mezőket és sávokat) a megadott XML fájlból.
+     * * @param filePath Az olvasandó XML fájl elérési útvonala.
+     * @return A betöltött térképet alkotó {@link Tile} objektumok listája.
+     */
     public List<Tile> loadMap(String filePath) {
         try {
             File inputFile = new File(filePath);
@@ -53,6 +63,12 @@ public class XMLParser {
         return new ArrayList<>();
     }
 
+    /**
+     * Elmenti az aktuális játékállást (térkép, entitások, konfiguráció, inventory stb.)
+     * a megadott XML fájlba.
+     * @param gameManager Az aktuális játékállapotot tartalmazó menedzser objektum.
+     * @param output A kimeneti XML fájl elérési útvonala.
+     */
     public void saveGame(GameManager gameManager, String output) {
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -312,6 +328,12 @@ public class XMLParser {
         }
     }
 
+    /**
+     * Betölt egy teljes játékállást az XML fájlból. Létrehozza a térképet,
+     * inicializálja az összes entitást (takarítók, buszsofőrök, NPC-k) és beállítja a referenciákat.
+     * @param filePath A beolvasandó játékállás XML fájljának útvonala.
+     * @return Egy inicializált {@link GameManager} példány a betöltött adatokkal.
+     */
     public GameManager loadGame(String filePath) {
         try {
             File inputFile = new File(filePath);
@@ -548,6 +570,11 @@ public class XMLParser {
 
     // --- SEGÉDFÜGGVÉNYEK ---
 
+    /**
+     * Szöveges azonosító alapján visszaadja a megfelelő mezőállapot (TileState) példányát.
+     * @param type Az állapot String reprezentációja (pl. "Icy", "Blocked").
+     * @return A megfelelő {@link TileState} példány. Alapértelmezetten {@link CleanTileState}.
+     */
     private TileState getTileStateByType(String type) {
         if (type == null) return CleanTileState.getInstance();
         switch (type) {
@@ -559,6 +586,12 @@ public class XMLParser {
         }
     }
 
+    /**
+     * Szöveges azonosító alapján létrehoz és visszaad egy konkrét kotrófejet (Attachment).
+     * @param type A kotrófej típusa.
+     * @param name A kotrófej azonosítója/neve.
+     * @return A létrehozott {@link Attachment} példány.
+     */
     private Attachment createAttachment(String type, String name) {
         // JAVÍTVA: Ha nincs típus megadva, egy olyan névtelen osztályt adunk vissza, aminek üres a típusa.
         // Így kimentésnél nem fogja legenerálni a `type="SweeperHead"` attribútumot, ezáltal pontosan megegyezik a fájllal.
@@ -582,6 +615,13 @@ public class XMLParser {
         }
     }
 
+    /**
+     * Szöveges azonosító alapján létrehoz egy új fogyóeszközt (Consumable).
+     * @param type A fogyóeszköz típusa (pl.: "Salt").
+     * @param name A fogyóeszköz neve/azonosítója.
+     * @param amount A rendelkezésre álló mennyiség.
+     * @return A létrehozott {@link Consumable} objektum, vagy null.
+     */
     private Consumable createConsumable(String type, String name, int amount) {
         if (type == null) return null;
         switch (type) {
@@ -592,6 +632,13 @@ public class XMLParser {
         }
     }
 
+    /**
+     * Segédfüggvény egy XML elem numerikus (int) attribútumának biztonságos kiolvasására.
+     * @param element Az XML elem.
+     * @param attribute Az attribútum neve.
+     * @param defaultValue Ha az attribútum nem létezik vagy nem szám, ezzel tér vissza.
+     * @return A beolvasott szám, vagy a defaultValue.
+     */
     private int getIntAttribute(Element element, String attribute, int defaultValue) {
         String val = element.getAttribute(attribute);
         if (val == null || val.isEmpty()) return defaultValue;
@@ -602,6 +649,12 @@ public class XMLParser {
         }
     }
 
+    /**
+     * Visszaadja a megadott XML elem első, meghatározott nevű gyermek elemét.
+     * @param parent A szülő XML elem.
+     * @param tagName A keresett gyermek elem neve (tag név).
+     * @return Az első egyező gyermek {@link Element}, vagy null ha nem létezik.
+     */
     private Element getSingleChildElement(Element parent, String tagName) {
         NodeList children = parent.getElementsByTagName(tagName);
         if (children.getLength() > 0) {
@@ -610,6 +663,11 @@ public class XMLParser {
         return null;
     }
 
+    /**
+     * Visszaadja a kapott mezőállapot (TileState) XML szerializációhoz használt string nevét.
+     * @param state A vizsgálandó {@link TileState} példány.
+     * @return Az állapot string azonosítója (pl. "DeepSnowy").
+     */
     private String getTileStateTypeName(TileState state) {
         if (state instanceof ShallowSnowyTileState) return "ShallowSnowy";
         if (state instanceof DeepSnowyTileState) return "DeepSnowy";
