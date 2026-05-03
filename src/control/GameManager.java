@@ -9,6 +9,7 @@ import model.shop.base.Shop;
 import model.shop.consumables.Biokerosene;
 import model.shop.consumables.Rubble;
 import model.shop.consumables.Salt;
+import model.vehicles.SnowShovel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,8 +39,9 @@ public class GameManager {
         purchasables.add(new SalterHead("SalterHead"));
         purchasables.add(new SweeperHead("SweeperHead"));
         purchasables.add(new Biokerosene(1, "Biokerosene"));
-        purchasables.add(new Rubble(1, "Rubble"));
         purchasables.add(new Salt(1, "Salt"));
+        purchasables.add(new Rubble(1, "Rubble"));
+        purchasables.add(new SnowShovel("SnowShovel"));
 
         for(int i = 0; i < items.size(); i++)
             prices.add(100);

@@ -46,7 +46,6 @@ public class ProtoController {
         gameCommands.put("pass", new Pass());
         gameCommands.put("save", new Save());
         configCommands.put("snowshovel", new SnowShovel());
-        configCommands.put("start", new Start());
         gameCommands.put("switchattachment", new SwitchAttachment());
 
         while (true) {
@@ -54,7 +53,7 @@ public class ProtoController {
             String input = scanner.nextLine();
             List<String> in_args = Arrays.asList(input.split(" "));
             String command = in_args.get(0);
-            if(in_args.size() > 1) in_args.remove(0);
+            if(in_args.size() > 1) in_args = in_args.subList(1, in_args.size());
             if (command.equals("exit")) {
                 break;
             }
@@ -74,15 +73,14 @@ public class ProtoController {
                             break;
                         }
                         case "load": {
-                            gameManager = new GameManager();
                             XMLParser parser = new XMLParser();
-                            parser.loadGame(in_args.get(0));
+                            gameManager = parser.loadGame(in_args.get(0));
                             state = ProgramStates.GAME;
                             break;
                         }
                         default:
                             try {
-                                outputStream.write(("Invalid Command").getBytes());
+                                outputStream.write(("Error Command").getBytes());
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
@@ -91,10 +89,11 @@ public class ProtoController {
                 case CONFIG:
                     if(command.equals("start")) {
                         state = ProgramStates.GAME;
+                        gameManager.startGame();
                     }
                     if(!configCommands.get(command).execute(gameManager,in_args)){
                         try {
-                            outputStream.write(("Invalid Command").getBytes());
+                            outputStream.write(("Error Command").getBytes());
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
@@ -106,7 +105,7 @@ public class ProtoController {
                     }
                     if(!gameCommands.get(command).execute(gameManager,in_args)){
                         try {
-                            outputStream.write(("Invalid Command").getBytes());
+                            outputStream.write(("Error Command").getBytes());
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }

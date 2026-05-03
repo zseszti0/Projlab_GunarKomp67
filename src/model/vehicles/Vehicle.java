@@ -46,7 +46,7 @@ public abstract class Vehicle {
         Vehicle collided = position.moveToNeighbor(target, this);
         if(collided == null){
             position = target;
-            return this;
+            return null;
         }
         return collided;
     }

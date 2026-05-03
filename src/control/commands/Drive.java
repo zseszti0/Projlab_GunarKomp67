@@ -42,12 +42,10 @@ public class Drive extends GameCommand {
                 }
             }
             if(bus == null) return false;
-            busChauffer.drive(bus,pos);
-            return true;
+            return busChauffer.drive(bus,pos);
         }
         else{
-            cleaner.drive(snowShovel,pos);
-            return true;
+            return cleaner.drive(snowShovel,pos);
         }
     }
 }

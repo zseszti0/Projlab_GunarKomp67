@@ -48,10 +48,6 @@
             <position id="Tile1" />
             <attachment id="Attachment1"/>
         </snowShovel>
-        <snowShovel id="SnowShovel2" >
-            <position id="Tile2" />
-            <attachment id="Attachment3" type="SalterHead"/>
-        </snowShovel>
         <inventory>
             <money amount="100" />
             <attachments>
@@ -82,14 +78,6 @@
                 <landMark id="Tile2" />
             </landMarks>
             <destination id="Tile1" />
-        </car>
-        <car id="Car2">
-            <position id="Tile2" />
-            <landMarks>
-                <landMark id="Tile3" />
-                <landMark id="Tile4" />
-            </landMarks>
-            <destination id="Tile3" />
         </car>
     </NPCDriver>
 </game>
