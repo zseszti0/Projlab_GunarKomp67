@@ -16,9 +16,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A játék központi vezérlő osztálya.
+ * Feladata a játékosok, a pálya, a körök és a bolt állapotának nyilvántartása és menedzselése.
+ */
 public class GameManager {
     private static Shop shop;
-    public static void setUpShop(){
+
+    /**
+     * Inicializálja és feltölti a játék boltját (Shop).
+     * Lépései:
+     * 1. Létrehoz három listát: a tárgyak neveinek, a tényleges objektumoknak és az áraknak.
+     * 2. Feltölti a listákat a különböző kiegészítőkkel (pl. seprű, hótoló, sárkányfej) és nyersanyagokkal (üzemanyag, só, kavics).
+     * 3. Beállítja minden tárgy egységárát (jelenleg fixen 100).
+     * 4. Példányosítja a Shop objektumot ezekkel a listákkal.
+     */
+    public static void setUpShop() {
         List<String> items = new ArrayList<>();
         List<Purchasable> purchasables = new ArrayList<>();
         List<Integer> prices = new ArrayList<>();
@@ -66,13 +79,20 @@ public class GameManager {
     private int currentActorRemainingAp = 2;
     private List<String> actorQueue = new ArrayList<>();
 
-    // Üres konstruktor, ha esetleg új játékot kezdenétek fájl nélkül
+    /**
+     * Alapértelmezett konstruktor új játék indításához.
+     * Csupán felépíti a boltot a setUpShop() meghívásával.
+     */
     public GameManager() {
         setUpShop();
     }
 
     /**
-     * Teljes konstruktor XML parserhez.
+     * Paraméteres konstruktor a fájlból (XML) történő betöltéshez.
+     * Lépései:
+     * 1. Inicializálja az összes belső listát és állapotváltozót a kapott paraméterek alapján (null ellenőrzésekkel).
+     * 2. Hozzáadja az NPC-ket és a mezőket (Tile) az automata (önmagát frissítő) elemek listájához.
+     * 3. Felépíti a boltot a setUpShop() hívásával.
      */
     public GameManager(boolean randomized, String currentActorId, int currentActorAp,
                        List<String> actorQueue, List<Tile> tiles, List<Cleaner> cleaners,
@@ -93,16 +113,28 @@ public class GameManager {
         setUpShop();
     }
 
-    public void tickTimer(){
+    /**
+     * A játékidő léptetése.
+     * Lépései: Végigiterál az összes automata elemen (NPC-k, mezők) és meghívja a frissítő (update) metódusukat.
+     */
+    public void tickTimer() {
         automata.forEach(IAutomatic::update);
     }
 
-    public void startGame(){
+    /**
+     * Elindítja a játékot.
+     * Lépései: Beállítja a lépési sorrend (actorQueue) első elemét aktuális cselekvőnek (currentActorId).
+     */
+    public void startGame() {
         currentActorId = actorQueue.get(0);
     }
 
     // --- SETTEREK A PARSERHEZ ---
 
+    /**
+     * Beállítja a takarítók listáját.
+     * Lépései: Eltárolja a listát, majd frissíti a cselekvők sorrendjét (actorQueue) a takarítók neveivel.
+     */
     public void setCleaners(List<Cleaner> cleaners) {
 
         this.cleaners = cleaners;
@@ -110,6 +142,10 @@ public class GameManager {
         actorQueue.addAll(cleaners.stream().map(Cleaner::getName).toList());
     }
 
+    /**
+     * Beállítja a buszsofőrök listáját.
+     * Lépései: Eltárolja a listát, majd felülírja a cselekvők sorrendjét a sofőrök neveivel.
+     */
     public void setBusChauffeurs(List<BusChaffeur> busChauffeurs) {
 
         this.busChauffeurs = busChauffeurs;
@@ -117,12 +153,20 @@ public class GameManager {
         actorQueue.addAll(busChauffeurs.stream().map(BusChaffeur::getName).toList());
     }
 
+    /**
+     * Beállítja az NPC sofőrök listáját.
+     * Lépései: Eltárolja a listát, majd hozzáadja őket az önműködő automatákhoz.
+     */
     public void setNpcDrivers(List<NPCDriver> npcDrivers) {
         this.npcDrivers = npcDrivers;
         // NPC-ket érdemes betenni az automaták közé
         automata.addAll(npcDrivers);
     }
 
+    /**
+     * Beállítja a pálya mezőit.
+     * Lépései: Eltárolja a listát, majd az időjárás miatt a mezőket is beteszi az önműködő automaták közé.
+     */
     public void setTiles(List<Tile> tiles) {
         this.tiles = tiles;
         // Tile-okat is betesszük az automaták közé az időjárás miatt
@@ -146,6 +190,7 @@ public class GameManager {
     }
 
     // --- GETTEREK A SAVE FUNKCIÓHOZ ---
+    // (A getterek értelemszerűen csak visszatérnek a kért belső változókkal.)
 
     public boolean isRandomized() {
         return randomized;
@@ -179,10 +224,24 @@ public class GameManager {
         return npcDrivers;
     }
 
+    /**
+     * Vásárlási parancs végrehajtása egy kiegészítőre/tárgyra.
+     * Lépései:
+     * 1. Megkeresi az éppen soron lévő játékost (takarítót) a currentActorId alapján. Ha nincs ilyen, kilép (false).
+     * 2. Meghívja a megtalált takarító shop() metódusát a kapott tárgynévvel és a globális bolttal.
+     * @return true, ha a takarító létezik és elindult a vásárlás, egyébként false.
+     */
     public void setMap(List<Tile> tiles){
         this.tiles = tiles;
     }
 
+    /**
+     * Vásárlási parancs végrehajtása egy hókotrót.
+     * Lépései:
+     * 1. Megkeresi a soron lévő takarítót. Ha nem találja, kilép.
+     * 2. Meghívja a takarító "hókotró-specifikus" vásárló metódusát, megadva a boltot és a lehelyezési célmezőt.
+     * @return true, ha a takarító megvan és a folyamat elindult.
+     */
     public boolean orderItem(String s) {
         Cleaner currentActor = cleaners.stream().filter(cleaner -> cleaner.getName().equals(currentActorId)).findFirst().orElse(null);
         if(currentActor == null)
@@ -193,6 +252,13 @@ public class GameManager {
         return true;
     }
 
+    /**
+     * Vásárlási parancs végrehajtása egy hótolóra.
+     * Lépései:
+     * 1. Megkeresi a soron lévő takarítót. Ha nem találja, kilép.
+     * 2. Meghívja a takarító "hótoló-specifikus" vásárló metódusát, megadva a boltot és a lehelyezési célmezőt.
+     * @return true, ha a takarító megvan és a folyamat elindult.
+     */
     public boolean orderSnowShovel(Tile pos) {
         Cleaner currentActor = cleaners.stream().filter(cleaner -> cleaner.getName().equals(currentActorId)).findFirst().orElse(null);
         if(currentActor == null)
@@ -203,10 +269,30 @@ public class GameManager {
         return true;
     }
 
+    /**
+     * Befejezi a jelenlegi cselekvő körét, és átadja a stafétát a következőnek.
+     * Lépései:
+     * 1. Megkeresi a jelenlegi szereplő indexét az actorQueue-ban.
+     * 2. Kiszámolja a következő indexet (ha a végére ért, elölről kezdi a modulo (%) művelet miatt).
+     * 3. Frissíti a currentActorId-t a következő játékosra.
+     */
     public void pass() {
         currentActorId = actorQueue.get((1 + actorQueue.indexOf(currentActorId)) % actorQueue.size());
     }
 
+    /**
+     * Végrehajtja a soron lévő játékos lépés (drive) akcióját.
+     * Lépései:
+     * 1. Megkeresi a jelenlegi cselekvőt a takarítók között.
+     * 2. Ha nem találja a takarítók közt, megkeresi a buszsofőrök között. Ha ott sincs, kilép (false).
+     * 3. Ha buszsofőr a cselekvő, megkeresi a kért járművet a flottájában, és elvezeti a célmezőre.
+     * 4. Ha takarító a cselekvő, megkeresi a kért hókotrót a járművei közt, és azzal hajt a célmezőre.
+     * 5. Mindkét sikeres esetben adminisztrálja az akciópont-levonást (turnEnd()), majd visszatér.
+     *
+     * @param snowShovelName A vezetni kívánt jármű (hókotró vagy busz) neve.
+     * @param pos A célmező, ahová a járművet vezetni kell.
+     * @return true, ha a vezetés végrehajtódott, false, ha a karakter vagy a jármű nem található.
+     */
     public boolean drive(String snowShovelName, Tile pos){
         Cleaner currentActor = cleaners.stream().filter(cleaner -> cleaner.getName().equals(currentActorId)).findFirst().orElse(null);
         if(currentActor == null){
@@ -229,6 +315,18 @@ public class GameManager {
         return true;
     }
 
+    /**
+     * Lecseréli egy adott hókotró kiegészítőjét az aktuális játékos körében.
+     * Lépései:
+     * 1. Megkeresi a jelenleg soron lévő takarítót.
+     * 2. Megkeresi a takarító járművei között a megadott nevű (ss) hókotrót, és lecseréli a kiegészítőjét.
+     * (Megjegyzés: a kódban lévő 'if(currentActor == null)' feltétel valószínűleg elírás, és != lenne a helyes).
+     * 3. Levonja az akciópontot (turnEnd()), majd sikeresen visszatér.
+     *
+     * @param ss A módosítandó hókotró neve.
+     * @param newAttachment Az új kiegészítő azonosítója/neve.
+     * @return Mindig true értékkel tér vissza.
+     */
     public boolean switchAttachment(String ss, String newAttachment){
         Cleaner currentActor = cleaners.stream().filter(cleaner -> cleaner.getName().equals(currentActorId)).findFirst().orElse(null);
         if(currentActor == null){
@@ -239,6 +337,13 @@ public class GameManager {
         return true;
     }
 
+    /**
+     * Adminisztrálja a játékos cselekvésének (akciójának) a végét.
+     * Lépései:
+     * 1. Csökkenti a jelenlegi játékos hátralévő akciópontjait (AP) eggyel.
+     * 2. Ha az akciópontok száma eléri a 0-t, automatikusan passzol a következő játékosnak,
+     * és visszaállítja az új játékos akciópontjait az alapértelmezett 2-re.
+     */
     private void turnEnd(){
         currentActorRemainingAp--;
         if(currentActorRemainingAp == 0){
