@@ -5,7 +5,21 @@ import model.map.PathFinder;
 
 import java.util.List;
 
+/**
+ * Konfigurációs parancs egy új NPC (nem játékos) sofőr inicializálására.
+ */
 public class NPCDriver extends ConfigCommand {
+    /**
+     * Létrehoz egy új NPC-t a hozzá tartozó útvonalkeresővel (PathFinder).
+     * Lépései:
+     * 1. Lekéri a meglévő NPC-k listáját.
+     * 2. Létrehoz egy új NPCDriver példányt az első argumentumban (args[0]) kapott névvel.
+     * 3. Hozzáadja az új NPC-t a listához, majd frissíti a GameManager nyilvántartását.
+     *
+     * @param gameManager A játék állapotát kezelő objektum.
+     * @param args args[0]: az új NPC neve.
+     * @return Mindig true értékkel tér vissza.
+     */
     @Override
     public boolean execute(GameManager gameManager, List<String> args) {
         List<model.players.NPCDriver> npc = gameManager.getNpcDrivers();

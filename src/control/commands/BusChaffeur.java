@@ -4,7 +4,20 @@ import control.GameManager;
 
 import java.util.List;
 
+/**
+ * Parancs, mely egy új buszsofőr (BusChaffeur) létrehozásához.
+ */
 public class BusChaffeur extends ConfigCommand {
+    /**
+     * Létrehozza és hozzáadja a buszsofőrt a játékhoz.
+     * Lépései:
+     * 1. Példányosít egy új BusChaffeur objektumot az első argumentumban (args[0]) kapott névvel.
+     * 2. Hozzáadja az új sofőrt a GameManager buszsofőröket tároló listájához.
+     *
+     * @param gameManager A játék állapotát kezelő objektum.
+     * @param args args[0]: az új buszsofőr neve.
+     * @return Mindig true értékkel tér vissza.
+     */
     @Override
     public boolean execute(GameManager gameManager, List<String> args) {
         List<model.players.BusChaffeur> busSs = gameManager.getBusChauffeurs();

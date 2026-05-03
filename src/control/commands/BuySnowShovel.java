@@ -5,7 +5,21 @@ import model.map.Tile;
 
 import java.util.List;
 
+/**
+ * Játékparancs, amellyel egy takarító (Cleaner) hótolót vásárolhat magának.
+ */
 public class BuySnowShovel extends GameCommand {
+    /**
+     * Végrehajtja a hótoló megvásárlását.
+     * Lépései:
+     * 1. Megkeresi a megadott nevű (args[0]) takarítót a GameManager-ben. Ha nincs ilyen, kilép (false).
+     * 2. Meghívja a takarító buySnowShovel() metódusát a tranzakció lebonyolítására.
+     * 3. Visszatér a belső vásárlási folyamat eredményével.
+     *
+     * @param gameManager A játék állapotát kezelő objektum.
+     * @param args args[0]: a vásárlást indító takarító neve.
+     * @return true, ha a takarító megvan és a vásárlás sikeresen lezajlott, egyébként false.
+     */
     @Override
     public boolean execute(GameManager gameManager, List<String> args) {
         List<Tile> tiles = gameManager.getTiles();

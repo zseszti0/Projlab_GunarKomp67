@@ -9,7 +9,23 @@ import model.players.BusChaffeur;
 
 import java.util.List;
 
+/**
+ * Játékparancs, amellyel egy konkrét járművet (hókotró vagy buszt) egy adott mezőre lehet vezetni.
+ */
 public class Drive extends GameCommand {
+    /**
+     * Végrehajtja a vezetés műveletet.
+     * Lépései:
+     * 1. Megkeresi a célmezőt a második argumentum (args[1]) alapján. Ha nincs ilyen, kilép.
+     * 2. Végigkeresi a takarítókat, hogy megtalálja az első argumentumban (args[0]) megadott nevű hókotrót.
+     * 3. Ha nem talált hókotrót, végigkeresi a buszsofőröket a megadott nevű buszért.
+     * 4. Ha semmilyen járművet nem talált, sikertelenül tér vissza (false).
+     * 5. Ha megvan a jármű és a gazdája, meghívja a megfelelő játékos drive metódusát a célmezőre.
+     *
+     * @param gameManager A játék állapotát kezelő objektum.
+     * @param args args[0]: a vezetni kívánt jármű neve, args[1]: a célmező neve.
+     * @return true, ha a vezetés sikeresen lezajlott, false, ha rossz a mező vagy a jármű azonosítója.
+     */
     @Override
     public boolean execute(GameManager gameManager, List<String> args) {
         List<Tile> tiles = gameManager.getTiles();
