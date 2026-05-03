@@ -48,6 +48,13 @@ public class ProtoController {
         configCommands.put("snowshovel", new SnowShovel());
         gameCommands.put("switchattachment", new SwitchAttachment());
 
+
+        /// /CONSOL OUT
+        try {
+            outputStream.write(("A játék elkezdődött, a hó hullik Zúzmaravárosban.\n").getBytes());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         while (true) {
             Scanner scanner = new Scanner(inputStream);
             String input = scanner.nextLine();
@@ -55,6 +62,12 @@ public class ProtoController {
             String command = in_args.get(0);
             if(in_args.size() > 1) in_args = in_args.subList(1, in_args.size());
             if (command.equals("exit")) {
+                /// /CONSOL OUT
+                try {
+                    outputStream.write(("Sikeresen kiléptél az aktuális játszmából. A program visszatért a tétlen fázisba.\n").getBytes());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
             }
             switch (state) {
@@ -70,12 +83,26 @@ public class ProtoController {
                                     gameManager.setRandomized(false);
                             }
                             state = ProgramStates.CONFIG;
+
+                            /// /CONSOL OUT
+                            try {
+                                outputStream.write(("Sikeresen létrehoztál egy új játékot a(z)" + in_args.get(0) + " térképen. A véletlen események beállítva. A konfigurációs fázis megkezdődött.\n").getBytes());
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
                             break;
                         }
                         case "load": {
                             XMLParser parser = new XMLParser();
                             gameManager = parser.loadGame(in_args.get(0));
                             state = ProgramStates.GAME;
+
+                            /// /CONSOL OUT
+                            try {
+                                outputStream.write(("A(z)"+ in_args.get(0) +"<játékállás neve> nevű játékállás sikeresen betöltve. Belépés a játszma fázisba.\n").getBytes());
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
                             break;
                         }
                         default:
@@ -90,8 +117,14 @@ public class ProtoController {
                     if(command.equals("start")) {
                         state = ProgramStates.GAME;
                         gameManager.startGame();
+                        /// /CONSOL OUT
+                        try {
+                            outputStream.write(("A konfiguráció befejeződött. A játék sikeresen elindult, belépés a játék fázisba.\n").getBytes());
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
-                    if(!configCommands.get(command).execute(gameManager,in_args)){
+                    if(!configCommands.get(command).execute(gameManager,in_args,outputStream )){
                         try {
                             outputStream.write(("Error Command").getBytes());
                         } catch (IOException e) {
@@ -103,7 +136,7 @@ public class ProtoController {
                     if(command.equals("exit")) {
                         state = ProgramStates.IDLE;
                     }
-                    if(!gameCommands.get(command).execute(gameManager,in_args)){
+                    if(!gameCommands.get(command).execute(gameManager,in_args, outputStream)){
                         try {
                             outputStream.write(("Error Command").getBytes());
                         } catch (IOException e) {

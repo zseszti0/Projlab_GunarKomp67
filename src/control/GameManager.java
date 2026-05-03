@@ -9,8 +9,10 @@ import model.shop.base.Shop;
 import model.shop.consumables.Biokerosene;
 import model.shop.consumables.Rubble;
 import model.shop.consumables.Salt;
+import model.vehicles.Bus;
 import model.vehicles.SnowShovel;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,7 +63,7 @@ public class GameManager {
     // Config változók
     private boolean randomized = true;
     private String currentActorId = "";
-    private int currentActorRemainingAp = 0;
+    private int currentActorRemainingAp = 2;
     private List<String> actorQueue = new ArrayList<>();
 
     // Üres konstruktor, ha esetleg új játékot kezdenétek fájl nélkül
@@ -186,6 +188,8 @@ public class GameManager {
         if(currentActor == null)
             return false;
         currentActor.shop(s, shop);
+
+        turnEnd();
         return true;
     }
 
@@ -194,10 +198,52 @@ public class GameManager {
         if(currentActor == null)
             return false;
         currentActor.shop("snowShovel", shop,pos);
+
+        turnEnd();
         return true;
     }
 
     public void pass() {
         currentActorId = actorQueue.get((1 + actorQueue.indexOf(currentActorId)) % actorQueue.size());
+    }
+
+    public boolean drive(String snowShovelName, Tile pos){
+        Cleaner currentActor = cleaners.stream().filter(cleaner -> cleaner.getName().equals(currentActorId)).findFirst().orElse(null);
+        if(currentActor == null){
+            BusChaffeur busChaffeur = busChauffeurs.stream().filter(b -> b.getName().equals(currentActorId)).findFirst().orElse(null);
+            if(busChaffeur == null)
+                return false;
+            Bus bus = busChaffeur.getVehicles().stream().filter(b -> b.getName().equals(snowShovelName)).findFirst().orElse(null);
+            if(bus == null)
+                return false;
+            busChaffeur.drive(bus,pos);
+        }
+        else{
+            SnowShovel snowShovel = currentActor.getVehicles().stream().filter(s -> s.getName().equals(snowShovelName)).findFirst().orElse(null);
+            if(snowShovel == null)
+                return false;
+            currentActor.drive(snowShovel,pos);
+        }
+
+        turnEnd();
+        return true;
+    }
+
+    public boolean switchAttachment(String ss, String newAttachment){
+        Cleaner currentActor = cleaners.stream().filter(cleaner -> cleaner.getName().equals(currentActorId)).findFirst().orElse(null);
+        if(currentActor == null){
+            SnowShovel snowShovel = currentActor.getVehicles().stream().filter(s -> s.getName().equals(ss)).findFirst().orElse(null);
+            currentActor.changeAttachment(snowShovel,newAttachment);
+        }
+        turnEnd();
+        return true;
+    }
+
+    private void turnEnd(){
+        currentActorRemainingAp--;
+        if(currentActorRemainingAp == 0){
+            pass();
+            currentActorRemainingAp = 2;
+        }
     }
 }
