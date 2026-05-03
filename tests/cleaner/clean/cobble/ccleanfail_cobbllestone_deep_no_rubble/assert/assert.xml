@@ -1,0 +1,42 @@
+<game>
+<config randomized="false">
+    <currentActor id="Takarito1" ap="1"/>
+    <actorQueue><actor id="Takarito1" /></actorQueue>
+</config>
+<map>
+    <tile id="Tile_Start" type="Clean" isRubbled="false" isSalted="false">
+        <neighbors>
+            <neighbor id="Tile_Icy" />
+            <neighbor id="Tile_Shallow" />
+            <neighbor id="Tile_Deep" />
+            <neighbor id="Tile_CleanTest" />
+        </neighbors>
+        <lanes><lane id="Lane1"/></lanes>
+    </tile>
+    <tile id="Tile_Icy" type="Icy" isRubbled="false" isSalted="false">
+        <neighbors><neighbor id="Tile_Start" /></neighbors>
+        <lanes><lane id="Lane1"/></lanes>
+    </tile>
+    <tile id="Tile_Shallow" type="ShallowSnowy" isRubbled="false" isSalted="false">
+        <neighbors><neighbor id="Tile_Start" /></neighbors>
+        <lanes><lane id="Lane1"/></lanes>
+    </tile>
+    <tile id="Tile_Deep" type="DeepSnowy" isRubbled="false" isSalted="false">
+        <neighbors><neighbor id="Tile_Start" /></neighbors>
+        <lanes><lane id="Lane1"/></lanes>
+    </tile>
+    <tile id="Tile_CleanTest" type="Clean" isRubbled="false" isSalted="false">
+        <neighbors><neighbor id="Tile_Start" /></neighbors>
+        <lanes><lane id="Lane1"/></lanes>
+    </tile>
+</map>
+<cleaner id="Takarito1">
+    <snowShovel id="1">
+        <position id="Tile_Deep" />
+        <attachment id="Att1" type="CobblestoneHead"/>
+    </snowShovel>
+    <inventory>
+        <money amount="0" />
+    </inventory>
+</cleaner>
+</game>

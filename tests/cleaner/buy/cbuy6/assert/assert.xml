@@ -1,0 +1,32 @@
+<game>
+    <config randomized="false">
+        <currentActor id="Takarito1" ap="1"/>
+        <actorQueue><actor id="Takarito1"/></actorQueue>
+    </config>
+    <map>
+        <tile id="Tile1" type="Clean">
+            <neighbors><neighbor id="Tile2"/></neighbors>
+            <lanes><lane id="Lane1"/></lanes>
+        </tile>
+        <tile id="Tile2" type="Clean">
+            <neighbors><neighbor id="Tile1"/><neighbor id="Tile3"/></neighbors>
+            <lanes><lane id="Lane1"/></lanes>
+        </tile>
+        <tile id="Tile3" type="Clean">
+            <neighbors><neighbor id="Tile2"/></neighbors>
+            <lanes><lane id="Lane1"/></lanes>
+        </tile>
+    </map>
+    <cleaner id="Takarito1">
+        <snowShovel id="1">
+            <position id="Tile1"/>
+            <attachment id="Attachment1" type="SweeperHead"/>
+        </snowShovel>
+        <inventory>
+            <money amount="50"/>
+            <attachments>
+                <attachment id="Attachment2" type="BlowerHead"/>
+            </attachments>
+        </inventory>
+    </cleaner>
+</game>

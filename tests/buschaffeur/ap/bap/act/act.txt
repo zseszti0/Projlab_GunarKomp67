@@ -1,0 +1,4 @@
+load bus_4tiles.xml
+drive 1 tile2
+drive 1 tile3
+exit

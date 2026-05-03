@@ -1,0 +1,3 @@
+load buy_test_3tiles_rich.xml
+buy blowerhead
+exit
