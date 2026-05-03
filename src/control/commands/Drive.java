@@ -7,6 +7,8 @@ import model.vehicles.SnowShovel;
 import model.players.Cleaner;
 import model.players.BusChaffeur;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
 /**
@@ -27,41 +29,28 @@ public class Drive extends GameCommand {
      * @return true, ha a vezetés sikeresen lezajlott, false, ha rossz a mező vagy a jármű azonosítója.
      */
     @Override
-    public boolean execute(GameManager gameManager, List<String> args) {
+    public boolean execute(GameManager gameManager, List<String> args, OutputStream output) {
         List<Tile> tiles = gameManager.getTiles();
         Tile pos = tiles.stream().filter(tile -> tile.getName().equals(args.get(1))).findFirst().orElse(null);
-        if(pos == null) return false;
+        if(pos == null){
+            /// /CONSOL OUT
+            try {
+                output.write(("A(z)" + args.get(1) + " számú mező nem létezik\n").getBytes());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            return false;
+        }
 
-        List<Cleaner> cleaners = gameManager.getCleaners();
-        SnowShovel snowShovel = null;
-        Cleaner cleaner = null;
-        for(Cleaner clnr : cleaners){
-            for(SnowShovel ss : clnr.getVehicles()){
-                if(ss.getName().equals(args.get(0))) {
-                    snowShovel = ss;
-                    cleaner = clnr;
-                    break;
-                }
+        boolean success = gameManager.drive(args.get(0), pos);
+        if(success) {
+            /// /CONSOL OUT
+            try {
+                output.write(("A(z)" + args.get(0) + " Számú hókotró/busz sikeresen átlépett a(z)" + args.get(1) + " mezőre.\n").getBytes());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
-        if(snowShovel == null){
-            List<BusChaffeur> busChauffeurs = gameManager.getBusChauffeurs();
-            Bus bus = null;
-            BusChaffeur busChauffer = null;
-            for(BusChaffeur bsch : busChauffeurs){
-                for(Bus b : bsch.getVehicles()){
-                    if(b.getName().equals(args.get(0))) {
-                        bus = b;
-                        busChauffer = bsch;
-                        break;
-                    }
-                }
-            }
-            if(bus == null) return false;
-            return busChauffer.drive(bus,pos);
-        }
-        else{
-            return cleaner.drive(snowShovel,pos);
-        }
+        return success;
     }
 }
