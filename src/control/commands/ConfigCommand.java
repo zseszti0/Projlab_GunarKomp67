@@ -2,5 +2,5 @@ package control.commands;
 
 import control.Command;
 
-public class BusChauffeur extends Command {
+public class ConfigCommand extends Command {
 }

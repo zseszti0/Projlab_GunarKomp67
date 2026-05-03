@@ -151,4 +151,13 @@ public class Inventory {
         return consumables;
     }
 
+    public Attachment getAttachment(String newAttachment) {
+        for(Attachment a : attachments){
+            if(a.getName().equals(newAttachment)){
+                attachments.remove(a);
+                return a;
+            }
+        }
+        return null;
+    }
 }

@@ -25,6 +25,10 @@ public abstract class Vehicle {
         this.position = position;
     }
 
+    public Vehicle(String s) {
+        this.name = s;
+    }
+
     /**
      * Visszaadja a jármű nevét.
      * @return A jármű neve

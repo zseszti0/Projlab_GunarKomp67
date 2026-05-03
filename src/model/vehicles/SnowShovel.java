@@ -33,6 +33,10 @@ public class SnowShovel extends Vehicle implements Purchasable {
         if(position != null) position.setVehicle(this);
     }
 
+    public SnowShovel(String s) {
+        super(s);
+    }
+
     /**
      * Végrehajtja a tisztítási folyamatot az aktuális mezőn.
      * Felhasználja a szükséges fogyóeszközöket az eszköztárból, majd meghívja a felszerelt kotrófej tisztítási metódusát.

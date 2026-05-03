@@ -1,6 +1,13 @@
 package control.commands;
 
-import control.Command;
+import control.GameManager;
 
-public class Pass extends Command {
+import java.util.List;
+
+public class Pass extends GameCommand {
+    @Override
+    public boolean execute(GameManager gameManager, List<String> args) {
+        gameManager.pass();
+        return true;
+    }
 }

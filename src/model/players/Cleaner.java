@@ -38,6 +38,10 @@ public class Cleaner extends AbstractVehicleOwner<SnowShovel> implements ICleane
         this.inventory = inventory;
     }
 
+    public Cleaner(String s) {
+        super(s);
+    }
+
     /**
      * Vezeti a megadott hókotrót a kívánt pozícióra, majd végrehajtja a tisztítást. Sikeres tisztítás esetén pénzt ír jóvá.
      * @param vehicle A vezetendő hókotró
@@ -68,6 +72,12 @@ public class Cleaner extends AbstractVehicleOwner<SnowShovel> implements ICleane
         Attachment oldA=ss.getEquippedAttachment();
         inventory.switchAttachment(oldA);
         ss.setEquippedAttachment(newAttachment);
+    }
+
+    public void changeAttachment(SnowShovel ss, String newAttachment) {
+        Attachment oldA=ss.getEquippedAttachment();
+        inventory.switchAttachment(oldA);
+        ss.setEquippedAttachment(inventory.getAttachment(newAttachment));
     }
 
     /**

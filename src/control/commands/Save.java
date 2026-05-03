@@ -1,6 +1,15 @@
 package control.commands;
 
-import control.Command;
+import control.GameManager;
+import control.XMLParser;
 
-public class Save extends Command {
+import java.util.List;
+
+public class Save extends GameCommand {
+    @Override
+    public boolean execute(GameManager gameManager, List<String> args) {
+        XMLParser parser = new XMLParser();
+        parser.saveGame(gameManager, args.get(1));
+        return true;
+    }
 }

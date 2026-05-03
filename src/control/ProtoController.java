@@ -1,7 +1,9 @@
 package control;
 
 import control.commands.*;
+import model.map.Tile;
 
+import java.io.*;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -13,42 +15,104 @@ enum ProgramStates {
     GAME
 }
 public class ProtoController {
-    private static boolean isTextInput = false;
     private static ProgramStates state = ProgramStates.IDLE;
 
     private static GameManager gameManager;
-    private static HashMap<String, Command> commands;
+    private static HashMap<String, ConfigCommand> configCommands;
+    private static HashMap<String, GameCommand> gameCommands;
 
     public static void main(String[] args) {
-        // Check if arguments were actually passed
+        InputStream inputStream = System.in;
+        OutputStream outputStream = System.out;
         if (args.length > 0) {
-            for (int i = 0; i < args.length; i++) {
-                System.out.println("Argument " + i + ": " + args[i]);
+            //first arg is input txt, second is output txt
+            try {
+                inputStream = new FileInputStream(args[0]);
+                outputStream = new FileOutputStream(args[1]);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
             }
         }
-        XMLParser parser = new XMLParser();
-        gameManager = parser.loadGame("input.xml");
 
-        commands = new HashMap<>();
-        commands.put("bus", new Bus());
-        commands.put("buschauffeur", new BusChauffeur());
-        commands.put("buy",new Buy());
-        commands.put("buysnowshovel",new BuySnowShovel());
-        commands.put("cleaner", new Cleaner());
-        commands.put("drive", new Drive());
-        commands.put("exit", new Exit());
-        commands.put("npcdriver", new NPCDriver());
-        commands.put("pass", new Pass());
-        commands.put("save", new Save());
-        commands.put("snowshovel", new SnowShovel());
-        commands.put("start", new Start());
-        commands.put("switchattachment", new SwitchAttachment());
+        configCommands = new HashMap<>();
+        gameCommands = new HashMap<>();
+        configCommands.put("bus", new Bus());
+        configCommands.put("buschauffeur", new BusChaffeur());
+        gameCommands.put("buy",new Buy());
+        gameCommands.put("buysnowshovel",new BuySnowShovel());
+        configCommands.put("cleaner", new Cleaner());
+        gameCommands.put("drive", new Drive());
+        configCommands.put("npcdriver", new NPCDriver());
+        gameCommands.put("pass", new Pass());
+        gameCommands.put("save", new Save());
+        configCommands.put("snowshovel", new SnowShovel());
+        configCommands.put("start", new Start());
+        gameCommands.put("switchattachment", new SwitchAttachment());
 
-        Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
-        List<String> in_args = Arrays.asList(input.split(" "));
-        if(!commands.get(in_args.get(0)).execute(gameManager,state,in_args.subList(1, in_args.size()))){
-            System.out.println("Invalid command");
+        while (true) {
+            Scanner scanner = new Scanner(inputStream);
+            String input = scanner.nextLine();
+            List<String> in_args = Arrays.asList(input.split(" "));
+            String command = in_args.get(0);
+            if(in_args.size() > 1) in_args.remove(0);
+            if (command.equals("exit")) {
+                break;
+            }
+            switch (state) {
+                case IDLE:
+                    switch (command) {
+                        case "new": {
+                            gameManager = new GameManager();
+                            XMLParser parser = new XMLParser();
+                            List<Tile> map = parser.loadMap(in_args.get(0));
+                            gameManager.setMap(map);
+                            if(in_args.size() > 1) {
+                                if(in_args.get(1).equals("-r"))
+                                    gameManager.setRandomized(false);
+                            }
+                            state = ProgramStates.CONFIG;
+                            break;
+                        }
+                        case "load": {
+                            gameManager = new GameManager();
+                            XMLParser parser = new XMLParser();
+                            parser.loadGame(in_args.get(0));
+                            state = ProgramStates.GAME;
+                            break;
+                        }
+                        default:
+                            try {
+                                outputStream.write(("Invalid Command").getBytes());
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                    }
+                    break;
+                case CONFIG:
+                    if(command.equals("start")) {
+                        state = ProgramStates.GAME;
+                    }
+                    if(!configCommands.get(command).execute(gameManager,in_args)){
+                        try {
+                            outputStream.write(("Invalid Command").getBytes());
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    break;
+                case GAME:
+                    if(command.equals("exit")) {
+                        state = ProgramStates.IDLE;
+                    }
+                    if(!gameCommands.get(command).execute(gameManager,in_args)){
+                        try {
+                            outputStream.write(("Invalid Command").getBytes());
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    break;
+            }
         }
     }
 }

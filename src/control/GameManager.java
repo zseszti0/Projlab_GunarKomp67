@@ -1,13 +1,53 @@
 package control;
 
+import control.commands.Save;
 import model.map.Tile;
 import model.players.*;
+import model.shop.attachements.*;
+import model.shop.base.Purchasable;
 import model.shop.base.Shop;
+import model.shop.consumables.Biokerosene;
+import model.shop.consumables.Rubble;
+import model.shop.consumables.Salt;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameManager {
     private static Shop shop;
+    public static void setUpShop(){
+        List<String> items = new ArrayList<>();
+        List<Purchasable> purchasables = new ArrayList<>();
+        List<Integer> prices = new ArrayList<>();
+
+        items.add("BlowerHead");
+        items.add("CobbleStoneHead");
+        items.add("DragonHead");
+        items.add("IcebreakerHead");
+        items.add("SalterHead");
+        items.add("SweeperHead");
+        items.add("Biokerosene");
+        items.add("Salt");
+        items.add("Rubble");
+        items.add("SnowShovel");
+
+        purchasables.add(new BlowerHead("BlowerHead"));
+        purchasables.add(new CobblestoneHead("CobbleStoneHead"));
+        purchasables.add(new DragonHead("DragonHead"));
+        purchasables.add(new IcebreakerHead("IcebreakerHead"));
+        purchasables.add(new SalterHead("SalterHead"));
+        purchasables.add(new SweeperHead("SweeperHead"));
+        purchasables.add(new Biokerosene(1, "Biokerosene"));
+        purchasables.add(new Rubble(1, "Rubble"));
+        purchasables.add(new Salt(1, "Salt"));
+
+        for(int i = 0; i < items.size(); i++)
+            prices.add(100);
+
+
+        shop = new Shop(items, purchasables, prices);
+    }
+
     private List<IAutomatic> automata = new ArrayList<>();
 
     // A résztvevők
@@ -17,14 +57,15 @@ public class GameManager {
     private List<Tile> tiles = new ArrayList<>();
 
     // Config változók
-    private boolean randomized = false;
+    private boolean randomized = true;
     private String currentActorId = "";
-    private int currentPlayerIndex = 0;
     private int currentActorRemainingAp = 0;
     private List<String> actorQueue = new ArrayList<>();
 
     // Üres konstruktor, ha esetleg új játékot kezdenétek fájl nélkül
-    public GameManager() {}
+    public GameManager() {
+        setUpShop();
+    }
 
     /**
      * Teljes konstruktor XML parserhez.
@@ -44,25 +85,32 @@ public class GameManager {
         // NPC-ket és Tile-okat az automaták közé
         automata.addAll(npcDrivers);
         automata.addAll(tiles);
+
+        setUpShop();
     }
 
     public void tickTimer(){
         automata.forEach(IAutomatic::update);
     }
 
-    void startGame(){
-        currentPlayerIndex = 0;
-        //bla bla
+    public void startGame(){
+        currentActorId = actorQueue.get(0);
     }
 
     // --- SETTEREK A PARSERHEZ ---
 
     public void setCleaners(List<Cleaner> cleaners) {
+
         this.cleaners = cleaners;
+        actorQueue.clear();
+        actorQueue.addAll(cleaners.stream().map(Cleaner::getName).toList());
     }
 
     public void setBusChauffeurs(List<BusChaffeur> busChauffeurs) {
+
         this.busChauffeurs = busChauffeurs;
+        actorQueue.clear();
+        actorQueue.addAll(busChauffeurs.stream().map(BusChaffeur::getName).toList());
     }
 
     public void setNpcDrivers(List<NPCDriver> npcDrivers) {
@@ -125,5 +173,29 @@ public class GameManager {
 
     public List<NPCDriver> getNpcDrivers() {
         return npcDrivers;
+    }
+
+    public void setMap(List<Tile> tiles){
+        this.tiles = tiles;
+    }
+
+    public boolean orderItem(String s) {
+        Cleaner currentActor = cleaners.stream().filter(cleaner -> cleaner.getName().equals(currentActorId)).findFirst().orElse(null);
+        if(currentActor == null)
+            return false;
+        currentActor.shop(s, shop);
+        return true;
+    }
+
+    public boolean orderSnowShovel(Tile pos) {
+        Cleaner currentActor = cleaners.stream().filter(cleaner -> cleaner.getName().equals(currentActorId)).findFirst().orElse(null);
+        if(currentActor == null)
+            return false;
+        currentActor.shop("snowShovel", shop,pos);
+        return true;
+    }
+
+    public void pass() {
+        currentActorId = actorQueue.get((1 + actorQueue.indexOf(currentActorId)) % actorQueue.size());
     }
 }
