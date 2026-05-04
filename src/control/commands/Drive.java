@@ -51,6 +51,14 @@ public class Drive extends GameCommand {
                 throw new RuntimeException(e);
             }
         }
+        else{
+            /// /CONSOL OUT
+            try {
+                output.write(("A(z)" + args.get(0) + " Számú hókotró/busz nem tudott sikeresen átlépni.\n").getBytes());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         return success;
     }
 }

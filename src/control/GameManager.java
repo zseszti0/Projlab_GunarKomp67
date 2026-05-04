@@ -296,6 +296,7 @@ public class GameManager {
      * @return true, ha a vezetés végrehajtódott, false, ha a karakter vagy a jármű nem található.
      */
     public boolean drive(String snowShovelName, Tile pos){
+        boolean success = false;
         Cleaner currentActor = cleaners.stream().filter(cleaner -> cleaner.getName().equals(currentActorId)).findFirst().orElse(null);
         if(currentActor == null){
             BusChaffeur busChaffeur = busChauffeurs.stream().filter(b -> b.getName().equals(currentActorId)).findFirst().orElse(null);
@@ -304,17 +305,17 @@ public class GameManager {
             Bus bus = busChaffeur.getVehicles().stream().filter(b -> b.getName().equals(snowShovelName)).findFirst().orElse(null);
             if(bus == null)
                 return false;
-            busChaffeur.drive(bus,pos);
+            success = busChaffeur.drive(bus,pos);
         }
         else{
             SnowShovel snowShovel = currentActor.getVehicles().stream().filter(s -> s.getName().equals(snowShovelName)).findFirst().orElse(null);
             if(snowShovel == null)
                 return false;
-            currentActor.drive(snowShovel,pos);
+            success = currentActor.drive(snowShovel,pos);
         }
 
         turnEnd();
-        return true;
+        return success;
     }
 
     /**
