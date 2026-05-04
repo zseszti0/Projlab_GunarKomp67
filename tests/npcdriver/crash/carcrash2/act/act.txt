@@ -1,0 +1,4 @@
+load tests/npcdriver/crash/carcrash2/arrange/car_crash_four_tiles_snowshovel.xml
+tick
+save
+exit
