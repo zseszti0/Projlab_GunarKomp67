@@ -29,7 +29,7 @@
         <inventory>
             <money amount="40"/>
             <attachments>
-                <attachment id="Attachment2" type="BlowerHead" />
+                <attachment id="BlowerHead" type="BlowerHead" />
             </attachments>
         </inventory>
     </cleaner>
