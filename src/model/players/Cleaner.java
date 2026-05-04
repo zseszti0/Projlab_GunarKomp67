@@ -55,9 +55,8 @@ public class Cleaner extends AbstractVehicleOwner<SnowShovel> implements ICleane
         if(collided!=null){
             return false;
         }
-        if(vehicle.clean(inventory)){
-            inventory.addMoney(10);
-        }
+        vehicle.clean(inventory);
+
         return true;
     }
 
