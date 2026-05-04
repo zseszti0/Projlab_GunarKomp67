@@ -8,8 +8,8 @@ import model.vehicles.SnowShovel;
 import java.util.List;
 
 /**
- * A sekely havas mezoallapot. Ebben az allapotban a jarmuvek at tudnak haladni, de tomorithetik a havat.
- * Singleton tervezesi mintat hasznal.
+ * A sekély havas mezőállapot. Ebben az állapotban a járművek át tudnak haladni, de tömöríthetik a havat, amiből így jég (Icy) lehet.
+ * Singleton tervezési mintát használ.
  */
 public class ShallowSnowyTileState extends SnowyTileState {
     private static final String name = "ShallowSnowyTileState";
@@ -19,14 +19,14 @@ public class ShallowSnowyTileState extends SnowyTileState {
     private ShallowSnowyTileState() {}
 
     /**
-     * Visszaadja a ShallowSnowyTileState egyetlen peldanyat.
-     * @return a ShallowSnowyTileState peldany
+     * Visszaadja a ShallowSnowyTileState egyetlen példányát.
+     * @return A ShallowSnowyTileState singleton példány.
      */
     public static ShallowSnowyTileState getInstance() {return instance==null?instance=new ShallowSnowyTileState():instance;}
 
     /**
-     * Kezeli a hoesest. Sekely hoval boritott mezore hullva a ho mely havas allapotba valt.
-     * @return mely havas mezoallapot (DeepSnowyTileState)
+     * Kezeli a hóesést. Sekély hóval borított mezőre hullva a hó mély havas (DeepSnowy) állapotba vált.
+     * @return A mély havas mezőállapot (DeepSnowyTileState).
      */
     @Override
     public TileState snowFall() {
@@ -34,39 +34,53 @@ public class ShallowSnowyTileState extends SnowyTileState {
     }
 
     /**
-     * Kezeli a ho olvadasat. A sekely ho elolvadasaval a mezo tiszta allapotba valt.
-     * @return tiszta mezoallapot (CleanTileState)
+     * Kezeli a hó olvadását. A sekély hó elolvadásával a mező tiszta állapotba vált.
+     * @return A tiszta mezőállapot (CleanTileState).
      */
     @Override
     public TileState snowMelt() {
         return CleanTileState.getInstance();
     }
 
+    /**
+     * Hozzáadja a sekély havas mezőt az útvonalkereső gráfhoz.
+     * @param subGraph A bejárható mezők listája.
+     * @param tile A gráfhoz hozzáadandó mező.
+     */
     @Override
     public void addToBFSSubGraph(List<Tile> subGraph, Tile tile){
         subGraph.add(tile);
     }
 
+    /**
+     * Félretolja a havat a szomszédos mezőkre.
+     * * @param tile Az a mező, amiről a havat letolják.
+     */
     @Override
     public void sweepSnowToSide(Tile tile){
         tile.acceptSweptSnow(ShallowSnowyTileState.getInstance());
     }
 
     /**
-     * Kezeli a jarmu mezore erkezeset, jelez ha érvénytelen lépés
-     * @param v az érkező jármű
-     * @return elfogadta-e a járművet
+     * Engedélyezi egy autó rálépését a sekély havas mezőre.
+     * * @param v Az érkező autó.
+     * @return true (a lépés érvényes).
      */
     @Override
     public boolean acceptVehicle(Car v) {return true;}
 
     /**
-     * Kezeli a jarmu mezore erkezeset, ami a ho tomorodeset eredmenyezheti.
-     * @return az uj mezoallapot a jarmu athaladasa utan
+     * Kezeli a jármű áthaladását, ami a hó tömörödését (jégesedést) eredményezheti.
+     * * @return A jeges mezőállapot (IcyTileState) a jármű áthaladása után.
      */
     @Override
     public TileState compressionReached(){return IcyTileState.getInstance();}
 
+    /**
+     * Növeli a kompressziós (tömörödési) indexet a jármű áthaladásakor.
+     * * @param compressionIndex Az eddigi kompressziós érték.
+     * @return A megnövelt kompressziós érték.
+     */
     @Override
     public int compressByOne(int compressionIndex){
         return compressionIndex + 1;
