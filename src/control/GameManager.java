@@ -266,7 +266,7 @@ public class GameManager {
         Cleaner currentActor = cleaners.stream().filter(cleaner -> cleaner.getName().equals(currentActorId)).findFirst().orElse(null);
         if(currentActor == null)
             return false;
-        currentActor.shop("snowShovel", shop,pos);
+        currentActor.shop("SnowShovel", shop,pos);
 
         turnEnd();
         return true;

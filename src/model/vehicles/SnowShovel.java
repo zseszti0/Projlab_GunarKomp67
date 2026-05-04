@@ -3,6 +3,7 @@ package model.vehicles;
 import model.inventory.Inventory;
 import model.map.Tile;
 import model.shop.attachements.Attachment;
+import model.shop.attachements.SweeperHead;
 import model.shop.base.Purchasable;
 
 import java.util.List;
@@ -21,7 +22,9 @@ public class SnowShovel extends Vehicle implements Purchasable {
      * @param position A kezdő pozíció mező
      */
     public SnowShovel(String name, Tile position){
+
         super(name,position);
+        currentAttachment = new SweeperHead("tempSweeperHead");
     }
 
     /**
@@ -35,6 +38,7 @@ public class SnowShovel extends Vehicle implements Purchasable {
 
     public SnowShovel(String s) {
         super(s);
+        currentAttachment = new SweeperHead("tempSweeperHead");
     }
 
     /**
