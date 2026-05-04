@@ -1,3 +1,4 @@
-load two_tile_map
+load tests/cleaner/move/cmove/arrange/two_tile_map.xml
 drive 1 Tile2
+save
 exit
