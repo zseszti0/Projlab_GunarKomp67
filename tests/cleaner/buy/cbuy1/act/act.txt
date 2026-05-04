@@ -1,4 +1,4 @@
 load tests/cleaner/buy/cbuy1/arrange/buy_test_3tiles_rich.xml
-buy salt
+buy Salt
 save
 exit
