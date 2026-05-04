@@ -1,3 +1,4 @@
-load snowfall.xml
-*várjunk 20 másodpercet*
+load tests/environment/snowfall/snowfall/arrange/snowfall.xml
+wait 20
+save
 exit

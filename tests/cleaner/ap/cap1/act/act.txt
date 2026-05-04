@@ -1,4 +1,5 @@
-load ap_test_4tiles.xml
-drive 1 tile2
-drive 1 tile3
+load tests/cleaner/ap/cap1/arrange/ap_test_4tiles.xml
+drive 1 Tile2
+drive 1 Tile3
+save
 exit

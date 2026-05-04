@@ -1,3 +1,4 @@
-load buy_test_3tiles_poor.xml
+load tests/cleaner/buy/cbuyfail4/arrange/buy_test_3tiles_poor.xml
 buy sweeperhead
+save
 exit

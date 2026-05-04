@@ -1,3 +1,4 @@
-load bus_two_tile_map_shallow.xml
-drive 1 tile2
+load tests/buschaffeur/move/bmove2/arrange/bus_three_tile_map_shallow.xml
+drive 1 Tile2
+save
 exit

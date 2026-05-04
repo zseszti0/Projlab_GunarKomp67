@@ -7,8 +7,8 @@ import model.vehicles.SnowShovel;
 import java.util.List;
 
 /**
- * A tiszta mezoallapot.
- * Singleton tervezesi mintat hasznal.
+ * A tiszta mezőállapot. Sem hó, sem jég nincs a felületen.
+ * Singleton tervezési mintát használ.
  */
 public class CleanTileState extends TileState {
     private static final String name = "CleanTileState";
@@ -18,8 +18,8 @@ public class CleanTileState extends TileState {
     private CleanTileState() {}
 
     /**
-     * Visszaadja a CleanTileState egyetlen peldanyat.
-     * @return a CleanTileState peldany
+     * Visszaadja a CleanTileState egyetlen példányát.
+     * @return A CleanTileState singleton példány.
      */
     public static CleanTileState getInstance() {
         if (instance == null) {
@@ -29,8 +29,8 @@ public class CleanTileState extends TileState {
     }
 
     /**
-     * Kezeli a hoesest. Tiszta mezore hullva a ho sekely havas allapotba valt.
-     * @return sekely havas mezoallapot (ShallowSnowyTileState)
+     * Kezeli a hóesést. Tiszta mezőre hullva a hó sekély havas állapotba vált.
+     * @return A sekély havas mezőállapot (ShallowSnowyTileState).
      */
     @Override
     public TileState snowFall() {
@@ -38,23 +38,28 @@ public class CleanTileState extends TileState {
     }
 
     /**
-     * Kezeli a ho olvadasat. Tiszta mezonel nincs ho, ami elolvadjon.
-     * @return onmaga (CleanTileState)
+     * Kezeli a hó olvadását. Tiszta mezőnél nincs hó, ami elolvadjon, így nem változik.
+     * @return Önmagával (CleanTileState) tér vissza.
      */
     @Override
     public TileState snowMelt() {
         return this;
     }
 
+    /**
+     * Hozzáadja a tiszta mezőt az útvonalkereső gráfhoz, mivel a tiszta felületen minden jármű áthaladhat.
+     * @param subGraph A bejárható mezők listája.
+     * @param tile A gráfhoz hozzáadandó mező.
+     */
     @Override
     public void addToBFSSubGraph(List<Tile> subGraph, Tile tile){
         subGraph.add(tile);
     }
 
     /**
-     * Kezeli a jarmu mezore erkezeset, jelez ha érvénytelen lépés
-     * @param v az érkező jármű
-     * @return elfogadta-e a járművet
+     * Engedélyezi egy normál autó (Car) rálépését a tiszta mezőre.
+     * @param v Az érkező autó.
+     * @return true (a lépés érvényes).
      */
     @Override
     public boolean acceptVehicle(Car v) {return true;}

@@ -1,3 +1,4 @@
-load switch_test_2tiles_salterhead.xml
+load tests/cleaner/change/cchange4/arrange/switch_test_2tiles_salterhead.xml
 switchattachment 1 salterhead
+save
 exit

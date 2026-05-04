@@ -1,4 +1,5 @@
-load ap_test_4tiles.xml
+load tests/cleaner/ap/cap2/arrange/ap_test_4tiles.xml
 buy blowerhead
 switchattachment 1 blowerhead
+save
 exit

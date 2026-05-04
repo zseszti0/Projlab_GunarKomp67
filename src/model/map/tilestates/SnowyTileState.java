@@ -7,16 +7,17 @@ import model.vehicles.SnowShovel;
 import model.vehicles.Vehicle;
 
 /**
- * A havas mezoallapotok (sekely es mely ho) kozos ose.
- * Felelossege a kozos takaritasi esemenyek lekezelese.
+ * A havas mezőállapotok (sekély és mély hó) közös absztrakt őse.
+ * Felelőssége a közös takarítási események lekezelése, amelyek mindkét típusú havon működnek.
  */
 public abstract class SnowyTileState extends TileState {
     private static final String name = "SnowyTileState";
+
     /**
-     * Kezeli a soprofej (SweeperHead) altali tisztitast.
-     * A soprofej a havas mezoket tisztava alakitja.
-     * @param swh a tisztitast vegzo soprofej
-     * @return a tiszta mezoallapot (CleanTileState)
+     * Kezeli a söprőfej (SweeperHead) általi tisztítást.
+     * A söprőfej a havas mezőket tisztává alakítja.
+     * @param swh A tisztítást végző söprőfej.
+     * @return A tiszta mezőállapot (CleanTileState).
      */
     @Override
     public TileState cleanedBy(SweeperHead swh) {
@@ -24,10 +25,10 @@ public abstract class SnowyTileState extends TileState {
     }
 
     /**
-     * Kezeli a hanyofej (BlowerHead) altali tisztitast.
-     * A hanyofej a havas mezoket tisztava alakitja.
-     * @param bh a tisztitast vegzo hanyofej
-     * @return a tiszta mezoallapot (CleanTileState)
+     * Kezeli a hóhányófej (BlowerHead) általi tisztítást.
+     * A hóhányófej szintén tisztává alakítja a havas mezőket.
+     * @param bh A tisztítást végző hóhányófej.
+     * @return A tiszta mezőállapot (CleanTileState).
      */
     @Override
     public TileState cleanedBy(BlowerHead bh) {
@@ -35,10 +36,10 @@ public abstract class SnowyTileState extends TileState {
     }
 
     /**
-     * Kezeli a sarkany fej (DragonHead) altali tisztitast.
-     * A sarkany fej a havas mezoket tisztava alakitja.
-     * @param dh a tisztitast vegzo sarkany fej
-     * @return a tiszta mezoallapot (CleanTileState)
+     * Kezeli a sárkányfej (DragonHead) általi tisztítást (olvasztást).
+     * A hő hatására a hó eltűnik, a mező tisztává válik.
+     * @param dh A tisztítást végző sárkányfej.
+     * @return A tiszta mezőállapot (CleanTileState).
      */
     @Override
     public TileState cleanedBy(DragonHead dh) {

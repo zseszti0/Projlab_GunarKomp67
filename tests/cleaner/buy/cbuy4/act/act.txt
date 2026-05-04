@@ -1,3 +1,4 @@
-load buy_test_3tiles_rich.xml
-buysnowshovel tile2
+load tests/cleaner/buy/cbuy4/arrange/buy_test_3tiles_rich.xml
+buysnowshovel Tile2
+save
 exit

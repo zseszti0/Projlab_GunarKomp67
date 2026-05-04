@@ -1,3 +1,4 @@
-load buy_test_3tiles_poor.xml
+load tests/cleaner/buy/cbuyfail7/arrange/buy_test_3tiles_poor.xml
 buy icebreakerhead
+save
 exit

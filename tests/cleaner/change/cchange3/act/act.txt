@@ -1,3 +1,4 @@
-load switch_test_2tiles_icebreakerhead.xml
+load tests/cleaner/change/cchange3/arrange/switch_test_2tiles_icebreakerhead.xml
 switchattachment 1 icebreakerhead
+save
 exit
