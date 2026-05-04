@@ -125,7 +125,7 @@ public class ProtoController {
 
                             /// /CONSOL OUT
                             try {
-                                outputStream.write(("A(z)"+ in_args.get(0) +"<játékállás neve> nevű játékállás sikeresen betöltve. Belépés a játszma fázisba.\n").getBytes());
+                                outputStream.write(("A(z)"+ in_args.get(0) +"nevű játékállás sikeresen betöltve. Belépés a játszma fázisba.\n").getBytes());
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }

@@ -138,8 +138,9 @@ public class GameManager {
     public void setCleaners(List<Cleaner> cleaners) {
 
         this.cleaners = cleaners;
-        actorQueue.clear();
-        actorQueue.addAll(cleaners.stream().map(Cleaner::getName).toList());
+        List<Cleaner> cleanersCopy = new ArrayList<>(cleaners);
+        cleaners.clear();
+        actorQueue.addAll(cleanersCopy.stream().map(Cleaner::getName).toList());
     }
 
     /**
@@ -149,8 +150,9 @@ public class GameManager {
     public void setBusChauffeurs(List<BusChaffeur> busChauffeurs) {
 
         this.busChauffeurs = busChauffeurs;
-        actorQueue.clear();
-        actorQueue.addAll(busChauffeurs.stream().map(BusChaffeur::getName).toList());
+        List<BusChaffeur> busChauffeursCopy = new ArrayList<>(busChauffeurs);
+        busChauffeurs.clear();
+        actorQueue.addAll(busChauffeursCopy.stream().map(BusChaffeur::getName).toList());
     }
 
     /**
