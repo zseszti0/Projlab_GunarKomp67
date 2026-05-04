@@ -1,3 +1,4 @@
-load blower_fail_cases.xml
+load tests/cleaner/clean/blower/ccleanfail2/arrange/blower_fail_cases.xml
 drive 1 Tile_IcyTest
+save
 exit

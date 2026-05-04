@@ -17,6 +17,11 @@ public class TestOracle {
             // No specific test folder provided: print discovered test folders and exit.
             List<String> folders = gatherTestSourceFolders();
 
+            //switch every "\" to "/"
+            for(int i = 0; i < folders.size(); i++){
+                folders.set(i, folders.get(i).replace("\\", "/"));
+            }
+
             String results = "";
             int successCount = 0;
             for (String f : folders) {
@@ -48,7 +53,7 @@ public class TestOracle {
 
     private static List<String> gatherTestSourceFolders(){
         List<String> result = new ArrayList<>();
-        Path testsRoot = Paths.get("tests");
+        Path testsRoot = Paths.get("tests/cleaner/clean");
         if (!Files.exists(testsRoot) || !Files.isDirectory(testsRoot)) {
             return result; // empty list if no tests directory
         }

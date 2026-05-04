@@ -1,3 +1,4 @@
-load dragon_full_fail.xml
+load tests/cleaner/clean/dragon/ccleanfail_dragon_clean_no_fuel/arrange/dragon_full_fail.xml
 drive 1 Tile_CleanTest
+save
 exit

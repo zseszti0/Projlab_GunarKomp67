@@ -1,3 +1,4 @@
-load cobblestone_full_success.xml
+load tests/cleaner/clean/cclean_cobblestone_deep/arrange/cobblestone_full_success.xml
 drive 1 Tile_Deep
+save
 exit

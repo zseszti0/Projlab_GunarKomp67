@@ -1,3 +1,4 @@
-load two_tile_map.xml
+load tests/cleaner/change/cchangefail1/arrange/two_tile_map.xml
 switchattachment 1 SweeperHead
+save
 exit

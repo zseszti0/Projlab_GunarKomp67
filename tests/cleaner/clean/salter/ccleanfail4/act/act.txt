@@ -1,3 +1,4 @@
-load salter_fail_cases.xml
+load tests/cleaner/clean/salter/ccleanfail4/arrange/salter_fail_cases.xml
 drive 1 Tile_CleanTest
+save
 exit

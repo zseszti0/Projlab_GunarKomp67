@@ -1,3 +1,4 @@
-load salter_fail_cases.xml
+load tests/cleaner/clean/ccleanfail_salter_shallow_no_salt/arrange/salter_fail_cases.xml
 drive 1 Tile_Shallow
+save
 exit

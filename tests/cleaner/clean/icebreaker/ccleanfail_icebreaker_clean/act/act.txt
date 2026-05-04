@@ -1,3 +1,4 @@
-load icebreaker_full_cases.xml 
+load tests/cleaner/clean/icebreaker/ccleanfail_icebreaker_clean/arrange/icebreaker_full_cases.xml
 drive 1 Tile_CleanTest 
+save
 exit

@@ -1,3 +1,4 @@
-load cobblestone_full_success.xml
+load tests/cleaner/clean/cobble/cclean7/arrange/cobblestone_full_success.xml
 drive 1 Tile_Icy
+save
 exit

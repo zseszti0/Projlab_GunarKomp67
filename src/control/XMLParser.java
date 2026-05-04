@@ -74,8 +74,6 @@ public class XMLParser {
         optionalAttributesBaseValues.put("isStunned", "false");
         optionalAttributesBaseValues.put("isBlocked", "false");
         optionalAttributesBaseValues.put("isCrashed", "false");
-        // Inventory/consumable optional amounts
-        optionalAttributesBaseValues.put("amount", "0");
     }
     /**
      * Betölti a játéktáblát (mezőket és sávokat) a megadott XML fájlból.
