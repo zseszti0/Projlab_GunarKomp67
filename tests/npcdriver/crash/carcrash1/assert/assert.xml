@@ -24,11 +24,11 @@
             <neighbors><neighbor id="Tile4"/><neighbor id="Tile6"/></neighbors>
             <lanes><lane id="Lane1"/></lanes>
         </tile>
-        <tile id="Tile6" type="Clean" isSalted="True">
+        <tile id="Tile6" type="Clean" isSalted="true">
             <neighbors><neighbor id="Tile5"/><neighbor id="Tile7"/></neighbors>
             <lanes><lane id="Lane1"/></lanes>
         </tile>
-        <tile id="Tile7" type="Clean" isRubbled="True" rubbleFadingIndex="1">
+        <tile id="Tile7" type="Clean" isRubbled="true" rubbleFadingIndex="1">
             <neighbors><neighbor id="Tile6"/><neighbor id="Tile8"/></neighbors>
             <lanes><lane id="Lane1"/></lanes>
         </tile>

@@ -173,9 +173,9 @@ public class Tile implements IAutomatic {
      */
     public void update() {
         if (isSalted) {
-            state.snowMelt();
+            state = state.snowMelt();
         } else {
-            state.snowFall();
+            state = state.snowFall();
             isRubbled = false;
         }
     }
