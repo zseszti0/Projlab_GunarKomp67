@@ -242,11 +242,13 @@ public class GameManager {
      * 2. Meghívja a takarító "hókotró-specifikus" vásárló metódusát, megadva a boltot és a lehelyezési célmezőt.
      * @return true, ha a takarító megvan és a folyamat elindult.
      */
-    public boolean orderItem(String s) {
+    public boolean orderItem(String s, int amount) {
         Cleaner currentActor = cleaners.stream().filter(cleaner -> cleaner.getName().equals(currentActorId)).findFirst().orElse(null);
         if(currentActor == null)
             return false;
-        currentActor.shop(s, shop);
+
+        for(int i = 0; i < amount; i++)
+            currentActor.shop(s, shop);
 
         turnEnd();
         return true;
