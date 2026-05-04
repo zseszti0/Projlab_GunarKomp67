@@ -1,3 +1,4 @@
-load bus_three_tile_map_icy.xml
-drive 1 tile2
+load tests/buschaffeur/move/bmove3/arrange/bus_three_tile_map_icy.xml
+drive 1 Tile2
+save
 exit

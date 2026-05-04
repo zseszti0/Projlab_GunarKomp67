@@ -17,7 +17,7 @@
             <lanes><lane id="Lane1"/></lanes>
         </tile>
     </map>
-    <busChaffeur id="Buszsofor1">
+    <busChauffeur id="Buszsofor1">
         <bus id="1">
             <position id="Tile2"/>
             <landMarks>
@@ -26,5 +26,5 @@
                 <destination id="Tile3"/>
             </landMarks>
         </bus>
-    </busChaffeur>
+    </busChauffeur>
 </game>
