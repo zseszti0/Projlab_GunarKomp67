@@ -25,7 +25,7 @@ public class Buy extends GameCommand {
     public boolean execute(GameManager gameManager, List<String> args, OutputStream output) {
         int iterate = 1;
         if(args.size() > 1){
-            iterate = Integer.parseInt(args.get(1));
+            iterate = Integer.parseInt(args.get(2));
         }
         boolean success = true;
         for(int i = 0; i < iterate; i++){
@@ -33,7 +33,7 @@ public class Buy extends GameCommand {
                 success = false;
         }
         if(success){
-            /// /CONSOL OUT
+            //CONSOLE OUT
             try {
                 output.write(("A vásárlás sikeres. "+ args.get(0)+" vásárolva.\n").getBytes());
             } catch (IOException e) {
@@ -41,7 +41,7 @@ public class Buy extends GameCommand {
             }
         }
         else {
-            /// /CONSOL OUT
+            //CONSOLE OUT
             try {
                 output.write((" A vásárlás sikertelen, nincs elég tőke.\n").getBytes());
             } catch (IOException e) {
