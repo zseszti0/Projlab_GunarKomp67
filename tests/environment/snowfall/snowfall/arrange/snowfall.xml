@@ -43,8 +43,8 @@
             <landMarks>
                 <landMark id="Tile1"/>
                 <landMark id="Tile4"/>
-                <destination id="Tile4"/>
             </landMarks>
+            <destination id="Tile4"/>
         </car>
     </NPCDriver>
 </game>

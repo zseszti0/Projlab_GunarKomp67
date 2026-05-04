@@ -43,8 +43,16 @@
             <landMarks>
                 <landMark id="Tile1"/>
                 <landMark id="Tile4"/>
-                <destination id="Tile4"/>
             </landMarks>
+            <destination id="Tile4"/>
+        </car>
+        <car id="2">
+            <position id="Tile2"/>
+            <landMarks>
+                <landMark id="Tile1"/>
+                <landMark id="Tile4"/>
+            </landMarks>
+            <destination id="Tile1"/>
         </car>
     </NPCDriver>
 </game>
