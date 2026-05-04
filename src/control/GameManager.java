@@ -13,6 +13,7 @@ import model.vehicles.SnowShovel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * A játék központi vezérlő osztálya.
@@ -31,7 +32,7 @@ public class GameManager {
      */
     public static void setUpShop() {
         List<String> items = new ArrayList<>();
-        List<Purchasable> purchasables = new ArrayList<>();
+        List<Supplier<Purchasable>> purchasables = new ArrayList<>();
         List<Integer> prices = new ArrayList<>();
 
         items.add("BlowerHead");
@@ -45,16 +46,16 @@ public class GameManager {
         items.add("Rubble");
         items.add("SnowShovel");
 
-        purchasables.add(new BlowerHead("BlowerHead"));
-        purchasables.add(new CobblestoneHead("CobbleStoneHead"));
-        purchasables.add(new DragonHead("DragonHead"));
-        purchasables.add(new IcebreakerHead("IcebreakerHead"));
-        purchasables.add(new SalterHead("SalterHead"));
-        purchasables.add(new SweeperHead("SweeperHead"));
-        purchasables.add(new Biokerosene(1, "Biokerosene"));
-        purchasables.add(new Salt(1, "Salt"));
-        purchasables.add(new Rubble(1, "Rubble"));
-        purchasables.add(new SnowShovel("SnowShovel"));
+        purchasables.add(() -> new BlowerHead("BlowerHead"));
+        purchasables.add(() -> new CobblestoneHead("CobbleStoneHead"));
+        purchasables.add(() -> new DragonHead("DragonHead"));
+        purchasables.add(() -> new IcebreakerHead("IcebreakerHead"));
+        purchasables.add(() -> new SalterHead("SalterHead"));
+        purchasables.add(() -> new SweeperHead("SweeperHead"));
+        purchasables.add(() -> new Biokerosene(1, "Biokerosene"));
+        purchasables.add(() -> new Salt(1, "Salt"));
+        purchasables.add(() -> new Rubble(1, "Rubble"));
+        purchasables.add(() -> new SnowShovel("SnowShovel"));
 
         for(int i = 0; i < items.size(); i++)
             prices.add(10);
