@@ -1,6 +1,8 @@
 package control;
 
 import model.map.Tile;
+
+import java.io.*;
 import java.util.List;
 
 import model.inventory.Inventory;
@@ -26,7 +28,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import java.io.File;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,6 +39,21 @@ import java.util.Map;
  * valamint a jelenlegi játékállás elmentését XML formátumban.
  */
 public class XMLParser {
+    private String sourceFolder;
+    private XMLParser() {}
+    private OutputStream outputStream;
+    public XMLParser(String sourceFolder) {
+        this.sourceFolder = sourceFolder;
+        if(sourceFolder == "")
+            outputStream = System.out;
+        else {
+            try {
+                outputStream = new FileOutputStream(sourceFolder + "/output/output.txt",true);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
     /**
      * Betölti a játéktáblát (mezőket és sávokat) a megadott XML fájlból.
      * * @param filePath Az olvasandó XML fájl elérési útvonala.
@@ -67,10 +84,10 @@ public class XMLParser {
      * Elmenti az aktuális játékállást (térkép, entitások, konfiguráció, inventory stb.)
      * a megadott XML fájlba.
      * @param gameManager Az aktuális játékállapotot tartalmazó menedzser objektum.
-     * @param output A kimeneti XML fájl elérési útvonala.
      */
-    public void saveGame(GameManager gameManager, String output) {
+    public void saveGame(GameManager gameManager) {
         try {
+            String output = sourceFolder + "/output/output.xml";
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.newDocument();
@@ -321,7 +338,6 @@ public class XMLParser {
             StreamResult result = new StreamResult(new File(output));
             transformer.transform(source, result);
 
-            System.out.println("Játék sikeresen mentve: " + output);
         } catch (Exception e) {
             System.err.println("Hiba történt a játék mentésekor: " + e.getMessage());
             e.printStackTrace();
@@ -528,6 +544,7 @@ public class XMLParser {
             File outputFilePath = new File(outputFile);
             File assertFilePath = new File(assertFile);
 
+
             if (!outputFilePath.exists()) {
                 System.err.println("HIBA: Kimeneti fájl nem található: " + outputFile);
                 return false;
@@ -544,19 +561,31 @@ public class XMLParser {
             outputDoc.getDocumentElement().normalize();
             assertDoc.getDocumentElement().normalize();
 
-            System.out.println("=== XML Fájl Összehasonlítás ===");
-            System.out.println("Kimeneti fájl: " + outputFile);
-            System.out.println("Elvárt fájl: " + assertFile);
-            System.out.println();
+            /// /CONSOL OUT
+            try {
+                outputStream.write(("=== XML Fájl Összehasonlítás ===\n").getBytes());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
             boolean isEqual = compareElements(outputDoc.getDocumentElement(),
                     assertDoc.getDocumentElement(),
                     "");
 
             if (isEqual) {
-                System.out.println("✓ A fájlok azonosak!");
+                /// /CONSOL OUT
+                try {
+                    outputStream.write(("✓ A fájlok azonosak!\n").getBytes());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             } else {
-                System.out.println("✗ A fájlok különböznek!");
+                /// /CONSOL OUT
+                try {
+                    outputStream.write(("✗ A fájlok különböznek!\n").getBytes());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
 
             return isEqual;
@@ -690,9 +719,12 @@ public class XMLParser {
 
         // 1. Tag nevek összehasonlítása
         if (!outputElement.getTagName().equals(assertElement.getTagName())) {
-            System.out.println("✗ HIBA: Tag név különbözik a " + path + " szinten");
-            System.out.println("  Kimenet: <" + outputElement.getTagName() + ">");
-            System.out.println("  Elvárt:  <" + assertElement.getTagName() + ">");
+            /// /CONSOL OUT
+            try {
+                outputStream.write(("✗ HIBA: Tag név különbözik a " + path + " szinten\n" + "  Kimenet: <" + outputElement.getTagName() + ">\n" + "  Elvárt:  <" + assertElement.getTagName() + ">\n").getBytes());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             return false;
         }
 
@@ -721,9 +753,12 @@ public class XMLParser {
 
         // Gyermek elemek száma
         if (outputElementChildren.size() != assertElementChildren.size()) {
-            System.out.println("✗ HIBA: " + currentPath + " - Gyermek elemek száma különbözik");
-            System.out.println("  Kimenet: " + outputElementChildren.size() + " elem");
-            System.out.println("  Elvárt:  " + assertElementChildren.size() + " elem");
+            /// /CONSOL OUT
+            try {
+                outputStream.write(("✗ HIBA: " + currentPath + " - Gyermek elemek száma különbözik\n" + "  Kimenet: " + outputElementChildren.size() + " elem\n" + "  Elvárt:  " + assertElementChildren.size() + " elem\n").getBytes());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             isEqual = false;
         }
 
@@ -743,15 +778,24 @@ public class XMLParser {
         if (outputElementChildren.size() > assertElementChildren.size()) {
             for (int i = assertElementChildren.size(); i < outputElementChildren.size(); i++) {
                 Element extra = outputElementChildren.get(i);
-                System.out.println("✗ HIBA: " + currentPath + " - Extra elem a kimenetben: <" +
-                        extra.getTagName() + ">");
+                /// /CONSOL OUT
+                try {
+                    outputStream.write(("✗ HIBA: " + currentPath + " - Extra elem a kimenetben: <" +
+                            extra.getTagName() + ">\n").getBytes());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 isEqual = false;
             }
         } else if (assertElementChildren.size() > outputElementChildren.size()) {
             for (int i = outputElementChildren.size(); i < assertElementChildren.size(); i++) {
                 Element missing = assertElementChildren.get(i);
-                System.out.println("✗ HIBA: " + currentPath + " - Hiányzó elem a kimenetből: <" +
-                        missing.getTagName() + ">");
+                try {
+                    outputStream.write(("✗ HIBA: " + currentPath + " - Hiányzó elem a kimenetből: <" +
+                            missing.getTagName() + ">\n").getBytes());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 isEqual = false;
             }
         }
@@ -779,9 +823,12 @@ public class XMLParser {
         int actualAttrCount = outputAttrs.getLength();
 
         if (actualAttrCount != expectedAttrCount) {
-            System.out.println("✗ HIBA: <" + tagName + "> - Attribútumok száma különbözik");
-            System.out.println("  Kimenet: " + actualAttrCount + " attribútum");
-            System.out.println("  Elvárt:  " + expectedAttrCount + " attribútum");
+            /// /CONSOL OUT
+            try {
+                outputStream.write(("✗ HIBA: <" + tagName + "> - Attribútumok száma különbözik\n" + "  Kimenet: " + actualAttrCount + " attribútum\n" + "  Elvárt:  " + expectedAttrCount + " attribútum\n").getBytes());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             isEqual = false;
         }
 
@@ -794,13 +841,21 @@ public class XMLParser {
             String outputValue = outputElement.getAttribute(attrName);
 
             if (outputValue == null || outputValue.isEmpty()) {
-                System.out.println("✗ HIBA: <" + tagName + "> [" + path + "]");
-                System.out.println("  Hiányzó attribútum: " + attrName);
+                /// /CONSOL OUT
+                try {
+                    outputStream.write(("✗ HIBA: <" + tagName + "> [" + path + "]\n" +  "  Hiányzó attribútum: " + attrName + "\n").getBytes());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 isEqual = false;
             } else if (!outputValue.equals(assertValue)) {
-                System.out.println("✗ HIBA: <" + tagName + "> attribútum: " + attrName + " [" + path + "]");
-                System.out.println("  Kimenet: " + attrName + "=\"" + outputValue + "\"");
-                System.out.println("  Elvárt:  " + attrName + "=\"" + assertValue + "\"");
+
+                /// /CONSOL OUT
+                try {
+                    outputStream.write(("✗ HIBA: <" + tagName + "> attribútum: " + attrName + " [" + path + "]\n" + "  Kimenet: " + attrName + "=\"" + outputValue + "\"\n" + "  Elvárt:  " + attrName + "=\"" + assertValue + "\"\n").getBytes());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 isEqual = false;
             }
         }
@@ -812,9 +867,13 @@ public class XMLParser {
 
             if (assertElement.getAttribute(attrName) == null ||
                     assertElement.getAttribute(attrName).isEmpty()) {
-                System.out.println("✗ HIBA: <" + tagName + "> [" + path + "]");
-                System.out.println("  Extra attribútum a kimenetben: " + attrName + "=\"" +
-                        outputAttr.getValue() + "\"");
+                /// /CONSOL OUT
+                try {
+                    outputStream.write(("✗ HIBA: <" + tagName + "> [" + path + "]\n" + "  Extra attribútum a kimenetben: " + attrName + "=\"" +
+                            outputAttr.getValue() + "\"\n").getBytes());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 isEqual = false;
             }
         }

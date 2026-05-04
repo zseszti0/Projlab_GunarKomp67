@@ -25,6 +25,7 @@ enum ProgramStates {
  */
 public class ProtoController {
     private static ProgramStates state = ProgramStates.IDLE;
+    private static String sourceFolder;
 
     private static GameManager gameManager;
     private static HashMap<String, ConfigCommand> configCommands;
@@ -53,8 +54,9 @@ public class ProtoController {
         OutputStream outputStream = System.out;
         if (args.length > 0) {
             try {
-                inputStream = new FileInputStream(args[0]);
-                outputStream = new FileOutputStream(args[1]);
+                sourceFolder = args[0];
+                inputStream = new FileInputStream(sourceFolder + "/act/act.txt");
+                outputStream = new FileOutputStream(sourceFolder + "/output/output.txt");
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
@@ -70,19 +72,12 @@ public class ProtoController {
         gameCommands.put("drive", new Drive());
         configCommands.put("npcdriver", new NPCDriver());
         gameCommands.put("pass", new Pass());
-        gameCommands.put("save", new Save());
         configCommands.put("snowshovel", new SnowShovel());
         gameCommands.put("switchattachment", new SwitchAttachment());
 
 
-        /// /CONSOL OUT
-        try {
-            outputStream.write(("A játék elkezdődött, a hó hullik Zúzmaravárosban.\n").getBytes());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        Scanner scanner = new Scanner(inputStream);
         while (true) {
-            Scanner scanner = new Scanner(inputStream);
             String input = scanner.nextLine();
             List<String> in_args = Arrays.asList(input.split(" "));
             String command = in_args.get(0);
@@ -101,7 +96,7 @@ public class ProtoController {
                     switch (command) {
                         case "new": {
                             gameManager = new GameManager();
-                            XMLParser parser = new XMLParser();
+                            XMLParser parser = new XMLParser(sourceFolder);
                             List<Tile> map = parser.loadMap(in_args.get(0));
                             gameManager.setMap(map);
                             if(in_args.size() > 1) {
@@ -119,7 +114,7 @@ public class ProtoController {
                             break;
                         }
                         case "load": {
-                            XMLParser parser = new XMLParser();
+                            XMLParser parser = new XMLParser(sourceFolder);
                             gameManager = parser.loadGame(in_args.get(0));
                             state = ProgramStates.GAME;
 
@@ -162,7 +157,18 @@ public class ProtoController {
                     if(command.equals("exit")) {
                         state = ProgramStates.IDLE;
                     }
-                    if(!gameCommands.get(command).execute(gameManager,in_args, outputStream)){
+                    if(command.equals("save")) {
+                        XMLParser parser = new XMLParser(sourceFolder);
+                        parser.saveGame(gameManager);
+
+                        /// /CONSOL OUT
+                        try {
+                            outputStream.write(("A játékállás sikeresen elmentve a(z) " + sourceFolder + "/output/output.xml" + "fájlba. A játék folytatódik.\n").getBytes());
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    else if(!gameCommands.get(command).execute(gameManager,in_args, outputStream)){
                         try {
                             outputStream.write(("Error Command").getBytes());
                         } catch (IOException e) {

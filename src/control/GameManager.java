@@ -1,6 +1,5 @@
 package control;
 
-import control.commands.Save;
 import model.map.Tile;
 import model.players.*;
 import model.shop.attachements.*;
@@ -12,7 +11,6 @@ import model.shop.consumables.Salt;
 import model.vehicles.Bus;
 import model.vehicles.SnowShovel;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -352,6 +350,9 @@ public class GameManager {
         if(currentActorRemainingAp == 0){
             pass();
             currentActorRemainingAp = 2;
+            /// /CONSOL OUT
+            System.out.println(currentActorId+" lépése következik.");
+
         }
     }
 }
