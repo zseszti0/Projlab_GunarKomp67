@@ -24,7 +24,7 @@
     <cleaner id="Takarito1">
         <snowShovel id="1">
             <position id="Tile1"/>
-            <attachment id="Att1" type="SweeperHead"/>
+            <attachment id="Attachment1" type="SweeperHead"/>
         </snowShovel>
         <inventory>
             <money amount="100"/>
