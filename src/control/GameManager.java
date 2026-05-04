@@ -59,6 +59,7 @@ public class GameManager {
         for(int i = 0; i < items.size(); i++)
             prices.add(10);
         prices.set(0,60);
+        prices.set(9, 100);
 
         shop = new Shop(items, purchasables, prices);
     }
@@ -265,7 +266,7 @@ public class GameManager {
         Cleaner currentActor = cleaners.stream().filter(cleaner -> cleaner.getName().equals(currentActorId)).findFirst().orElse(null);
         if(currentActor == null)
             return false;
-        currentActor.shop("snowShovel", shop,pos);
+        currentActor.shop("SnowShovel", shop,pos);
 
         turnEnd();
         return true;
