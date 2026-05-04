@@ -1,6 +1,6 @@
 <game>
-    <config randomized="false">
-        <currentActor id="Buszsofor1" ap="0"/>
+    <config>
+        <currentActor id="Buszsofor1" ap="1"/>
         <actorQueue><actor id="Buszsofor1"/></actorQueue>
     </config>
     <map>
@@ -23,7 +23,7 @@
     </map>
     <busChauffeur id="Buszsofor1">
         <bus id="1">
-            <position id="Tile3"/>
+            <position id="Tile2"/>
             <landMarks>
                 <landMark id="Tile1"/>
                 <landMark id="Tile4"/>

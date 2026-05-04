@@ -178,10 +178,15 @@ public class Tile implements IAutomatic {
      */
     public void update() {
         if (isSalted) {
-            state.snowMelt();
+            state = state.snowMelt();
         } else {
-            state.snowFall();
-            isRubbled = false;
+            state = state.snowFall();
+
+            if(isRubbled) {
+                rubbleFadingIndex = (rubbleFadingIndex + 1) % 2;
+                if (rubbleFadingIndex == 0)
+                    isRubbled = false;
+            }
         }
     }
 
@@ -318,6 +323,7 @@ public class Tile implements IAutomatic {
      */
     public boolean cleanTile(CobblestoneHead a) {
         this.isRubbled = true;
+        rubbleFadingIndex = 0;
         return false;
     }
 

@@ -42,7 +42,7 @@ public class NPCDriver extends AbstractVehicleOwner<Car> implements IAutomatic {
                 Vehicle collided = c.moveTo(nt);
                 if (collided == null) {
                     c.checkDestinationReached();
-                } else if (collided != null) {
+                } else if (collided != c) {
                     c.getHitByCar();
                     collided.getHitByCar();
                 }

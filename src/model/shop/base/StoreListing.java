@@ -26,9 +26,9 @@ public class StoreListing {
      * @param price a targy ara
      * @param purchasable maga a targy (ami a peldanyositaskor alapul szolgal)
      */
-    public StoreListing(int price, Purchasable purchasable) {
+    public StoreListing(int price, Supplier<Purchasable> purchasable) {
         this.price = price;
-        this.factory = () -> purchasable;
+        this.factory = purchasable;
     }
 
 

@@ -1,3 +1,4 @@
-load blower_fail_cases.xml
+load tests/cleaner/clean/ccleanfail_blower_clean/arrange/blower_fail_cases.xml
 drive 1 Tile_CleanTest
+save
 exit

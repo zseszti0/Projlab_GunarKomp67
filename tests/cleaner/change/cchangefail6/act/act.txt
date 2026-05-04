@@ -1,3 +1,4 @@
-load two_tile_map.xml
+load tests/cleaner/change/cchangefail6/arrange/two_tile_map.xml
 switchattachment 1 CobblestoneHead
+save
 exit

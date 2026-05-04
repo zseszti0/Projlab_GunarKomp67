@@ -8,7 +8,7 @@
             <neighbors><neighbor id="Tile2"/></neighbors>
             <lanes><lane id="Lane1"/></lanes>
         </tile>
-        <tile id="Tile2" type="Shallow Snowy">
+        <tile id="Tile2" type="ShallowSnowy">
             <neighbors><neighbor id="Tile1"/><neighbor id="Tile3"/></neighbors>
             <lanes><lane id="Lane1"/></lanes>
         </tile>

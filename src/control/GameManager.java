@@ -13,6 +13,7 @@ import model.vehicles.SnowShovel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * A játék központi vezérlő osztálya.
@@ -31,7 +32,7 @@ public class GameManager {
      */
     public static void setUpShop() {
         List<String> items = new ArrayList<>();
-        List<Purchasable> purchasables = new ArrayList<>();
+        List<Supplier<Purchasable>> purchasables = new ArrayList<>();
         List<Integer> prices = new ArrayList<>();
 
         items.add("BlowerHead");
@@ -45,20 +46,22 @@ public class GameManager {
         items.add("Rubble");
         items.add("SnowShovel");
 
-        purchasables.add(new BlowerHead("BlowerHead"));
-        purchasables.add(new CobblestoneHead("CobbleStoneHead"));
-        purchasables.add(new DragonHead("DragonHead"));
-        purchasables.add(new IcebreakerHead("IcebreakerHead"));
-        purchasables.add(new SalterHead("SalterHead"));
-        purchasables.add(new SweeperHead("SweeperHead"));
-        purchasables.add(new Biokerosene(1, "Biokerosene"));
-        purchasables.add(new Salt(1, "Salt"));
-        purchasables.add(new Rubble(1, "Rubble"));
-        purchasables.add(new SnowShovel("SnowShovel"));
+        purchasables.add(() -> new BlowerHead("BlowerHead"));
+        purchasables.add(() -> new CobblestoneHead("CobbleStoneHead"));
+        purchasables.add(() -> new DragonHead("DragonHead"));
+        purchasables.add(() -> new IcebreakerHead("IcebreakerHead"));
+        purchasables.add(() -> new SalterHead("SalterHead"));
+        purchasables.add(() -> new SweeperHead("SweeperHead"));
+        purchasables.add(() -> new Biokerosene(1, "Biokerosene"));
+        purchasables.add(() -> new Salt(1, "Salt"));
+        purchasables.add(() -> new Rubble(1, "Rubble"));
+        purchasables.add(() -> new SnowShovel("SnowShovel"));
 
         for(int i = 0; i < items.size(); i++)
-            prices.add(100);
-
+            prices.add(10);
+        prices.set(0,60);
+        prices.set(5,50);
+        prices.set(9, 100);
 
         shop = new Shop(items, purchasables, prices);
     }
@@ -242,11 +245,13 @@ public class GameManager {
      * 2. Meghívja a takarító "hókotró-specifikus" vásárló metódusát, megadva a boltot és a lehelyezési célmezőt.
      * @return true, ha a takarító megvan és a folyamat elindult.
      */
-    public boolean orderItem(String s) {
+    public boolean orderItem(String s, int amount) {
         Cleaner currentActor = cleaners.stream().filter(cleaner -> cleaner.getName().equals(currentActorId)).findFirst().orElse(null);
         if(currentActor == null)
             return false;
-        currentActor.shop(s, shop);
+
+        for(int i = 0; i < amount; i++)
+            currentActor.shop(s, shop);
 
         turnEnd();
         return true;
@@ -263,7 +268,7 @@ public class GameManager {
         Cleaner currentActor = cleaners.stream().filter(cleaner -> cleaner.getName().equals(currentActorId)).findFirst().orElse(null);
         if(currentActor == null)
             return false;
-        currentActor.shop("snowShovel", shop,pos);
+        currentActor.shop("SnowShovel", shop,pos);
 
         turnEnd();
         return true;

@@ -3,6 +3,7 @@ package model.shop.base;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  * A bolt osztaly, amely tarolja a takarito altal megvasarolhato arukat.
@@ -22,7 +23,7 @@ public class Shop {
      * @param purchasablesPrices az arucikkek arai
      * @throws IllegalArgumentException ha a listak meretei nem egyeznek meg
      */
-    public Shop(List<String> purchasablesNames, List<Purchasable> purchasables, List<Integer> purchasablesPrices) throws IllegalArgumentException {
+    public Shop(List<String> purchasablesNames, List<Supplier<Purchasable>> purchasables, List<Integer> purchasablesPrices) throws IllegalArgumentException {
         if(purchasablesNames.size() != purchasables.size() || purchasables.size() != purchasablesPrices.size())
             throw new IllegalArgumentException("Nem egyezik meg a nevek, árak és az árucikkek száma!");
 

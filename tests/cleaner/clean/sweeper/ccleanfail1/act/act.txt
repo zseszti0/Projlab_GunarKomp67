@@ -1,3 +1,4 @@
-load sweeper_fail_cases.xml
+load tests/cleaner/clean/sweeper/ccleanfail1/arrange/sweeper_fail_cases.xml
 drive 1 Tile_IcyTest
+save
 exit

@@ -1,3 +1,4 @@
-load sweeper_fail_cases.xml
+load tests/cleaner/clean/sweeper/ccleanfail_sweeper_clean/arrange/sweeper_fail_cases.xml
 drive 1 Tile_CleanTest
+save
 exit

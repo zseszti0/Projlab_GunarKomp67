@@ -1,3 +1,4 @@
-load dragon_full_success.xml
+load tests/cleaner/clean/dragon/cclean6/arrange/dragon_full_success.xml
 drive 1 Tile_Deep
+save
 exit

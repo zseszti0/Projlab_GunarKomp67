@@ -1,3 +1,4 @@
-load blower_success_cases.xml
+load tests/cleaner/clean/blower/cclean3/arrange/blower_success_cases.xml
 drive 1 Tile_Deep
+save
 exit

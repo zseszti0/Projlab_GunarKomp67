@@ -23,25 +23,23 @@ public class Buy extends GameCommand {
      */
     @Override
     public boolean execute(GameManager gameManager, List<String> args, OutputStream output) {
-        int iterate = 1;
+        int amount = 1;
         if(args.size() > 1){
-            iterate = Integer.parseInt(args.get(1));
+            amount = Integer.parseInt(args.get(2));
         }
         boolean success = true;
-        for(int i = 0; i < iterate; i++){
-            if(!gameManager.orderItem(args.get(0)))
-                success = false;
-        }
+        gameManager.orderItem(args.get(0),amount);
+
         if(success){
-            /// /CONSOL OUT
+            //CONSOLE OUT
             try {
-                output.write(("A vásárlás sikeres. Bevételezve:"+ args.get(0)+".\n").getBytes());
+                output.write(("A vásárlás sikeres. "+ args.get(0)+" vásárolva.\n").getBytes());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
         else {
-            /// /CONSOL OUT
+            //CONSOLE OUT
             try {
                 output.write((" A vásárlás sikertelen, nincs elég tőke.\n").getBytes());
             } catch (IOException e) {

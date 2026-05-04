@@ -1,5 +1,5 @@
 <game>
-    <config randomized="false">
+    <config>
         <currentActor id="Buszsofor1" ap="1"/>
         <actorQueue><actor id="Buszsofor1"/></actorQueue>
     </config>
@@ -8,7 +8,7 @@
             <neighbors><neighbor id="Tile2"/></neighbors>
             <lanes><lane id="Lane1"/></lanes>
         </tile>
-        <tile id="Tile2" type="Shallow Snowy">
+        <tile id="Tile2" type="ShallowSnowy">
             <neighbors><neighbor id="Tile1"/><neighbor id="Tile3"/></neighbors>
             <lanes><lane id="Lane1"/></lanes>
         </tile>
@@ -23,8 +23,9 @@
             <landMarks>
                 <landMark id="Tile1"/>
                 <landMark id="Tile3"/>
-                <destination id="Tile3"/>
             </landMarks>
+
+            <destination id="Tile3"/>
         </bus>
     </busChauffeur>
 </game>
