@@ -11,9 +11,9 @@ import model.vehicles.SnowShovel;
 import model.vehicles.Vehicle;
 
 /**
- * A modellbeli mezo, a varos uthalozatanak egy egysege.
- * Felelossege tarolni az utallapotokat, szomszedokat es vegrehajtani az allapotvaltozasokat.
- * Asszociaciok: TileState (a mezo allapota), Tile (szomszedos mezok), Lane (sav, amihez tartozik), Vehicle (a rajta allo jarmu)
+ * A modellbeli mező, a város úthálózatának egy egysége.
+ * Felelőssége tárolni az útállapotokat, szomszédokat és végrehajtani az állapotváltozásokat.
+ * Asszociációk: TileState (a mező állapota), Tile (szomszédos mezők), Lane (sáv, amihez tartozik), Vehicle (a rajta álló jármű)
  */
 public class Tile implements IAutomatic {
 
@@ -65,9 +65,12 @@ public class Tile implements IAutomatic {
 
 
     /**
-     * Konstruktor a Tile osztalyhoz.
-     * @param state a mezo kezdeti allapota
-     * @param lanes a sav, amelyhez a mezo tartozik
+     * Konstruktor a Tile osztályhoz.
+     * Beállítja a nevet, az állapotot és a sávokat.
+     * A sótlan állapotot (`isSalted = false`) és a tömörödési indexet (`compressionIndex = 0`) alaphelyzetbe állítja.
+     * @param name a mező azonosító neve
+     * @param state a mező kezdeti állapota
+     * @param lanes a sávok listája, amelyhez a mező tartozik
      */
     public Tile(String name, TileState state, List<Lane> lanes) {
         this.name = name;
@@ -79,7 +82,9 @@ public class Tile implements IAutomatic {
     }
 
     /**
-     * Teljes konstruktor, amit az XML parser hasznal: lehetoseget ad a belso mezotulajdonsagok beallitasa-ra.
+     * Teljes konstruktor, amit az XML parser használ.
+     * Az összes belső attribútumot közvetlenül inicializálja a paraméterek alapján.
+     * Ha a kapott `state` null, akkor automatikusan a `CleanTileState.getInstance()`-t állítja be.
      */
     public Tile(String name, TileState state, boolean isSalted, boolean isRubbled,
                 int compressionIndex, int saltMeltingIndex, int rubbleFadingIndex,

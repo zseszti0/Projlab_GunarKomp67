@@ -5,8 +5,9 @@ import model.vehicles.Bus;
 import model.vehicles.SnowShovel;
 
 /**
- * A mely havas mezoallapot. A jarmuvek elakadhatnak benne.
- * Singleton tervezesi mintat hasznal.
+ * A mély havas mezőállapot. A nehéz járművek (autók, buszok) elakadhatnak benne,
+ * csak a hókotrók tudják normálisan megtisztítani.
+ * Singleton tervezési mintát használ.
  */
 public class DeepSnowyTileState extends SnowyTileState {
     private static final String name = "DeepSnowyTileState";
@@ -16,16 +17,16 @@ public class DeepSnowyTileState extends SnowyTileState {
     private DeepSnowyTileState() {}
 
     /**
-     * Visszaadja a DeepSnowyTileState egyetlen peldanyat.
-     * @return a DeepSnowyTileState peldany
+     * Visszaadja a DeepSnowyTileState egyetlen példányát.
+     * * @return A DeepSnowyTileState singleton példány.
      */
     public static DeepSnowyTileState getInstance() {
         return instance == null ? instance = new DeepSnowyTileState() : instance;
     }
 
     /**
-     * Kezeli a hoesest. Mely havas mezon a hoeses nem valtoztat az allapoton.
-     * @return onmaga (DeepSnowyTileState)
+     * Kezeli a hóesést. Mély havas mezőn a hóesés már nem változtat az állapoton (nem lesz még mélyebb).
+     * * @return Önmagával (DeepSnowyTileState) tér vissza.
      */
     @Override
     public TileState snowFall() {
@@ -33,23 +34,27 @@ public class DeepSnowyTileState extends SnowyTileState {
     }
 
     /**
-     * Kezeli a ho olvadasat. A mely ho elolvadasaval a mezo sekely havas allapotba kerul.
-     * @return sekely havas mezoallapot (ShallowSnowyTileState)
+     * Kezeli a hó olvadását. A mély hó elolvadásával a mező egy szinttel lejjebb, sekély havas állapotba kerül.
+     * * @return A sekély havas mezőállapot (ShallowSnowyTileState).
      */
     @Override
     public TileState snowMelt() {
         return ShallowSnowyTileState.getInstance();
     }
 
+    /**
+     * Félretolja a mély havat a szomszédokra.
+     * * @param tile A mező, amiről a havat tolják.
+     */
     @Override
     public void sweepSnowToSide(Tile tile){
         tile.acceptSweptSnow(DeepSnowyTileState.getInstance());
     }
 
     /**
-     * Kezeli a jarmu mezore erkezeset, jelez ha érvénytelen lépés
-     * @param v az érkező jármű
-     * @return elfogadta-e a járművet
+     * Megakadályozza, hogy egy busz áthaladjon a mély havas mezőn.
+     * * @param v Az érkező busz.
+     * @return false (a lépés érvénytelen/blokkolt).
      */
     @Override
     public boolean acceptVehicle(Bus v) {return false;}
