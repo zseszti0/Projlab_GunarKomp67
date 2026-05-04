@@ -1,3 +1,4 @@
-load switch_test_2tiles_dragonhead.xml
+load tests/cleaner/change/cchange5/arrange/switch_test_2tiles_dragonhead.xml
 switchattachment 1 dragonhead
+save
 exit
