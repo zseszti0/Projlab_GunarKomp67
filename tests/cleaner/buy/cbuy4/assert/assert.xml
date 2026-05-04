@@ -22,7 +22,7 @@
             <position id="Tile1"/>
             <attachment id="Attachment1" type="SweeperHead"/>
         </snowShovel>
-        <snowShovel id="2">
+        <snowShovel id="SnowShovel">
             <position id="Tile2"/>
             <attachment id="Attachment2" type="SweeperHead"/>
         </snowShovel>

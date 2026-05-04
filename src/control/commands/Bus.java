@@ -18,7 +18,7 @@ public class Bus extends ConfigCommand {
      * 1. Megkeresi a megadott nevű (args[0]) buszvezetőt a GameManager-ben. Ha nincs ilyen, kilép.
      * 2. Megkeresi a játéktér mezői között a célmezőt a megadott név (args[1]) alapján.
      * 3. Példányosít egy új buszt, amelynek neve a vezető nevéből és a már birtokolt járművei számából áll össze.
-     * 4. Hozzáadja az új buszt a vezetőhöz, és egyúttal le is helyezi a célmezőre.
+     * 4. Hozzáadja az új buszt a vezetőhöz, és egyúttal beállítja a busz pozícióját a célmezőre.
      *
      * @param gameManager A játék állapotát kezelő objektum.
      * @param args args[0]: a buszvezető neve, args[1]: a célmező neve.
@@ -33,7 +33,7 @@ public class Bus extends ConfigCommand {
         Tile pos = tiles.stream().filter(tile -> tile.getName().equals(args.get(1))).findFirst().orElse(null);
         busChaffeur.addBus(new model.vehicles.Bus(args.get(0) + busChaffeur.getVehicles().size(),pos ,null));
 
-        /// /CONSOL OUT
+        //CONSOLE OUT
         try {
             output.write(("Egy új busz sikeresen hozzáadva a(z)"+args.get(0)+" nevű játékos flottájához. A jármű a(z) <mező> mezőn kezd.\n").getBytes());
         } catch (IOException e) {
