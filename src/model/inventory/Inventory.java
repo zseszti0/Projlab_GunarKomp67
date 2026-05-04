@@ -26,8 +26,9 @@ public class Inventory {
     private List<Consumable> consumables = new ArrayList<>();
 
     /**
-     * Konstruktor, amely létrehoz egy új eszköztárat a megadott névvel.
-     * @param name Az eszköztár neve
+     * Konstruktor, amely létrehoz egy új eszköztárat a megadott névvel és kezdeti pénzzel.
+     * @param name Az eszköztár azonosítója/neve.
+     * @param money A kezdeti pénzösszeg.
      */
     public Inventory(String name, int money){
         this.name=name;
@@ -35,7 +36,12 @@ public class Inventory {
     }
 
     /**
-     * Teljes konstruktor, amely lehetővé teszi a kezdeti tartalom beallitását (XML parserhez).
+     * Teljes konstruktor, amely lehetővé teszi a kezdeti tartalom (pénz, felszerelések, fogyóeszközök) beállítását.
+     * Elsősorban az XML parser használja játékállás betöltésekor.
+     * @param name Az eszköztár neve.
+     * @param money A kezdeti pénzmennyiség.
+     * @param attachments A már birtokolt kotrófejek listája.
+     * @param consumables A már birtokolt fogyóeszközök listája.
      */
     public Inventory(String name, int money, List<Attachment> attachments, List<Consumable> consumables){
         this.name = name;
@@ -68,23 +74,26 @@ public class Inventory {
         return false;
     }
 
+    /**
+     * Visszaadja az aktuális pénzmennyiséget.
+     * * @return A rendelkezésre álló pénzösszeg.
+     */
     public int getMoney(){
         return money;
     }
 
-
     /**
-     * Kicseréli a hókotróról levetett kotrófejet az eszköztárban.
-     * A régi fej az eszköztárba kerül.
-     * @param oldA A levetett kotrófej
+     * Kicseréli a hókotróról levetett kotrófejet.
+     * A járműről leszedett, régi fejet eltárolja az eszköztárban.
+     * @param oldA A levetett kotrófej, amit el kell rakni az Inventory-ba.
      */
     public void switchAttachment(Attachment oldA){
             attachments.add(oldA);
     }
 
     /**
-     * Hozzáad egy új kotrófejet az eszköztárhoz.
-     * @param a A hozzáadandó kotrófej
+     * Hozzáad egy újonnan szerzett (pl. vásárolt) kotrófejet az eszköztárhoz.
+     * @param a A hozzáadandó kotrófej.
      */
     public void addAttachment(Attachment a){
             attachments.add(a);
@@ -92,7 +101,8 @@ public class Inventory {
 
     /**
      * Hozzáad sót az eszköztárhoz.
-     * @param s A hozzáadandó só
+     * Ha már létezik só a készletben, megnöveli annak a mennyiségét, egyébként új elemként adja hozzá.
+     * @param s A hozzáadandó só.
      */
     public void addConsumable(Salt s){
         for(Consumable c : consumables){
@@ -105,7 +115,8 @@ public class Inventory {
 
     /**
      * Hozzáad biokerozint az eszköztárhoz.
-     * @param b A hozzáadandó biokerozin
+     * Ha már létezik biokerozin a készletben, megnöveli annak mennyiségét, egyébként újként hozzáadja.
+     * @param b A hozzáadandó biokerozin.
      */
     public void addConsumable(Biokerosene b){
         for(Consumable c : consumables){
@@ -143,14 +154,27 @@ public class Inventory {
         return true;
     }
 
+    /**
+     * Visszaadja az eszköztárban lévő kotrófejek listáját.
+     * @return A birtokolt kotrófejek (Attachment) listája.
+     */
     public List<Attachment> getAttachments() {
         return attachments;
     }
 
+    /**
+     * Visszaadja az eszköztárban lévő fogyóeszközök listáját.
+     * @return A birtokolt fogyóeszközök (Consumable) listája.
+     */
     public List<Consumable> getConsumables(){
         return consumables;
     }
 
+    /**
+     * Név alapján kikeres és kivesz egy kotrófejet az eszköztárból (pl. felszereléshez).
+     * @param newAttachment A kivenni kívánt kotrófej neve (azonosítója).
+     * @return A megtalált {@link Attachment} objektum (amely ezután kikerül a listából), vagy null, ha nincs ilyen.
+     */
     public Attachment getAttachment(String newAttachment) {
         for(Attachment a : attachments){
             if(a.getName().equals(newAttachment)){
