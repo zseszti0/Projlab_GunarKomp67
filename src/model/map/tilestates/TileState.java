@@ -60,7 +60,7 @@ public abstract class TileState {
      * @param dh A tisztítást végző sárkányfej.
      * @return Az új mezőállapot a tisztítás után.
      */
-    public TileState cleanedBy(DragonHead dh) {return this;}
+    public TileState cleanedBy(DragonHead dh) {return CleanTileState.getInstance();}
 
 
     /**
@@ -68,14 +68,14 @@ public abstract class TileState {
      * @param ssts A beérkező sekély hó állapot példánya.
      * @return Az új mezőállapot a hó érkezése után.
      */
-    public TileState acceptSweptSnow(ShallowSnowyTileState ssts) {return this;}
+    public TileState acceptSweptSnow(ShallowSnowyTileState ssts) {return ShallowSnowyTileState.getInstance();}
 
     /**
      * Kezeli a szomszédos mezőről átsöpört (vagy fújt) mély hó érkezését.
      * @param dsts A beérkező mély hó állapot példánya.
      * @return Az új mezőállapot a hó érkezése után.
      */
-    public TileState acceptSweptSnow(DeepSnowyTileState dsts) {return this;}
+    public TileState acceptSweptSnow(DeepSnowyTileState dsts) {return DeepSnowyTileState.getInstance();}
 
     /**
      * Kezeli egy jármű mezőre érkezését, ami a hó tömörödését eredményezheti (pl. sekély hóból jég).

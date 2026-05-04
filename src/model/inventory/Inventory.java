@@ -25,6 +25,15 @@ public class Inventory {
     /** A tárolt fogyóeszközök listája. */
     private List<Consumable> consumables = new ArrayList<>();
 
+    private void setupConsumables(){
+        Salt s = new Salt(0, "Salt");
+        Biokerosene b = new Biokerosene(0, "Biokerosene");
+        Rubble r = new Rubble(0, "Rubble");
+        consumables.add(s);
+        consumables.add(b);
+        consumables.add(r);
+    }
+
     /**
      * Konstruktor, amely létrehoz egy új eszköztárat a megadott névvel és kezdeti pénzzel.
      * @param name Az eszköztár azonosítója/neve.
@@ -33,6 +42,7 @@ public class Inventory {
     public Inventory(String name, int money){
         this.name=name;
         this.money=money;
+        setupConsumables();
     }
 
     /**
@@ -48,6 +58,7 @@ public class Inventory {
         this.money = money;
         if(attachments != null) this.attachments = attachments;
         if(consumables != null) this.consumables = consumables;
+        setupConsumables();
     }
 
 

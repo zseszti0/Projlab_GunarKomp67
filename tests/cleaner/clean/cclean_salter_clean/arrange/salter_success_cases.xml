@@ -29,13 +29,13 @@
     </map>
     <cleaner id="Takarito1">
         <snowShovel id="1">
-            <position id="Tile_CleanTest"/>
+            <position id="Tile_Start"/>
             <attachment id="Att1" type="SalterHead"/>
         </snowShovel>
         <inventory>
             <money amount="0"/>
             <consumables>
-                <consumable id="Salt1" type="Salt" amount="0"/>
+                <consumable id="Salt1" type="Salt" amount="1"/>
             </consumables>
         </inventory>
     </cleaner>
