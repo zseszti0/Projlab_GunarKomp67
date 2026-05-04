@@ -35,7 +35,7 @@ public class Buy extends GameCommand {
         if(success){
             /// /CONSOL OUT
             try {
-                output.write(("A vásárlás sikeres. Bevételezve:"+ args.get(0)+".\n").getBytes());
+                output.write(("A vásárlás sikeres. "+ args.get(0)+" vásárolva.\n").getBytes());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

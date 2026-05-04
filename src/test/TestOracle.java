@@ -9,9 +9,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.List;
 
 public class TestOracle {
     public static void main(String[] args) {
+        if(args.length == 0){
+
+        }
         ProtoController.main(args);
         XMLParser parser = new XMLParser(args[0]);
 
@@ -31,4 +35,6 @@ public class TestOracle {
             throw new RuntimeException(e);
         }
     }
+
+
 }

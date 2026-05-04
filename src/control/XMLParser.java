@@ -213,9 +213,8 @@ public class XMLParser {
                 // Money
                 Element moneyElement = doc.createElement("money");
                 int money = cleaner.getInventory().getMoney();
-                if (money != 0) {
-                    moneyElement.setAttribute("amount", String.valueOf(money));
-                }
+                moneyElement.setAttribute("amount", String.valueOf(money));
+
                 invElement.appendChild(moneyElement);
 
                 // Attachments in Inventory
