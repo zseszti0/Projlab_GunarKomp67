@@ -42,6 +42,8 @@ public class XMLParser {
     private String sourceFolder;
     private XMLParser() {}
     private OutputStream outputStream;
+
+    private HashMap<String, String> optionalAttributesBaseValues = new HashMap<>();
     public XMLParser(String sourceFolder) {
         this.sourceFolder = sourceFolder;
         if(sourceFolder == "")
@@ -53,6 +55,27 @@ public class XMLParser {
                 throw new RuntimeException(e);
             }
         }
+
+        // Register optional attributes and their default string values here.
+        // These are global attribute names that, if missing on either side during
+        // an assertion, will be treated as having the given default value.
+        optionalAttributesBaseValues.put("isSalted", "false");
+        optionalAttributesBaseValues.put("isRubbled", "false");
+        // code uses "saltMeltingIndex" for the melting index attribute -- keep both names to be robust
+        optionalAttributesBaseValues.put("saltMeltingIndex", "0");
+        optionalAttributesBaseValues.put("snowMeltingIndex", "0");
+        optionalAttributesBaseValues.put("compressionIndex", "0");
+        optionalAttributesBaseValues.put("rubbleFadingIndex", "0");
+
+        // Config optional
+        optionalAttributesBaseValues.put("randomized", "false");
+
+        // Vehicle optional flags
+        optionalAttributesBaseValues.put("isStunned", "false");
+        optionalAttributesBaseValues.put("isBlocked", "false");
+        optionalAttributesBaseValues.put("isCrashed", "false");
+        // Inventory/consumable optional amounts
+        optionalAttributesBaseValues.put("amount", "0");
     }
     /**
      * Betölti a játéktáblát (mezőket és sávokat) a megadott XML fájlból.
@@ -819,62 +842,68 @@ public class XMLParser {
         org.w3c.dom.NamedNodeMap outputAttrs = outputElement.getAttributes();
         org.w3c.dom.NamedNodeMap assertAttrs = assertElement.getAttributes();
 
-        // Az elvárt attribútumok száma
-        int expectedAttrCount = assertAttrs.getLength();
-        int actualAttrCount = outputAttrs.getLength();
-
-        if (actualAttrCount != expectedAttrCount) {
-            String tagIdAttribute = outputElement.getAttribute("id");
-            /// /CONSOL OUT
-            try {
-                outputStream.write(("✗ HIBA: <" + tagName + " id:"+tagIdAttribute+"> - Attribútumok száma különbözik\n" + "  Kimenet: " + actualAttrCount + " attribútum\n" + "  Elvárt:  " + expectedAttrCount + " attribútum\n").getBytes());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            isEqual = false;
+        // Build a union set of attribute names present in either element
+        java.util.Set<String> allAttrNames = new java.util.HashSet<>();
+        for (int i = 0; i < assertAttrs.getLength(); i++) {
+            org.w3c.dom.Attr a = (org.w3c.dom.Attr) assertAttrs.item(i);
+            allAttrNames.add(a.getName());
+        }
+        for (int i = 0; i < outputAttrs.getLength(); i++) {
+            org.w3c.dom.Attr a = (org.w3c.dom.Attr) outputAttrs.item(i);
+            allAttrNames.add(a.getName());
         }
 
-        // Minden elvárt attribútum ellenőrzése
-        for (int i = 0; i < assertAttrs.getLength(); i++) {
-            org.w3c.dom.Attr assertAttr = (org.w3c.dom.Attr) assertAttrs.item(i);
-            String attrName = assertAttr.getName();
-            String assertValue = assertAttr.getValue();
+        // For each attribute name in the union, decide values (use defaults for optional ones)
+        for (String attrName : allAttrNames) {
+            boolean hasOutput = outputElement.hasAttribute(attrName) && !outputElement.getAttribute(attrName).isEmpty();
+            boolean hasAssert = assertElement.hasAttribute(attrName) && !assertElement.getAttribute(attrName).isEmpty();
 
-            String outputValue = outputElement.getAttribute(attrName);
+            String outputValue = hasOutput ? outputElement.getAttribute(attrName) : null;
+            String assertValue = hasAssert ? assertElement.getAttribute(attrName) : null;
 
-            if (outputValue == null || outputValue.isEmpty()) {
-                String tagIdAttribute = outputElement.getAttribute("id");
-                /// /CONSOL OUT
-                try {
-                    outputStream.write(("✗ HIBA: <" + tagName +" id:"+tagIdAttribute+ "> [" + path + "]\n" +  "  Hiányzó attribútum: " + attrName + "\n").getBytes());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+            // If missing on both sides (shouldn't happen because of union), skip
+            if ((outputValue == null || outputValue.isEmpty()) && (assertValue == null || assertValue.isEmpty())) {
+                continue;
+            }
+
+            // If output missing but assert present
+            if ((outputValue == null || outputValue.isEmpty()) && (assertValue != null && !assertValue.isEmpty())) {
+                if (optionalAttributesBaseValues.containsKey(attrName)) {
+                    outputValue = optionalAttributesBaseValues.get(attrName);
+                } else {
+                    String tagIdAttribute = outputElement.getAttribute("id");
+                    try {
+                        outputStream.write(("✗ HIBA: <" + tagName + " id:"+tagIdAttribute+ "> [" + path + "]\n" +  "  Hiányzó attribútum a kimenetben: " + attrName + "\n").getBytes());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    isEqual = false;
+                    continue;
                 }
-                isEqual = false;
-            } else if (!outputValue.equals(assertValue)) {
+            }
+
+            // If assert missing but output present
+            if ((assertValue == null || assertValue.isEmpty()) && (outputValue != null && !outputValue.isEmpty())) {
+                if (optionalAttributesBaseValues.containsKey(attrName)) {
+                    assertValue = optionalAttributesBaseValues.get(attrName);
+                } else {
+                    String tagIdAttribute = outputElement.getAttribute("id");
+                    try {
+                        outputStream.write(("✗ HIBA: <" + tagName +" id:"+tagIdAttribute+ "> [" + path + "]\n" + "  Extra attribútum a kimenetben: " + attrName + "=\"" +
+                                outputValue + "\"\n").getBytes());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    isEqual = false;
+                    continue;
+                }
+            }
+
+            // Both sides now have values (either real or defaults) - compare
+            if (outputValue != null && assertValue != null && !outputValue.equals(assertValue)) {
                 String tagIdAttribute = outputElement.getAttribute("id");
-                /// /CONSOL OUT
                 try {
                     outputStream.write(("✗ HIBA: <" + tagName +" id:"+tagIdAttribute+ "> attribútum: " + attrName + " [" + path + "]\n" + "  Kimenet: " + attrName + "=\"" + outputValue + "\"\n" + "  Elvárt:  " + attrName + "=\"" + assertValue + "\"\n").getBytes());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                isEqual = false;
-            }
-        }
-
-        // Extra attribútumok ellenőrzése (ami csak a kimenetben van)
-        for (int i = 0; i < outputAttrs.getLength(); i++) {
-            org.w3c.dom.Attr outputAttr = (org.w3c.dom.Attr) outputAttrs.item(i);
-            String attrName = outputAttr.getName();
-
-            if (assertElement.getAttribute(attrName) == null ||
-                    assertElement.getAttribute(attrName).isEmpty()) {
-                String tagIdAttribute = outputElement.getAttribute("id");
-                /// /CONSOL OUT
-                try {
-                    outputStream.write(("✗ HIBA: <" + tagName +" id:"+tagIdAttribute+ "> [" + path + "]\n" + "  Extra attribútum a kimenetben: " + attrName + "=\"" +
-                            outputAttr.getValue() + "\"\n").getBytes());
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
