@@ -16,8 +16,8 @@ public class TestOracle {
         XMLParser parser = new XMLParser(args[0]);
 
         String assertPath = args[0] + "/assert/assert.xml";
-        String outputPath = args[0] + "/output/output.xml";
-        String massageOutputPath = args[0] + "/output/output.txt";
+        String outputPath = args[0] + "/output.xml";
+        String massageOutputPath = args[0] + "/output.txt";
 
         FileInputStream inputStream = null;
         try {

@@ -56,7 +56,7 @@ public class ProtoController {
             try {
                 sourceFolder = args[0];
                 inputStream = new FileInputStream(sourceFolder + "/act/act.txt");
-                outputStream = new FileOutputStream(sourceFolder + "/output/output.txt");
+                outputStream = new FileOutputStream(sourceFolder + "/output.txt");
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
@@ -163,7 +163,7 @@ public class ProtoController {
 
                         /// /CONSOL OUT
                         try {
-                            outputStream.write(("A játékállás sikeresen elmentve a(z) " + sourceFolder + "/output/output.xml" + "fájlba. A játék folytatódik.\n").getBytes());
+                            outputStream.write(("A játékállás sikeresen elmentve a(z) " + sourceFolder + "/output.xml" + "fájlba. A játék folytatódik.\n").getBytes());
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }

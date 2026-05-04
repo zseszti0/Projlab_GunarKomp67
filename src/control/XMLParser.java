@@ -48,7 +48,7 @@ public class XMLParser {
             outputStream = System.out;
         else {
             try {
-                outputStream = new FileOutputStream(sourceFolder + "/output/output.txt",true);
+                outputStream = new FileOutputStream(sourceFolder + "/output.txt",true);
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
@@ -87,7 +87,7 @@ public class XMLParser {
      */
     public void saveGame(GameManager gameManager) {
         try {
-            String output = sourceFolder + "/output/output.xml";
+            String output = sourceFolder + "/output.xml";
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.newDocument();
