@@ -62,7 +62,7 @@ public class ShallowSnowyTileState extends SnowyTileState {
 
     /**
      * Félretolja a havat a szomszédos mezőkre.
-     * * @param tile Az a mező, amiről a havat letolják.
+     * @param tile Az a mező, amiről a havat letolják.
      */
     @Override
     public void sweepSnowToSide(Tile tile){
@@ -71,7 +71,7 @@ public class ShallowSnowyTileState extends SnowyTileState {
 
     /**
      * Engedélyezi egy autó rálépését a sekély havas mezőre.
-     * * @param v Az érkező autó.
+     * @param v Az érkező autó.
      * @return true (a lépés érvényes).
      */
     @Override
@@ -79,14 +79,14 @@ public class ShallowSnowyTileState extends SnowyTileState {
 
     /**
      * Kezeli a jármű áthaladását, ami a hó tömörödését (jégesedést) eredményezheti.
-     * * @return A jeges mezőállapot (IcyTileState) a jármű áthaladása után.
+     * @return A jeges mezőállapot (IcyTileState) a jármű áthaladása után.
      */
     @Override
     public TileState compressionReached(){return IcyTileState.getInstance();}
 
     /**
      * Növeli a kompressziós (tömörödési) indexet a jármű áthaladásakor.
-     * * @param compressionIndex Az eddigi kompressziós érték.
+     * @param compressionIndex Az eddigi kompressziós érték.
      * @return A megnövelt kompressziós érték.
      */
     @Override

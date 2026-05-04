@@ -26,7 +26,6 @@ public class SwitchAttachment extends GameCommand {
     @Override
     public boolean execute(GameManager gameManager, List<String> args, OutputStream output) {
         gameManager.switchAttachment(args.get(0), args.get(1));
-        /// /CONSOL OUT
         try {
             output.write(("A(z)"+ args.get(0)+". Számú hókotró feje sikeresen lecserélve a következőre: "+args.get(1)+".\n").getBytes());
         } catch (IOException e) {

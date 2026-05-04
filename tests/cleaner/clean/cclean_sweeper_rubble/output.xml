@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<game>
+    <config randomized="false">
+        <currentActor ap="1" id="Takarito1"/>
+        <actorQueue>
+            <actor id="Takarito1"/>
+        </actorQueue>
+    </config>
+    <map>
+        <tile id="Tile_Start" type="Clean">
+            <neighbors>
+                <neighbor id="Tile_Deep"/>
+                <neighbor id="Tile_Shallow"/>
+                <neighbor id="Tile_Rubble"/>
+            </neighbors>
+            <lanes>
+                <lane id="Lane1"/>
+            </lanes>
+        </tile>
+        <tile id="Tile_Deep" type="DeepSnowy">
+            <neighbors>
+                <neighbor id="Tile_Start"/>
+                <neighbor id="Tile_Deep_End"/>
+            </neighbors>
+            <lanes>
+                <lane id="Lane1"/>
+            </lanes>
+        </tile>
+        <tile id="Tile_Deep_End" type="Clean">
+            <neighbors>
+                <neighbor id="Tile_Deep"/>
+            </neighbors>
+            <lanes>
+                <lane id="Lane1"/>
+            </lanes>
+        </tile>
+        <tile id="Tile_Shallow" type="ShallowSnowy">
+            <neighbors>
+                <neighbor id="Tile_Start"/>
+                <neighbor id="Tile_Shallow_End"/>
+            </neighbors>
+            <lanes>
+                <lane id="Lane1"/>
+            </lanes>
+        </tile>
+        <tile id="Tile_Shallow_End" type="Clean">
+            <neighbors>
+                <neighbor id="Tile_Shallow"/>
+            </neighbors>
+            <lanes>
+                <lane id="Lane1"/>
+            </lanes>
+        </tile>
+        <tile id="Tile_Rubble" type="Clean">
+            <neighbors>
+                <neighbor id="Tile_Rubble_End"/>
+                <neighbor id="Tile_Start"/>
+            </neighbors>
+            <lanes>
+                <lane id="Lane1"/>
+            </lanes>
+        </tile>
+        <tile id="Tile_Rubble_End" isRubbled="true" type="Clean">
+            <neighbors>
+                <neighbor id="Tile_Rubble"/>
+            </neighbors>
+            <lanes>
+                <lane id="Lane1"/>
+            </lanes>
+        </tile>
+    </map>
+    <cleaner id="Takarito1">
+        <snowShovel id="1">
+            <position id="Tile_Rubble"/>
+            <attachment id="Att1" type="SweeperHead"/>
+        </snowShovel>
+        <inventory>
+            <money amount="0"/>
+        </inventory>
+    </cleaner>
+</game>

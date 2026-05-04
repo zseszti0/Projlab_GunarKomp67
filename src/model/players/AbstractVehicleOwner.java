@@ -18,14 +18,21 @@ public abstract class AbstractVehicleOwner<T extends Vehicle> {
 
     /**
      * Konstruktor, amely létrehoz egy új járműtulajdonost a megadott névvel.
-     * @param name A játékos neve
+     * Lépései:
+     * 1. Beállítja az objektum nevét a paraméterben kapott értékre.
+     * * @param name A játékos neve
      */
     public AbstractVehicleOwner(String name){
         this.name=name;
     }
 
     /**
-     * Konstruktor, amely létrehoz egy járműtulajdonost név és flotta alapján (XML parserhez).
+     * Konstruktor, amely létrehoz egy járműtulajdonost név és flotta alapján (elsősorban az XML parserhez).
+     * Lépései:
+     * 1. Beállítja a nevet.
+     * 2. Ha az átadott járműlista nem null, akkor inicializálja vele a belső flottát.
+     * * @param name A játékos neve.
+     * @param vehicles A kezdeti járműflotta listája.
      */
     public AbstractVehicleOwner(String name, List<T> vehicles){
         this.name = name;
@@ -34,15 +41,19 @@ public abstract class AbstractVehicleOwner<T extends Vehicle> {
 
     /**
      * Visszaadja a játékos nevét.
-     * @return A játékos neve
+     * Lépései:
+     * 1. Visszatér a belső name változóval.
+     * * @return A játékos neve
      */
     public String getName(){
         return name;
     }
 
     /**
-     * Visszaadja a játékos nevét.
-     * @return A játékos járműveit
+     * Visszaadja a játékoshoz tartozó járműveket.
+     * Lépései:
+     * 1. Visszatér a birtokolt járműveket (Vehicle) tartalmazó listával.
+     * * @return A játékos járművei
      */
     public List<T> getVehicles() {
         return vehicles;

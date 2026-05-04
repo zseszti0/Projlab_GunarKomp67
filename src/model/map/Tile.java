@@ -66,11 +66,13 @@ public class Tile implements IAutomatic {
 
     /**
      * Konstruktor a Tile osztályhoz.
-     * Beállítja a nevet, az állapotot és a sávokat.
-     * A sótlan állapotot (`isSalted = false`) és a tömörödési indexet (`compressionIndex = 0`) alaphelyzetbe állítja.
-     * @param name a mező azonosító neve
-     * @param state a mező kezdeti állapota
-     * @param lanes a sávok listája, amelyhez a mező tartozik
+     * Lépései:
+     * 1. Beállítja a nevet, az állapotot és a sávokat.
+     * 2. A sótlan állapotot (`isSalted = false`) és a tömörödési indexet (`compressionIndex = 0`) alaphelyzetbe állítja.
+     *
+     * @param name A mező azonosító neve.
+     * @param state A mező kezdeti állapota.
+     * @param lanes A sávok listája, amelyhez a mező tartozik.
      */
     public Tile(String name, TileState state, List<Lane> lanes) {
         this.name = name;
@@ -82,9 +84,20 @@ public class Tile implements IAutomatic {
     }
 
     /**
-     * Teljes konstruktor, amit az XML parser használ.
-     * Az összes belső attribútumot közvetlenül inicializálja a paraméterek alapján.
-     * Ha a kapott `state` null, akkor automatikusan a `CleanTileState.getInstance()`-t állítja be.
+     * Teljes konstruktor, amit az XML parser használ játékállás betöltésekor.
+     * Lépései:
+     * 1. Az összes belső attribútumot közvetlenül inicializálja a paraméterek alapján.
+     * 2. Ha a kapott `state` null, akkor automatikusan egy tiszta mezőállapotot (CleanTileState) állít be.
+     *
+     * @param name A mező neve.
+     * @param state A mező állapota.
+     * @param isSalted Sózott-e a mező.
+     * @param isRubbled Kőzúzalékkal felszórt-e a mező.
+     * @param compressionIndex A hó tömörödési szintje.
+     * @param saltMeltingIndex A só olvasztási fázisa.
+     * @param rubbleFadingIndex A zúzalék kopási fázisa.
+     * @param neighbors A szomszédos mezők listája.
+     * @param lanes A sávok listája, amelyekhez tartozik.
      */
     public Tile(String name, TileState state, boolean isSalted, boolean isRubbled,
                 int compressionIndex, int saltMeltingIndex, int rubbleFadingIndex,
@@ -161,20 +174,32 @@ public class Tile implements IAutomatic {
     }
 
     /**
-     * Lezarja a savot, amelyhez a mezo tartozik. Balesetnel hivodik.
-     * TODO
+     * Lezárja a sávot, amelyhez a mező tartozik. Balesetnél hívódik.
+     * Lépései:
+     * 1. Végigmegy az összes sávon (Lane), amelynek ez a mező a része.
+     * 2. Minden sávon meghívja a blockAllTilesInLane() metódust, ami a sáv összes mezőjét lezárja.
      */
     public void closeLane() {
         for(Lane lane : lanes)
             lane.blockAllTilesInLane();
     }
+
+    /**
+     * Lezárja az adott mezőt, állapotát BlockedTileState-re cserélve.
+     * Lépései:
+     * 1. A mező állapotát beállítja a BlockedTileState egyetlen (Singleton) példányára.
+     */
     public void blockTile(){
         state = BlockedTileState.getInstance();
     }
 
     /**
-     * A hoeses generalasakor vagy olvadasakor hivja a rendszer.
-     * Ha a mezo sozott, olvadast (snowMelt) kezdemenyez, ha nem, akkor hoesest (snowFall).
+     * A játékidő múlását (Tick) kezeli a mezőn.
+     * Lépései:
+     * 1. Ha a mező sózott, akkor hívja az állapot snowMelt() (olvadás) metódusát.
+     * 2. Ha nem sózott, akkor hívja a snowFall() (hóesés) metódust.
+     * 3. Ha a mező fel van szórva zúzalékkal (isRubbled), inkrementálja a kopási indexet (rubbleFadingIndex).
+     * 4. Ha az index eléri a küszöböt, a zúzalék eltűnik (isRubbled = false).
      */
     public void update() {
         if (isSalted) {
@@ -191,25 +216,39 @@ public class Tile implements IAutomatic {
     }
 
     /**
-     * A soprofejtol erkezo sekely havat kezeli es delegalja az aktualis allapotnak.
-     * @param ssts a kapott sekely ho allapot
+     * A söprőfejtől érkező sekély havat kezeli.
+     * Lépései:
+     * 1. Továbbítja (delegálja) az eseményt a jelenlegi mezőállapot acceptSweptSnow metódusának.
+     * 2. Beállítja az ez alapján visszakapott új állapotot.
+     *
+     * @param ssts A beérkező sekély hó állapot.
      */
     public void acceptSweptSnow(ShallowSnowyTileState ssts) {
         this.state = state.acceptSweptSnow(ssts);
     }
 
     /**
-     * A soprofejtol erkezo mely havat kezeli es delegalja az aktualis allapotnak.
-     * @param dsts a kapott mely ho allapot
+     * A söprőfejtől érkező mély havat kezeli.
+     * Lépései:
+     * 1. Továbbítja (delegálja) az eseményt a jelenlegi mezőállapot acceptSweptSnow metódusának.
+     * 2. Beállítja az ez alapján visszakapott új állapotot.
+     *
+     * @param dsts A beérkező mély hó állapot.
      */
     public void acceptSweptSnow(DeepSnowyTileState dsts) {
         this.state = state.acceptSweptSnow(dsts);
     }
 
     /**
-     * Kezeli a parameterkent kapott jarmu mezore erkezeset, es delegalja a ho tomorodeset az allapotnak.
-     * @param v az erkezo jarmu
-     * @return a rajta allo jarmu (vagy null, ha nincs rajta)
+     * Kezeli egy érkező jármű fogadását a mezőn.
+     * Lépései:
+     * 1. Ellenőrzi, hogy van-e már a mezőn egy jármű. Ha igen, azonnal visszatér az ott lévő járművel.
+     * 2. Meghívja a jármű goToTile() metódusát, ami ellenőrzi, hogy a jármű ténylegesen ráléphet-e (deleál vissza az acceptVehicle konkrét típusaira).
+     * 3. Ha a lépés érvényes, beállítja az új járművet a mezőre, és null-t ad vissza (sikeres lépés).
+     * 4. Ha nem érvényes, visszatér az eredeti járművel.
+     *
+     * @param v Az érkező jármű.
+     * @return A rajta álló (vagy azzal ütköző) jármű, sikeres lépés esetén null.
      */
     public Vehicle acceptVehicle(Vehicle v) {
         if(vehicle != null)
@@ -220,16 +259,41 @@ public class Tile implements IAutomatic {
             vehicle = v;
             return null;
         }
-        else{
+        else {
             return v;
         }
     }
+
+    /**
+     * Delegálja a hókotró mezőre lépését az állapotnak.
+     * @param v Az érkező hókotró.
+     * @return true, ha a lépés érvényes.
+     */
     public boolean acceptVehicle(SnowShovel v){
         return state.acceptVehicle(v);
     }
+
+    /**
+     * Delegálja a busz mezőre lépését az állapotnak.
+     * @param v Az érkező busz.
+     * @return true, ha a lépés érvényes.
+     */
     public boolean acceptVehicle(Bus v){
         return state.acceptVehicle(v);
     }
+
+    /**
+     * Delegálja az autó mezőre lépését az állapotnak, és kezeli a hó tömörödését.
+     * Lépései:
+     * 1. Ellenőrzi, hogy az aktuális állapot engedi-e az autót.
+     * 2. Ha igen, megnöveli a hó tömörödési indexét (compressByOne).
+     * 3. Ha a mező nem sózott és az index elért egy kritikus szintet (>= 2), az állapot compressionReached() metódusa hívódik (pl. jéggé válik).
+     * 4. Ha történt állapotváltás, lenullázza a kompressziós indexet.
+     * 5. Mindig false-al tér vissza a specifikus NPC logika miatt, amit a hívó kezel le.
+     *
+     * @param v Az érkező autó.
+     * @return Érvényességi állapot (jelenlegi logika szerint false-t ad, a hívás mellékhatásokat okoz).
+     */
     public boolean acceptVehicle(Car v){
         if(state.acceptVehicle(v)){
             compressionIndex = state.compressByOne(compressionIndex);
@@ -245,10 +309,16 @@ public class Tile implements IAutomatic {
     }
 
     /**
-     * Kezeli, hogy a mozgo jarmu a szomszedos mezore szeretne lepni.
-     * @param t a celmezo
-     * @param v a mozgo jarmu
-     * @return a jarmu, amivel utkozott (null, ha nem tortent utkozes)
+     * Kezeli, hogy a mezőn álló jármű egy szomszédos mezőre szeretne lépni.
+     * Lépései:
+     * 1. Ellenőrzi, hogy a célmező (t) ténylegesen a szomszédok között van-e.
+     * 2. Ha érvényes szomszéd, meghívja a célmező acceptVehicle() metódusát a járművel.
+     * 3. Ha a célmező elfogadta a járművet (null-t adott vissza, nem volt ütközés), akkor az aktuális mezőről eltávolítja a járművet (null).
+     * 4. Visszatér a célmezőről kapott eredménnyel (ütközött jármű vagy null).
+     *
+     * @param t A célmező.
+     * @param v A mozgó jármű.
+     * @return A jármű, amivel ütközött, vagy null, ha a mozgás sikeres és ütközésmentes volt.
      */
     public Vehicle moveToNeighbor(Tile t, Vehicle v) {
         boolean valid = neighbors.contains(t);
@@ -263,9 +333,13 @@ public class Tile implements IAutomatic {
     }
 
     /**
-     * Alapertelmezett takaritasi valasz sopresre.
-     * @param a a hasznalt soprofej
-     * @return true, ha tortent allapotvaltozas
+     * Takarítási válasz söprőfej (SweeperHead) használata esetén.
+     * Lépései:
+     * 1. Lekéri az új állapotot a jelenlegi állapot cleanedBy(SweeperHead) metódusától.
+     * 2. Kicseréli az állapotot, és ha volt változás, a régi állapot sweepSnowToSide metódusával félresöpri a havat a szomszédos mezőre.
+     *
+     * @param a A használt söprőfej.
+     * @return true, ha történt állapotváltozás, false egyébként.
      */
     public boolean cleanTile(SweeperHead a) {
         TileState oldState = this.state;
@@ -291,9 +365,12 @@ public class Tile implements IAutomatic {
     }
 
     /**
-     * Alapertelmezett takaritasi valasz hanyasra.
-     * @param a a hasznalt hanyofej
-     * @return true, ha tortent allapotvaltozas
+     * Takarítási válasz hóhányófej (BlowerHead) használata esetén.
+     * Lépései:
+     * 1. Lekéri és beállítja az új állapotot a cleanedBy() alapján.
+     *
+     * @param a A használt hóhányófej.
+     * @return true, ha történt állapotváltozás.
      */
     public boolean cleanTile(BlowerHead a) {
         TileState oldState = this.state;
@@ -305,9 +382,12 @@ public class Tile implements IAutomatic {
     }
 
     /**
-     * Alapertelmezett takaritasi valasz jegtoresre.
-     * @param a a hasznalt jegtoro fej
-     * @return true, ha tortent allapotvaltozas
+     * Takarítási válasz jégtörő fej (IcebreakerHead) használata esetén.
+     * Lépései:
+     * 1. Lekéri és beállítja az új állapotot a cleanedBy() alapján.
+     *
+     * @param a A használt jégtörő fej.
+     * @return true, ha történt állapotváltozás.
      */
     public boolean cleanTile(IcebreakerHead a) {
         TileState oldState = this.state;
@@ -318,9 +398,12 @@ public class Tile implements IAutomatic {
     }
 
     /**
-     * Alapertelmezett takaritasi valasz soszorasra. Felsolzza a mezot.
-     * @param a a hasznalt soszoro fej
-     * @return true, ha tortent allapotvaltozas
+     * Takarítási válasz sószóró fej (SalterHead) használata esetén.
+     * Lépései:
+     * 1. Beállítja az isSalted flaget igazra.
+     *
+     * @param a A használt sószóró fej.
+     * @return false (állapotminta szinten nem változik azonnal).
      */
     public boolean cleanTile(SalterHead a) {
         this.isSalted = true;
@@ -328,9 +411,12 @@ public class Tile implements IAutomatic {
     }
 
     /**
-     * Alapertelmezett takaritasi valasz soszorasra. Felzúzottkövezi a mezot.
-     * @param a a hasznalt zuzalék szóró fej
-     * @return true, ha tortent allapotvaltozas
+     * Takarítási válasz kőzúzalék szóró fej (CobblestoneHead) használata esetén.
+     * Lépései:
+     * 1. Beállítja az isRubbled flaget igazra, és lenullázza a kopási indexet.
+     *
+     * @param a A használt zúzalék szóró fej.
+     * @return false (állapotminta szinten nem változik azonnal).
      */
     public boolean cleanTile(CobblestoneHead a) {
         this.isRubbled = true;
@@ -339,9 +425,12 @@ public class Tile implements IAutomatic {
     }
 
     /**
-     * Alapertelmezett takaritasi valasz sarkany fejre.
-     * @param a a hasznalt sarkany fej
-     * @return true, ha tortent allapotvaltozas
+     * Takarítási válasz sárkányfej (DragonHead) használata esetén.
+     * Lépései:
+     * 1. Lekéri és beállítja az új állapotot a cleanedBy() alapján.
+     *
+     * @param a A használt sárkányfej.
+     * @return true, ha történt állapotváltozás.
      */
     public boolean cleanTile(DragonHead a) {
         TileState oldState = this.state;
@@ -351,7 +440,9 @@ public class Tile implements IAutomatic {
         return oldState != newState;
     }
 
-    //tesztelési inithez segédfüggvény
+    /**
+     * Teszteléshez használt segédfüggvény a mező besózására.
+     */
     public void setSalted(){
         isSalted = true;
     }
@@ -360,10 +451,30 @@ public class Tile implements IAutomatic {
         vehicle = c1;
     }
 
+    /**
+     * Delegálja az útvonalkeresési kérelmet az aktuális TileState-nek.
+     * Lépései:
+     * 1. Meghívja a belső state objektum requestPath metódusát a szükséges paraméterekkel.
+     *
+     * @param position A jelenlegi mező.
+     * @param destination A célmező.
+     * @param pf A PathFinder objektum.
+     * @return A következő mező az út során.
+     */
     public Tile requestPath(Tile position, Tile destination, PathFinder pf){
         return state.requestPath(position, destination, pf, isSalted, isRubbled);
     }
 
+    /**
+     * Kiszámítja, hogy egy csúszó jármű hova érkezik.
+     * Lépései:
+     * 1. Vesz egy szomszédot kiindulási lépésnek (step1).
+     * 2. Végigiterál a szomszédokon és a sávokon, hogy megtalálja azt a szomszédot, amelyik azonos sávban folytatódik előre.
+     * 3. Ugyanezt az iterációt elvégzi mégegyszer (step2), hogy 2 mezőnyi távolságra csússzon a jármű az eredeti sávban.
+     * 4. Visszatér a megtalált második szomszéddal.
+     *
+     * @return A mező, amire a jármű érkezik a megcsúszás után.
+     */
     public Tile getSlipTarget(){
         Tile step1 = neighbors.get(0);
 
@@ -389,6 +500,13 @@ public class Tile implements IAutomatic {
         return step2;
     }
 
+    /**
+     * Hozzáadja a mezőt egy gráf (BFS) lehetséges csomópontjai közé.
+     * Lépései:
+     * 1. Továbbítja a hívást a mező állapotának, mivel az állapot dönti el, hogy járható-e a mező.
+     *
+     * @param subGraph A bejárható mezők listája.
+     */
     public void addToBFSSubGraph(List<Tile> subGraph){
         state.addToBFSSubGraph(subGraph, this);
     }

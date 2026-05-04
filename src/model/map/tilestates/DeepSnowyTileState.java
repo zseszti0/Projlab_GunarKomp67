@@ -18,7 +18,11 @@ public class DeepSnowyTileState extends SnowyTileState {
 
     /**
      * Visszaadja a DeepSnowyTileState egyetlen példányát.
-     * * @return A DeepSnowyTileState singleton példány.
+     * Lépései:
+     * 1. Ellenőrzi, ha nem létezik példány, létrehoz egyet.
+     * 2. Visszatér az egyetlen példánnyal.
+     *
+     * @return A DeepSnowyTileState singleton példány.
      */
     public static DeepSnowyTileState getInstance() {
         return instance == null ? instance = new DeepSnowyTileState() : instance;
@@ -26,7 +30,7 @@ public class DeepSnowyTileState extends SnowyTileState {
 
     /**
      * Kezeli a hóesést. Mély havas mezőn a hóesés már nem változtat az állapoton (nem lesz még mélyebb).
-     * * @return Önmagával (DeepSnowyTileState) tér vissza.
+     * @return Önmagával (DeepSnowyTileState) tér vissza.
      */
     @Override
     public TileState snowFall() {
@@ -35,7 +39,7 @@ public class DeepSnowyTileState extends SnowyTileState {
 
     /**
      * Kezeli a hó olvadását. A mély hó elolvadásával a mező egy szinttel lejjebb, sekély havas állapotba kerül.
-     * * @return A sekély havas mezőállapot (ShallowSnowyTileState).
+     * @return A sekély havas mezőállapot (ShallowSnowyTileState).
      */
     @Override
     public TileState snowMelt() {
@@ -44,7 +48,7 @@ public class DeepSnowyTileState extends SnowyTileState {
 
     /**
      * Félretolja a mély havat a szomszédokra.
-     * * @param tile A mező, amiről a havat tolják.
+     * @param tile A mező, amiről a havat tolják.
      */
     @Override
     public void sweepSnowToSide(Tile tile){
@@ -61,7 +65,7 @@ public class DeepSnowyTileState extends SnowyTileState {
     public TileState acceptSweptSnow(ShallowSnowyTileState ssts) {return DeepSnowyTileState.getInstance();}
     /**
      * Megakadályozza, hogy egy busz áthaladjon a mély havas mezőn.
-     * * @param v Az érkező busz.
+     * @param v Az érkező busz.
      * @return false (a lépés érvénytelen/blokkolt).
      */
     @Override

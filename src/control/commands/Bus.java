@@ -33,7 +33,6 @@ public class Bus extends ConfigCommand {
         Tile pos = tiles.stream().filter(tile -> tile.getName().equals(args.get(1))).findFirst().orElse(null);
         busChaffeur.addBus(new model.vehicles.Bus(args.get(0) + busChaffeur.getVehicles().size(),pos ,null));
 
-        //CONSOLE OUT
         try {
             output.write(("Egy új busz sikeresen hozzáadva a(z)"+args.get(0)+" nevű játékos flottájához. A jármű a(z) <mező> mezőn kezd.\n").getBytes());
         } catch (IOException e) {

@@ -1,0 +1,16 @@
+A(z)tests/cleaner/clean/cclean_dragon_shallow/arrange/dragon_full_success.xmlnevű játékállás sikeresen betöltve. Belépés a játszma fázisba.
+A(z)1 Számú hókotró/busz sikeresen átlépett a(z)Tile_Shallow mezőre.
+A játékállás sikeresen elmentve a(z) tests/cleaner/clean/cclean_dragon_shallow/output.xmlfájlba. A játék folytatódik.
+Sikeresen kiléptél az aktuális játszmából. A program visszatért a tétlen fázisba.
+=== XML Fájl Összehasonlítás ===
+✗ HIBA: <tile id:Tile_Shallow> attribútum: type [game > map > tile]
+  Kimenet: type="ShallowSnowy"
+  Elvárt:  type="Clean"
+✗ HIBA: game > cleaner > inventory id: - Gyermek elemek száma különbözik
+  Kimenet: 1 elem
+  Elvárt:  2 elem
+✗ HIBA: <money id:> attribútum: amount [game > cleaner > inventory > money]
+  Kimenet: amount="0"
+  Elvárt:  amount="10"
+✗ HIBA: game > cleaner > inventory id: - Hiányzó elem a kimenetből: <consumables>
+✗ A fájlok különböznek!

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<game>
+    <config randomized="false">
+        <currentActor ap="1" id="Takarito1"/>
+        <actorQueue>
+            <actor id="Takarito1"/>
+        </actorQueue>
+    </config>
+    <map>
+        <tile id="Tile_Start" type="Clean">
+            <neighbors>
+                <neighbor id="Tile_CleanTest"/>
+                <neighbor id="Tile_IcyTest"/>
+            </neighbors>
+            <lanes>
+                <lane id="Lane1"/>
+            </lanes>
+        </tile>
+        <tile id="Tile_CleanTest" type="Clean">
+            <neighbors>
+                <neighbor id="Tile_Start"/>
+            </neighbors>
+            <lanes>
+                <lane id="Lane1"/>
+            </lanes>
+        </tile>
+        <tile id="Tile_IcyTest" type="Icy">
+            <neighbors>
+                <neighbor id="Tile_Start"/>
+            </neighbors>
+            <lanes>
+                <lane id="Lane1"/>
+            </lanes>
+        </tile>
+    </map>
+    <cleaner id="Takarito1">
+        <snowShovel id="1">
+            <position id="Tile_CleanTest"/>
+            <attachment id="Att1" type="SweeperHead"/>
+        </snowShovel>
+        <inventory>
+            <money amount="0"/>
+        </inventory>
+    </cleaner>
+</game>

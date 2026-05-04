@@ -31,7 +31,6 @@ public class Buy extends GameCommand {
         gameManager.orderItem(args.get(0),amount);
 
         if(success){
-            //CONSOLE OUT
             try {
                 output.write(("A vásárlás sikeres. "+ args.get(0)+" vásárolva.\n").getBytes());
             } catch (IOException e) {
@@ -39,7 +38,6 @@ public class Buy extends GameCommand {
             }
         }
         else {
-            //CONSOLE OUT
             try {
                 output.write((" A vásárlás sikertelen, nincs elég tőke.\n").getBytes());
             } catch (IOException e) {

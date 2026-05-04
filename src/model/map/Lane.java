@@ -5,9 +5,9 @@ import model.map.tilestates.BlockedTileState;
 import java.util.List;
 
 /**
- * A modellbeli mezoket (Tile) fogja ossze.
- * Felelossege a mezo pusztitasok es hozzaadasok vegrehajtasa az adatokon.
- * Asszociaciok: Tile (a savban levo mezok). Egy savnak legalabb egy darab mezoje kell, hogy legyen.
+ * A modellbeli mezőket (Tile) fogja össze.
+ * Felelőssége a mező pusztítások és hozzáadások végrehajtása az adatokon.
+ * Asszociációk: Tile (a sávban lévő mezők). Egy sávnak legalább egy darab mezője kell, hogy legyen.
  */
 public class Lane {
     /**
@@ -15,37 +15,51 @@ public class Lane {
     private final String name;
 
     /**
-     * Visszaadja az objektum nevet.
-     * Elorelathatolag csak a skeletonban kell
-     * */
+     * Visszaadja az objektum nevét.
+     * Lépései:
+     * 1. Visszatér a sáv nevével.
+     *
+     * @return A sáv azonosítója (neve).
+     */
     public String getName() {
         return name;
     }
 
     /**
-     * A savhoz tartozo mezok listaja.
+     * A sávhoz tartozó mezők listája.
      */
     private List<Tile> tiles;
 
     /**
-     * Visszaadja a savban levo mezoket.
-     * @return a savhoz tartozo Tile objektumok listaja
+     * Visszaadja a sávban lévő mezőket.
+     * Lépései:
+     * 1. Visszatér a sávot alkotó Tile objektumokat tartalmazó listával.
+     *
+     * @return A sávhoz tartozó Tile objektumok listája.
      */
     public List<Tile> getTiles() {
         return tiles;
     }
 
     /**
-     * Hozzaad egsy uj mezot a savhoz e kiterjeszti a savot.
-     * @param tile a hozzaadando mezo
+     * Hozzáad egy új mezőt a sávhoz, ezzel kiterjeszti azt.
+     * Lépései:
+     * 1. A paraméterként kapott mezőt (Tile) hozzáadja a belső tiles listához.
+     *
+     * @param tile A hozzáadandó mező.
      */
     public void addTile(Tile tile){
         tiles.add(tile);
     }
 
     /**
-     * Konstruktor a Lane osztalyhoz.
-     * @param tiles a savot alkoto mezok listaja
+     * Konstruktor a Lane osztályhoz.
+     * Lépései:
+     * 1. Beállítja a sávhoz tartozó mezők listáját.
+     * 2. Beállítja a sáv nevét.
+     *
+     * @param tiles A sávot alkotó mezők listája.
+     * @param name A sáv azonosító neve.
      */
     public Lane(List<Tile> tiles, String name) {
         this.tiles = tiles;
@@ -53,8 +67,11 @@ public class Lane {
     }
 
     /**
-     * Lezarja az osszes mezot a savon.
-     * Karambol (utkozes) eseten hivodik, a mezok allapotat BlockedTileState-re allitja.
+     * Lezárja az összes mezőt a sávon.
+     * Karambol (ütközés) esetén hívódik.
+     * Lépései:
+     * 1. Végigiterál a sávhoz tartozó összes mezőn (Tile).
+     * 2. Minden mezőn meghívja a blockTile() metódust, amely BlockedTileState-re állítja azok állapotát.
      */
     void blockAllTilesInLane(){
         for(Tile tile : tiles){

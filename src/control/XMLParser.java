@@ -44,6 +44,17 @@ public class XMLParser {
     private OutputStream outputStream;
 
     private HashMap<String, String> optionalAttributesBaseValues = new HashMap<>();
+
+    /**
+     * Létrehozza az XML feldolgozót és beállítja az alapértelmezett opcionális attribútumokat.
+     * Lépései:
+     * 1. Beállítja a forrásmappát.
+     * 2. Inicializálja a kimeneti streamet a forrásmappa alapján (vagy System.out-ra állítja, ha az üres).
+     * 3. Feltölti az optionalAttributesBaseValues map-et az elvárt alapértelmezett XML attribútum értékekkel,
+     * amelyek az ellenőrzéseknél (assert) kapnak szerepet.
+     *
+     * @param sourceFolder A mappa útvonala, ahová az output.txt és output.xml fájlok kerülnek mentésre.
+     */
     public XMLParser(String sourceFolder) {
         this.sourceFolder = sourceFolder;
         if(sourceFolder == "")
@@ -56,25 +67,21 @@ public class XMLParser {
             }
         }
 
-        // Register optional attributes and their default string values here.
-        // These are global attribute names that, if missing on either side during
-        // an assertion, will be treated as having the given default value.
         optionalAttributesBaseValues.put("isSalted", "false");
         optionalAttributesBaseValues.put("isRubbled", "false");
-        // code uses "saltMeltingIndex" for the melting index attribute -- keep both names to be robust
+
         optionalAttributesBaseValues.put("saltMeltingIndex", "0");
         optionalAttributesBaseValues.put("snowMeltingIndex", "0");
         optionalAttributesBaseValues.put("compressionIndex", "0");
         optionalAttributesBaseValues.put("rubbleFadingIndex", "0");
 
-        // Config optional
         optionalAttributesBaseValues.put("randomized", "false");
 
-        // Vehicle optional flags
         optionalAttributesBaseValues.put("isStunned", "false");
         optionalAttributesBaseValues.put("isBlocked", "false");
         optionalAttributesBaseValues.put("isCrashed", "false");
     }
+
     /**
      * Betölti a játéktáblát (mezőket és sávokat) a megadott XML fájlból.
      * * @param filePath Az olvasandó XML fájl elérési útvonala.
@@ -90,8 +97,6 @@ public class XMLParser {
 
             NodeList mapList = doc.getElementsByTagName("map");
             if (mapList.getLength() > 0) {
-                // Itt egy üres Map-et adunk át, mert a loadMap esetében nincs szükségünk
-                // az ID alapján történő jármű-lehelyezésekhez a referenciákra utólag.
                 return parseMapData((Element) mapList.item(0), new HashMap<>());
             }
         } catch (Exception e) {
@@ -113,23 +118,19 @@ public class XMLParser {
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.newDocument();
 
-            // Root element
             Element root = doc.createElement("game");
             doc.appendChild(root);
 
-            // 1. Save Config
             Element configElement = doc.createElement("config");
             configElement.setAttribute("randomized", gameManager.isRandomized() ? "true" : "false");
 
             root.appendChild(configElement);
 
-            // Current Actor
             Element currentActorElement = doc.createElement("currentActor");
             currentActorElement.setAttribute("id", gameManager.getCurrentActorId());
             currentActorElement.setAttribute("ap", String.valueOf(gameManager.getCurrentActorRemainingAp()));
             configElement.appendChild(currentActorElement);
 
-            // Actor Queue
             Element queueElement = doc.createElement("actorQueue");
             for (String actorId : gameManager.getActorQueue()) {
                 Element actorElement = doc.createElement("actor");
@@ -138,7 +139,6 @@ public class XMLParser {
             }
             configElement.appendChild(queueElement);
 
-            // 2. Save Map & Tiles
             Element mapElement = doc.createElement("map");
             root.appendChild(mapElement);
 
@@ -146,11 +146,9 @@ public class XMLParser {
                 Element tileElement = doc.createElement("tile");
                 tileElement.setAttribute("id", tile.getName());
 
-                // Get tile state type name
                 String stateType = getTileStateTypeName(tile.getState());
                 tileElement.setAttribute("type", stateType);
 
-                // Only save optional attributes if they differ from default
                 if (tile.isSalted()) {
                     tileElement.setAttribute("isSalted", "true");
                 }
@@ -167,7 +165,6 @@ public class XMLParser {
                     tileElement.setAttribute("rubbleFadingIndex", String.valueOf(tile.getRubbleFadingIndex()));
                 }
 
-                // Neighbors
                 Element neighborsElement = doc.createElement("neighbors");
                 if (tile.getNeighbors() != null) {
                     for (Tile neighbor : tile.getNeighbors()) {
@@ -178,7 +175,6 @@ public class XMLParser {
                 }
                 tileElement.appendChild(neighborsElement);
 
-                // JAVÍTVA: Több sáv (Lane) kiírása a Tile-okhoz
                 Element lanesElement = doc.createElement("lanes");
                 if (tile.getLanes() != null) {
                     for (Lane lane : tile.getLanes()) {
@@ -192,31 +188,26 @@ public class XMLParser {
                 mapElement.appendChild(tileElement);
             }
 
-            // 3. Save Cleaners
             for (Cleaner cleaner : gameManager.getCleaners()) {
                 Element cleanerElement = doc.createElement("cleaner");
                 cleanerElement.setAttribute("id", cleaner.getName());
                 root.appendChild(cleanerElement);
 
-                // Snow Shovels
                 for (SnowShovel shovel : cleaner.getVehicles()) {
                     Element shovelElement = doc.createElement("snowShovel");
                     shovelElement.setAttribute("id", shovel.getName());
                     cleanerElement.appendChild(shovelElement);
 
-                    // Position
                     Element posElement = doc.createElement("position");
                     if (shovel.getPosition() != null) {
                         posElement.setAttribute("id", shovel.getPosition().getName());
                     }
                     shovelElement.appendChild(posElement);
 
-                    // Equipped Attachment
                     if (shovel.getEquippedAttachment() != null) {
                         Element attElement = doc.createElement("attachment");
                         attElement.setAttribute("id", shovel.getEquippedAttachment().getName());
 
-                        // JAVÍTVA: Csak akkor írjuk ki a type attribútumot, ha létezik (referenciáknál nem írjuk ki)
                         String attType = shovel.getEquippedAttachment().getType();
                         if (attType != null && !attType.isEmpty()) {
                             attElement.setAttribute("type", attType);
@@ -226,18 +217,15 @@ public class XMLParser {
                     }
                 }
 
-                // Inventory
                 Element invElement = doc.createElement("inventory");
                 cleanerElement.appendChild(invElement);
 
-                // Money
                 Element moneyElement = doc.createElement("money");
                 int money = cleaner.getInventory().getMoney();
                 moneyElement.setAttribute("amount", String.valueOf(money));
 
                 invElement.appendChild(moneyElement);
 
-                // Attachments in Inventory
                 if (!cleaner.getInventory().getAttachments().isEmpty()) {
                     Element attachmentsElement = doc.createElement("attachments");
                     for (Attachment att : cleaner.getInventory().getAttachments()) {
@@ -249,8 +237,6 @@ public class XMLParser {
                     invElement.appendChild(attachmentsElement);
                 }
 
-                // Consumables in Inventory
-                // Only save consumables tag if there are consumables with non-zero amounts
                 List<Consumable> nonZeroConsumables = new ArrayList<>();
                 for (Consumable cons : cleaner.getInventory().getConsumables()) {
                     if (cons.getAmount() > 0) {
@@ -271,7 +257,6 @@ public class XMLParser {
                 }
             }
 
-            // 4. Save BusChauffeurs
             for (BusChaffeur busChauffeur : gameManager.getBusChauffeurs()) {
                 Element bcElement = doc.createElement("busChauffeur");
                 bcElement.setAttribute("id", busChauffeur.getName());
@@ -285,14 +270,12 @@ public class XMLParser {
                     }
                     bcElement.appendChild(busElement);
 
-                    // Position
                     Element posElement = doc.createElement("position");
                     if (bus.getPosition() != null) {
                         posElement.setAttribute("id", bus.getPosition().getName());
                     }
                     busElement.appendChild(posElement);
 
-                    // Landmarks
                     Element landMarksElement = doc.createElement("landMarks");
                     if (bus.getLandMarks() != null) {
                         for (Tile landmark : bus.getLandMarks()) {
@@ -303,7 +286,6 @@ public class XMLParser {
                     }
                     busElement.appendChild(landMarksElement);
 
-                    // Current Destination
                     Element destElement = doc.createElement("destination");
                     Tile currentDest = bus.getCurrentDestination();
                     if (currentDest != null) {
@@ -313,7 +295,6 @@ public class XMLParser {
                 }
             }
 
-            // 5. Save NPCDrivers
             for (NPCDriver npcDriver : gameManager.getNpcDrivers()) {
                 Element npcElement = doc.createElement("NPCDriver");
                 npcElement.setAttribute("id", npcDriver.getName());
@@ -327,14 +308,12 @@ public class XMLParser {
                     }
                     npcElement.appendChild(carElement);
 
-                    // Position
                     Element posElement = doc.createElement("position");
                     if (car.getPosition() != null) {
                         posElement.setAttribute("id", car.getPosition().getName());
                     }
                     carElement.appendChild(posElement);
 
-                    // Landmarks
                     Element landMarksElement = doc.createElement("landMarks");
                     if (car.getLandMarks() != null) {
                         for (Tile landmark : car.getLandMarks()) {
@@ -345,7 +324,6 @@ public class XMLParser {
                     }
                     carElement.appendChild(landMarksElement);
 
-                    // Current Destination
                     Element destElement = doc.createElement("destination");
                     Tile currentDest = car.getCurrentDestination();
                     if (currentDest != null) {
@@ -355,7 +333,6 @@ public class XMLParser {
                 }
             }
 
-            // Write to file
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -385,18 +362,14 @@ public class XMLParser {
             Document doc = dBuilder.parse(inputFile);
             doc.getDocumentElement().normalize();
 
-            // 1. Térkép és Mezők (Tile & Lane) beolvasása a közös függvénnyel
             Map<String, Tile> tileMap = new HashMap<>();
             List<Tile> allTiles = new ArrayList<>();
 
             NodeList mapList = doc.getElementsByTagName("map");
             if (mapList.getLength() > 0) {
-                // Itt átadjuk a tileMap-et, hogy a parseMapData feltöltse az ID -> Tile párokkal,
-                // amik kellenek a járművek pozíciójának beállításához!
                 allTiles = parseMapData((Element) mapList.item(0), tileMap);
             }
 
-            // 2. Takarítók beolvasása
             List<Cleaner> cleaners = new ArrayList<>();
             NodeList cleanerNodes = doc.getElementsByTagName("cleaner");
             for (int i = 0; i < cleanerNodes.getLength(); i++) {
@@ -423,7 +396,6 @@ public class XMLParser {
                     }
                 }
 
-                // FELTÉTELEZETT TELJES KONSTRUKTOR:
                 Inventory inventory = new Inventory(id + "_Inv", money, attachments, consumables);
                 List<SnowShovel> fleet = new ArrayList<>();
 
@@ -441,18 +413,14 @@ public class XMLParser {
                         equipped = createAttachment(attNode.getAttribute("type"), attNode.getAttribute("id"));
                     }
 
-                    // FELTÉTELEZETT TELJES KONSTRUKTOR:
                     SnowShovel shovel = new SnowShovel(shovelId, position, equipped);
                     fleet.add(shovel);
                     if (position != null) position.setVehicle(shovel);
                 }
 
-                // FELTÉTELEZETT TELJES KONSTRUKTOR:
                 cleaners.add(new Cleaner(id, inventory, fleet));
             }
 
-            // 3. Buszsofőrök beolvasása
-            // ... (Itt változatlan maradt a tegnapi kód)
             List<BusChaffeur> busChauffeurs = new ArrayList<>();
             NodeList busChauffeurNodes = doc.getElementsByTagName("busChauffeur");
             for (int i = 0; i < busChauffeurNodes.getLength(); i++) {
@@ -486,8 +454,6 @@ public class XMLParser {
                 busChauffeurs.add(new BusChaffeur(id, fleet));
             }
 
-            // 4. NPC Sofőrök beolvasása
-            // ... (Itt változatlan maradt a tegnapi kód)
             List<NPCDriver> npcDrivers = new ArrayList<>();
             NodeList npcNodes = doc.getElementsByTagName("NPCDriver");
             for (int i = 0; i < npcNodes.getLength(); i++) {
@@ -521,7 +487,6 @@ public class XMLParser {
                 npcDrivers.add(new NPCDriver(id, new PathFinder("PF_" + id), fleet));
             }
 
-            // 5. Config beolvasása és GameManager példányosítása
             boolean randomized = false;
             String currentActorId = null;
             int currentActorAp = 0;
@@ -588,7 +553,6 @@ public class XMLParser {
             outputDoc.getDocumentElement().normalize();
             assertDoc.getDocumentElement().normalize();
 
-            /// /CONSOL OUT
             try {
                 outputStream.write(("=== XML Fájl Összehasonlítás ===\n").getBytes());
             } catch (IOException e) {
@@ -600,14 +564,12 @@ public class XMLParser {
                     "");
 
             if (isEqual) {
-                /// /CONSOL OUT
                 try {
                     outputStream.write(("✓ A fájlok azonosak!\n").getBytes());
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             } else {
-                /// /CONSOL OUT
                 try {
                     outputStream.write(("✗ A fájlok különböznek!\n").getBytes());
                 } catch (IOException e) {
@@ -649,8 +611,6 @@ public class XMLParser {
      * @return A létrehozott {@link Attachment} példány.
      */
     private Attachment createAttachment(String type, String name) {
-        // JAVÍTVA: Ha nincs típus megadva, egy olyan névtelen osztályt adunk vissza, aminek üres a típusa.
-        // Így kimentésnél nem fogja legenerálni a `type="SweeperHead"` attribútumot, ezáltal pontosan megegyezik a fájllal.
         if (type == null || type.isEmpty()) {
             return new SweeperHead(name) {
                 @Override
@@ -744,9 +704,7 @@ public class XMLParser {
         String currentPath = path.isEmpty() ? outputElement.getTagName() :
                 path + " > " + outputElement.getTagName();
 
-        // 1. Tag nevek összehasonlítása
         if (!outputElement.getTagName().equals(assertElement.getTagName())) {
-            /// /CONSOL OUT
             try {
                 outputStream.write(("✗ HIBA: Tag név különbözik a " + path + " szinten\n" + "  Kimenet: <" + outputElement.getTagName() + ">\n" + "  Elvárt:  <" + assertElement.getTagName() + ">\n").getBytes());
             } catch (IOException e) {
@@ -755,14 +713,11 @@ public class XMLParser {
             return false;
         }
 
-        // 2. Attribútumok összehasonlítása
         isEqual = compareAttributes(outputElement, assertElement, currentPath) && isEqual;
 
-        // 3. Gyermek elemek összehasonlítása
         NodeList outputChildren = outputElement.getChildNodes();
         NodeList assertChildren = assertElement.getChildNodes();
 
-        // Szűrjük ki a szöveges csomópontokat (whitespace)
         java.util.List<Element> outputElementChildren = new ArrayList<>();
         java.util.List<Element> assertElementChildren = new ArrayList<>();
 
@@ -778,10 +733,8 @@ public class XMLParser {
             }
         }
 
-        // Gyermek elemek száma
         if (outputElementChildren.size() != assertElementChildren.size()) {
             String tagIdAttribute = outputElement.getAttribute("id");
-            /// /CONSOL OUT
             try {
                 outputStream.write(("✗ HIBA: " + currentPath+ " id:" + tagIdAttribute + " - Gyermek elemek száma különbözik\n" + "  Kimenet: " + outputElementChildren.size() + " elem\n" + "  Elvárt:  " + assertElementChildren.size() + " elem\n").getBytes());
             } catch (IOException e) {
@@ -790,24 +743,20 @@ public class XMLParser {
             isEqual = false;
         }
 
-        // Gyermek elemek összehasonlítása
         int minChildren = Math.min(outputElementChildren.size(), assertElementChildren.size());
         for (int i = 0; i < minChildren; i++) {
             Element outputChild = outputElementChildren.get(i);
             Element assertChild = assertElementChildren.get(i);
 
-            // Az aktuális gyermek tag nevét hozzáadjuk az útvonalhoz
             if (!compareElements(outputChild, assertChild, currentPath)) {
                 isEqual = false;
             }
         }
 
-        // Ha több elem van az egyik oldalon
         if (outputElementChildren.size() > assertElementChildren.size()) {
             for (int i = assertElementChildren.size(); i < outputElementChildren.size(); i++) {
                 Element extra = outputElementChildren.get(i);
                 String tagIdAttribute = extra.getAttribute("id");
-                /// /CONSOL OUT
                 try {
                     outputStream.write(("✗ HIBA: " + currentPath + " id:"+tagIdAttribute + " - Extra elem a kimenetben: <" +
                             extra.getTagName() + ">\n").getBytes());
@@ -844,11 +793,9 @@ public class XMLParser {
         boolean isEqual = true;
         String tagName = outputElement.getTagName();
 
-        // Kimeneti attribútumok ellenőrzése
         org.w3c.dom.NamedNodeMap outputAttrs = outputElement.getAttributes();
         org.w3c.dom.NamedNodeMap assertAttrs = assertElement.getAttributes();
 
-        // Build a union set of attribute names present in either element
         java.util.Set<String> allAttrNames = new java.util.HashSet<>();
         for (int i = 0; i < assertAttrs.getLength(); i++) {
             org.w3c.dom.Attr a = (org.w3c.dom.Attr) assertAttrs.item(i);
@@ -859,7 +806,6 @@ public class XMLParser {
             allAttrNames.add(a.getName());
         }
 
-        // For each attribute name in the union, decide values (use defaults for optional ones)
         for (String attrName : allAttrNames) {
             boolean hasOutput = outputElement.hasAttribute(attrName) && !outputElement.getAttribute(attrName).isEmpty();
             boolean hasAssert = assertElement.hasAttribute(attrName) && !assertElement.getAttribute(attrName).isEmpty();
@@ -867,12 +813,10 @@ public class XMLParser {
             String outputValue = hasOutput ? outputElement.getAttribute(attrName) : null;
             String assertValue = hasAssert ? assertElement.getAttribute(attrName) : null;
 
-            // If missing on both sides (shouldn't happen because of union), skip
             if ((outputValue == null || outputValue.isEmpty()) && (assertValue == null || assertValue.isEmpty())) {
                 continue;
             }
 
-            // If output missing but assert present
             if ((outputValue == null || outputValue.isEmpty()) && (assertValue != null && !assertValue.isEmpty())) {
                 if (optionalAttributesBaseValues.containsKey(attrName)) {
                     outputValue = optionalAttributesBaseValues.get(attrName);
@@ -888,7 +832,6 @@ public class XMLParser {
                 }
             }
 
-            // If assert missing but output present
             if ((assertValue == null || assertValue.isEmpty()) && (outputValue != null && !outputValue.isEmpty())) {
                 if (optionalAttributesBaseValues.containsKey(attrName)) {
                     assertValue = optionalAttributesBaseValues.get(attrName);
@@ -905,7 +848,6 @@ public class XMLParser {
                 }
             }
 
-            // Both sides now have values (either real or defaults) - compare
             if (outputValue != null && assertValue != null && !outputValue.equals(assertValue)) {
                 String tagIdAttribute = outputElement.getAttribute("id");
                 try {
@@ -933,7 +875,7 @@ public class XMLParser {
 
         NodeList tiles = mapNode.getElementsByTagName("tile");
 
-        // Első kör: Objektumok létrehozása üres szomszédsági listákkal
+
         for (int i = 0; i < tiles.getLength(); i++) {
             Element tileElement = (Element) tiles.item(i);
             String id = tileElement.getAttribute("id");
@@ -944,7 +886,6 @@ public class XMLParser {
             int meltIdx = getIntAttribute(tileElement, "saltMeltingIndex", 0);
             int fadeIdx = getIntAttribute(tileElement, "rubbleFadingIndex", 0);
 
-            // Több sáv kezelése
             List<Lane> tileLanes = new ArrayList<>();
             NodeList lanes = tileElement.getElementsByTagName("lane");
             for (int j = 0; j < lanes.getLength(); j++) {
@@ -954,19 +895,16 @@ public class XMLParser {
                 tileLanes.add(tileLane);
             }
 
-            // Lista előkészítése a szomszédoknak
             List<Tile> neighbors = new ArrayList<>();
 
             Tile tile = new Tile(id, state, isSalted, isRubbled, compIdx, meltIdx, fadeIdx, neighbors, tileLanes);
             tileMap.put(id, tile);
             allTiles.add(tile);
 
-            // Sávokhoz is hozzáadjuk a csempét
             for (Lane lane : tileLanes) {
                 lane.getTiles().add(tile);
             }
 
-            // Szomszéd ID-k elmentése későbbi összekötéshez
             List<String> neighborIds = new ArrayList<>();
             NodeList neighborNodes = tileElement.getElementsByTagName("neighbor");
             for (int j = 0; j < neighborNodes.getLength(); j++) {
@@ -975,7 +913,6 @@ public class XMLParser {
             tileNeighborsMap.put(id, neighborIds);
         }
 
-        // Második kör: Szomszédok referenciáinak feltöltése
         for (String tileId : tileMap.keySet()) {
             Tile tile = tileMap.get(tileId);
             for (String neighborId : tileNeighborsMap.get(tileId)) {

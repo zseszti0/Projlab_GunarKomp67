@@ -22,7 +22,6 @@ public class Pass extends GameCommand {
     @Override
     public boolean execute(GameManager gameManager, List<String> args, OutputStream output) {
         gameManager.pass();
-        /// /CONSOL OUT
         try {
             output.write(("A körödet sikeresen befejezted (passzoltál). A következő játékos jön.\n").getBytes());
         } catch (IOException e) {

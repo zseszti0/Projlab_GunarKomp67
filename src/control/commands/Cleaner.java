@@ -26,8 +26,6 @@ public class Cleaner extends ConfigCommand {
         List<model.players.Cleaner> cleaners = gameManager.getCleaners();
         cleaners.add(new model.players.Cleaner(args.get(0)));
         gameManager.setCleaners(cleaners);
-
-        /// /CONSOL OUT
         try {
             output.write(("A(z)" + args.get(0) + "nevű takarító szerepű játékos sikeresen hozzáadva a játékkonfigurációhoz.\n").getBytes());
         } catch (IOException e) {

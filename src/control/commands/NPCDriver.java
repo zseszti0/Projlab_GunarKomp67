@@ -27,8 +27,6 @@ public class NPCDriver extends ConfigCommand {
         List<model.players.NPCDriver> npc = gameManager.getNpcDrivers();
         npc.add(new model.players.NPCDriver(args.get(0), new PathFinder("pathFinder")));
         gameManager.setNpcDrivers(npc);
-
-        /// /CONSOL OUT
         try {
             output.write(("Az NPC autó(k) sikeresen hozzáadva a játékkonfigurációhoz.").getBytes());
         } catch (IOException e) {

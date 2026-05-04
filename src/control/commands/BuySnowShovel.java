@@ -30,7 +30,6 @@ public class BuySnowShovel extends GameCommand {
 
         boolean success = gameManager.orderSnowShovel(pos);
         if(success){
-            /// /CONSOL OUT
             try {
                 output.write(("A vásárlás sikeres. Egy új hókotró sikeresen lehelyezve a(z)"+ args.get(0) +"mezőre.\n").getBytes());
             } catch (IOException e) {
@@ -38,7 +37,6 @@ public class BuySnowShovel extends GameCommand {
             }
         }
         else {
-            /// /CONSOL OUT
             try {
                 output.write((" A vásárlás sikertelen, nincs elég tőke.\n").getBytes());
             } catch (IOException e) {

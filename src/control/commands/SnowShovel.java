@@ -36,7 +36,6 @@ public class SnowShovel extends ConfigCommand {
         model.vehicles.SnowShovel snowShovel1 = new model.vehicles.SnowShovel(args.get(0) + cleaner.getVehicles().size());
         cleaner.addToFleet(snowShovel1, pos);
 
-        /// /CONSOL OUT
         try {
             output.write(("Egy új hókotró sikeresen hozzáadva a(z)"+ args.get(0) +"nevű játékos flottájához. A jármű a(z) <mező> mezőn kezd.\n").getBytes());
         } catch (IOException e) {

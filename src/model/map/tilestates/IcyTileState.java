@@ -21,8 +21,12 @@ public class IcyTileState extends TileState {
     private IcyTileState() {}
 
     /**
-     * Visszaadja a IcyTileState egyetlen peldanyat.
-     * @return a IcyTileState peldany
+     * Visszaadja a IcyTileState egyetlen példányát.
+     * Lépései:
+     * 1. Ha az instance null, létrehoz egy új IcyTileState-et.
+     * 2. Visszatér a singleton példánnyal.
+     *
+     * @return A IcyTileState példány.
      */
     public static IcyTileState getInstance() {
         if (instance == null) {
@@ -32,8 +36,12 @@ public class IcyTileState extends TileState {
     }
 
     /**
-     * Kezeli a hoesest. Jeges mezon a hoeses nem valtoztat az allapoton, jeges marad.
-     * @return onmaga (IcyTileState)
+     * Kezeli a hóesést.
+     * Lépései:
+     * 1. Jeges mezőn a hóesés nem változtat az állapoton, az jég marad.
+     * 2. Visszatér önmagával.
+     *
+     * @return Önmagával (IcyTileState) tér vissza.
      */
     @Override
     public TileState snowFall() {
@@ -41,8 +49,12 @@ public class IcyTileState extends TileState {
     }
 
     /**
-     * Kezeli a ho (jeg) olvadasat. A jeg elolvadasaval a mezo tiszta allapotba kerul.
-     * @return tiszta mezoallapot (CleanTileState)
+     * Kezeli a jég olvadását.
+     * Lépései:
+     * 1. A jég elolvadásával a mező egyből tiszta állapotba kerül.
+     * 2. Visszaadja a CleanTileState példányt.
+     *
+     * @return Tiszta mezőállapot (CleanTileState).
      */
     @Override
     public TileState snowMelt() {
@@ -50,17 +62,33 @@ public class IcyTileState extends TileState {
     }
 
     /**
-     * Kezeli a jegtoro fej (IcebreakerHead) altali tisztitast.
-     * A jegtoro feltori a jeget, ami igy sekely havassa valik.
-     * @param ih a tisztitast vegzo jegtoro fej
-     * @return sekely havas mezoallapot (ShallowSnowyTileState)
+     * Kezeli a jégtörő fej (IcebreakerHead) általi tisztítást.
+     * Lépései:
+     * 1. A jégtörő fej feltöri a jeget.
+     * 2. A mező állapota sekély havassá (ShallowSnowy) válik.
+     *
+     * @param ih A tisztítást végző jégtörő fej.
+     * @return Sekély havas mezőállapot (ShallowSnowyTileState).
      */
     @Override
     public TileState cleanedBy(IcebreakerHead ih) {
         return ShallowSnowyTileState.getInstance();
     }
 
-
+    /**
+     * Kiszámítja az útvonalat vagy lekezeli a csúszást.
+     * Lépései:
+     * 1. Ellenőrzi, hogy a mező le van-e sózva vagy fel van-e szórva törmelékkel.
+     * 2. Ha igen, akkor nincs csúszásveszély, és a PathFinder segítségével kikeresi a következő érvényes mezőt.
+     * 3. Ha nincs sem sózva, sem szórva, akkor a jármű megcsúszik, és a mező getSlipTarget() metódusával visszaadott célmezőt adja vissza.
+     *
+     * @param position A kiindulási mező.
+     * @param destination A célmező.
+     * @param pf Az útvonalkereső (PathFinder) objektum.
+     * @param isSalted Meg van-e sózva a mező.
+     * @param isRubbled Van-e kőtörmelék a mezőn.
+     * @return A következő mező, ahová a jármű kerül (irányított haladás vagy csúszás eredményeként).
+     */
     @Override
     public Tile requestPath(Tile position, Tile destination, PathFinder pf, boolean isSalted, boolean isRubbled){
         if(isSalted || isRubbled)
@@ -68,6 +96,14 @@ public class IcyTileState extends TileState {
         return position.getSlipTarget();
     }
 
+    /**
+     * Hozzáadja a jeges mezőt az útvonalkereső gráfhoz.
+     * Lépései:
+     * 1. Hozzáadja az aktuális mezőt a bejárható gráf listájához.
+     *
+     * @param subGraph A bejárható mezők listája.
+     * @param tile A gráfhoz hozzáadandó mező.
+     */
     @Override
     public void addToBFSSubGraph(List<Tile> subGraph, Tile tile){
         subGraph.add(tile);

@@ -26,7 +26,6 @@ public class BusChaffeur extends ConfigCommand {
         busSs.add(new model.players.BusChaffeur(args.get(0)));
         gameManager.setBusChauffeurs(busSs);
 
-        /// /CONSOL OUT
         try {
             output.write(("A(z)"+ args.get(0)+" nevű buszsofőr szerepű játékos sikeresen hozzáadva a játékkonfigurációhoz.\n").getBytes());
         } catch (IOException e) {

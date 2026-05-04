@@ -355,7 +355,6 @@ public class GameManager {
         if(currentActorRemainingAp == 0){
             pass();
             currentActorRemainingAp = 2;
-            /// /CONSOL OUT
             System.out.println(currentActorId+" lépése következik.");
 
         }

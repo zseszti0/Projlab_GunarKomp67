@@ -85,7 +85,6 @@ public class ProtoController {
             String command = in_args.get(0);
             if(in_args.size() > 1) in_args = in_args.subList(1, in_args.size());
             if (command.equals("exit")) {
-                /// /CONSOL OUT
                 try {
                     outputStream.write(("Sikeresen kiléptél az aktuális játszmából. A program visszatért a tétlen fázisba.\n").getBytes());
                 } catch (IOException e) {
@@ -107,7 +106,6 @@ public class ProtoController {
                             }
                             state = ProgramStates.CONFIG;
 
-                            /// /CONSOL OUT
                             try {
                                 outputStream.write(("Sikeresen létrehoztál egy új játékot a(z)" + in_args.get(0) + " térképen. A véletlen események beállítva. A konfigurációs fázis megkezdődött.\n").getBytes());
                             } catch (IOException e) {
@@ -120,7 +118,6 @@ public class ProtoController {
                             gameManager = parser.loadGame(in_args.get(0));
                             state = ProgramStates.GAME;
 
-                            /// /CONSOL OUT
                             try {
                                 outputStream.write(("A(z)"+ in_args.get(0) +"nevű játékállás sikeresen betöltve. Belépés a játszma fázisba.\n").getBytes());
                             } catch (IOException e) {
@@ -140,7 +137,6 @@ public class ProtoController {
                     if(command.equals("start")) {
                         state = ProgramStates.GAME;
                         gameManager.startGame();
-                        /// /CONSOL OUT
                         try {
                             outputStream.write(("A konfiguráció befejeződött. A játék sikeresen elindult, belépés a játék fázisba.\n").getBytes());
                         } catch (IOException e) {
@@ -163,7 +159,6 @@ public class ProtoController {
                         XMLParser parser = new XMLParser(sourceFolder);
                         parser.saveGame(gameManager);
 
-                        /// /CONSOL OUT
                         try {
                             outputStream.write(("A játékállás sikeresen elmentve a(z) " + sourceFolder + "/output.xml" + "fájlba. A játék folytatódik.\n").getBytes());
                         } catch (IOException e) {

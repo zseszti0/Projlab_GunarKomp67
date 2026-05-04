@@ -1,0 +1,13 @@
+A(z)tests/cleaner/clean/cobble/cclean7/arrange/cobblestone_full_success.xmlnevű játékállás sikeresen betöltve. Belépés a játszma fázisba.
+A(z)1 Számú hókotró/busz sikeresen átlépett a(z)Tile_Icy mezőre.
+A játékállás sikeresen elmentve a(z) tests/cleaner/clean/cobble/cclean7/output.xmlfájlba. A játék folytatódik.
+Sikeresen kiléptél az aktuális játszmából. A program visszatért a tétlen fázisba.
+=== XML Fájl Összehasonlítás ===
+✗ HIBA: <tile id:Tile_Icy> attribútum: isRubbled [game > map > tile]
+  Kimenet: isRubbled="false"
+  Elvárt:  isRubbled="true"
+✗ HIBA: game > cleaner > inventory id: - Gyermek elemek száma különbözik
+  Kimenet: 1 elem
+  Elvárt:  2 elem
+✗ HIBA: game > cleaner > inventory id: - Hiányzó elem a kimenetből: <consumables>
+✗ A fájlok különböznek!
