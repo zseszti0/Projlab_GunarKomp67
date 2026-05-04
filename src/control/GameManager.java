@@ -57,9 +57,8 @@ public class GameManager {
         purchasables.add(new SnowShovel("SnowShovel"));
 
         for(int i = 0; i < items.size(); i++)
-            prices.add(100);
+            prices.add(10);
         prices.set(0,60);
-        prices.set(7,10);
 
         shop = new Shop(items, purchasables, prices);
     }
