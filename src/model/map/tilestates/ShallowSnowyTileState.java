@@ -24,6 +24,14 @@ public class ShallowSnowyTileState extends SnowyTileState {
      */
     public static ShallowSnowyTileState getInstance() {return instance==null?instance=new ShallowSnowyTileState():instance;}
 
+
+    /**
+     * Kezeli a szomszédos mezőről átsöpört (vagy fújt) sekély hó érkezését.
+     * @param ssts A beérkező sekély hó állapot példánya.
+     * @return Az új mezőállapot a hó érkezése után.
+     */
+    @Override
+    public TileState acceptSweptSnow(ShallowSnowyTileState ssts) {return DeepSnowyTileState.getInstance();}
     /**
      * Kezeli a hóesést. Sekély hóval borított mezőre hullva a hó mély havas (DeepSnowy) állapotba vált.
      * @return A mély havas mezőállapot (DeepSnowyTileState).

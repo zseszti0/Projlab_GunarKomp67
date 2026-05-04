@@ -50,6 +50,7 @@ public class ProtoController {
      * args[1]: a kimeneti (output) txt fájl elérési útja.
      */
     public static void main(String[] args) {
+        state = ProgramStates.IDLE;
         InputStream inputStream = System.in;
         OutputStream outputStream = System.out;
         if (args.length > 0) {

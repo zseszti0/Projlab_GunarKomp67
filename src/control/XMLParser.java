@@ -250,9 +250,17 @@ public class XMLParser {
                 }
 
                 // Consumables in Inventory
-                if (!cleaner.getInventory().getConsumables().isEmpty()) {
+                // Only save consumables tag if there are consumables with non-zero amounts
+                List<Consumable> nonZeroConsumables = new ArrayList<>();
+                for (Consumable cons : cleaner.getInventory().getConsumables()) {
+                    if (cons.getAmount() > 0) {
+                        nonZeroConsumables.add(cons);
+                    }
+                }
+
+                if (!nonZeroConsumables.isEmpty()) {
                     Element consumablesElement = doc.createElement("consumables");
-                    for (Consumable cons : cleaner.getInventory().getConsumables()) {
+                    for (Consumable cons : nonZeroConsumables) {
                         Element consElement = doc.createElement("consumable");
                         consElement.setAttribute("id", cons.getName());
                         consElement.setAttribute("type", cons.getType());

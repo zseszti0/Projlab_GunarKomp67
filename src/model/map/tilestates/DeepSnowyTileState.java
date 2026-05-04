@@ -46,6 +46,14 @@ public class DeepSnowyTileState extends SnowyTileState {
         tile.acceptSweptSnow(DeepSnowyTileState.getInstance());
     }
 
+
+    /**
+     * Kezeli a szomszédos mezőről átsöpört (vagy fújt) sekély hó érkezését.
+     * @param ssts A beérkező sekély hó állapot példánya.
+     * @return Az új mezőállapot a hó érkezése után.
+     */
+    @Override
+    public TileState acceptSweptSnow(ShallowSnowyTileState ssts) {return DeepSnowyTileState.getInstance();}
     /**
      * Kezeli a jarmu mezore erkezeset, jelez ha érvénytelen lépés
      * @param v az érkező jármű

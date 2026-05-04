@@ -19,7 +19,7 @@
             <lanes><lane id="Lane1"/></lanes>
         </tile>
         <tile id="Tile_Shallow" type="Clean" isRubbled="false" isSalted="false">
-            <neighbors><neighbor id="Tile_Start"/><neighbor id="Tile_Shallow_End"/></neighbors>
+            <neighbors><neighbor id="Tile_Shallow_End"/><neighbor id="Tile_Start"/></neighbors>
             <lanes><lane id="Lane1"/></lanes>
         </tile>
         <tile id="Tile_Shallow_End" type="ShallowSnowy" isRubbled="false" isSalted="false">
@@ -41,7 +41,7 @@
             <attachment id="Att1" type="SweeperHead"/>
         </snowShovel>
         <inventory>
-            <money amount="10"/>
+            <money amount="110"/>
         </inventory>
     </cleaner>
 </game>

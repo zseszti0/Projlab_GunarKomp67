@@ -31,7 +31,7 @@
             <attachment id="Att1" type="DragonHead"/>
         </snowShovel>
         <inventory>
-            <money amount="10"/>
+            <money amount="110"/>
             <consumables>
                 <consumable id="Bio1" type="Biokerosene" amount="0"/>
             </consumables>

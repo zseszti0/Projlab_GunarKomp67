@@ -60,6 +60,7 @@ public class IcyTileState extends TileState {
         return ShallowSnowyTileState.getInstance();
     }
 
+
     @Override
     public Tile requestPath(Tile position, Tile destination, PathFinder pf, boolean isSalted, boolean isRubbled){
         if(isSalted || isRubbled)

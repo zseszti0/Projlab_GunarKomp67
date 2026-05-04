@@ -25,10 +25,12 @@ public class TestOracle {
             String results = "";
             int successCount = 0;
             for (String f : folders) {
+                System.out.println("Running test: " + f);
                 String[] newArgs = {f};
                 boolean succsess = runTest(newArgs);
                 results += f + " " + (succsess ? "OK" : "FAIL") + "\n";
                 if(succsess) successCount++;
+                System.out.println("Test finished.");
             }
 
             results += "\n\n" + successCount + " test(s) passed.";

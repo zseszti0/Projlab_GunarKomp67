@@ -25,7 +25,7 @@
             <attachment id="Att1" type="BlowerHead"/>
         </snowShovel>
         <inventory>
-            <money amount="10"/>
+            <money amount="110"/>
         </inventory>
     </cleaner>
 </game>

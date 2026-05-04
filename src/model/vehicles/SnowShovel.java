@@ -51,7 +51,7 @@ public class SnowShovel extends Vehicle implements Purchasable {
         boolean enoughFuel = inventory.useHead(currentAttachment);
         if(enoughFuel){
             if(currentAttachment.cleansOn(position)){
-                inventory.addMoney(100);
+                inventory.addMoney(110);
             }
             return true;
         }

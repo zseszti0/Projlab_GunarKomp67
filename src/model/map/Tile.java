@@ -271,8 +271,18 @@ public class Tile implements IAutomatic {
         if(stateChanged){
             oldState.sweepSnowToSide(neighbors.get(0));
         }
+        if(isRubbled){
+            isRubbled = false;
+            rubbleFadingIndex = 0;
+            neighbors.get(0).sweepRubble();
+        }
 
         return stateChanged;
+    }
+
+    private void sweepRubble(){
+        isRubbled = true;
+        rubbleFadingIndex = 0;
     }
 
     /**
@@ -284,6 +294,7 @@ public class Tile implements IAutomatic {
         TileState oldState = this.state;
         TileState newState = state.cleanedBy(a);
         state = newState;
+        isRubbled = false;
 
         return oldState != newState;
     }
