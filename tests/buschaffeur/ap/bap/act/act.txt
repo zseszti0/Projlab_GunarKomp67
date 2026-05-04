@@ -1,5 +1,4 @@
 load tests/buschaffeur/ap/bap/arrange/bus_4tiles.xml
 drive 1 Tile2
-drive 1 Tile3
 save
 exit
