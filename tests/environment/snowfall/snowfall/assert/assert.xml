@@ -1,7 +1,7 @@
 <game>
-    <config randomized="false">
-        <currentActor id="Autotulaj1" ap="2"/>
-        <actorQueue><actor id="Autotulaj1"/></actorQueue>
+    <config>
+        <currentActor ap="0" id=""/>
+        <actorQueue/>
     </config>
     <map>
         <tile id="Tile1" type="ShallowSnowy">
@@ -24,11 +24,11 @@
             <neighbors><neighbor id="Tile4"/><neighbor id="Tile6"/></neighbors>
             <lanes><lane id="Lane1"/></lanes>
         </tile>
-        <tile id="Tile6" type="Clean" isSalted="True">
+        <tile id="Tile6" type="Clean" isSalted="true" saltMeltingIndex="1">
             <neighbors><neighbor id="Tile5"/><neighbor id="Tile7"/></neighbors>
             <lanes><lane id="Lane1"/></lanes>
         </tile>
-        <tile id="Tile7" type="Clean" isRubbled="True" rubbleFadingIndex="1">
+        <tile id="Tile7" type="ShallowSnowy" isRubbled="true" rubbleFadingIndex="1">
             <neighbors><neighbor id="Tile6"/><neighbor id="Tile8"/></neighbors>
             <lanes><lane id="Lane1"/></lanes>
         </tile>
@@ -43,8 +43,8 @@
             <landMarks>
                 <landMark id="Tile1"/>
                 <landMark id="Tile4"/>
-                <destination id="Tile4"/>
             </landMarks>
+            <destination id="Tile4"/>
         </car>
     </NPCDriver>
 </game>

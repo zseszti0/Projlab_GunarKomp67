@@ -1,18 +1,18 @@
 <game>
     <config randomized="false">
-        <currentActor id="Autotulaj1" ap="2"/>
-        <actorQueue><actor id="Autotulaj1"/></actorQueue>
+        <currentActor ap="0" id=""/>
+        <actorQueue/>
     </config>
     <map>
         <tile id="Tile1" type="Clean">
             <neighbors><neighbor id="Tile2"/><neighbor id="Tile8"/></neighbors>
             <lanes><lane id="Lane1"/></lanes>
         </tile>
-        <tile id="Tile2" type="Shallow Snowy">
+        <tile id="Tile2" type="ShallowSnowy">
             <neighbors><neighbor id="Tile1"/><neighbor id="Tile3"/></neighbors>
             <lanes><lane id="Lane1"/></lanes>
         </tile>
-        <tile id="Tile3" type="Deep Snowy">
+        <tile id="Tile3" type="DeepSnowy">
             <neighbors><neighbor id="Tile2"/><neighbor id="Tile4"/></neighbors>
             <lanes><lane id="Lane1"/></lanes>
         </tile>
