@@ -59,12 +59,12 @@ tests/cleaner/clean/cclean_blower_deep OK
 tests/cleaner/clean/cclean_blower_shallow OK
 tests/cleaner/clean/cclean_cobblestone_clean OK
 tests/cleaner/clean/cclean_cobblestone_deep OK
-tests/cleaner/clean/cclean_cobblestone_icy FAIL
+tests/cleaner/clean/cclean_cobblestone_icy OK
 tests/cleaner/clean/cclean_cobblestone_shallow OK
 tests/cleaner/clean/cclean_dragon_clean OK
 tests/cleaner/clean/cclean_dragon_deep OK
 tests/cleaner/clean/cclean_dragon_icy OK
-tests/cleaner/clean/cclean_dragon_shallow FAIL
+tests/cleaner/clean/cclean_dragon_shallow OK
 tests/cleaner/clean/cclean_icebreaker_icy OK
 tests/cleaner/clean/cclean_salter_clean OK
 tests/cleaner/clean/cclean_salter_deep OK
@@ -120,4 +120,4 @@ tests/npcdriver/slip/carslip OK
 tests/npcdriver/turn/carturn OK
 
 
-118 test(s) passed.
+120 test(s) passed.

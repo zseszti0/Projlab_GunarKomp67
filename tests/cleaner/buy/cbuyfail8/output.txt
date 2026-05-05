@@ -1,0 +1,6 @@
+A(z)tests/cleaner/buy/cbuyfail8/arrange/buy_test_3tiles_poor.xmlnevű játékállás sikeresen betöltve. Belépés a játszma fázisba.
+A vásárlás sikeres. SalterHead vásárolva.
+A játékállás sikeresen elmentve a(z) tests/cleaner/buy/cbuyfail8/output.xmlfájlba. A játék folytatódik.
+Sikeresen kiléptél az aktuális játszmából. A program visszatért a tétlen fázisba.
+=== XML Fájl Összehasonlítás ===
+✓ A fájlok azonosak!

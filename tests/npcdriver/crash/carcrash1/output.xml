@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<game>
+    <config randomized="false">
+        <currentActor ap="0" id=""/>
+        <actorQueue/>
+    </config>
+    <map>
+        <tile id="Tile1" type="Blocked">
+            <neighbors>
+                <neighbor id="Tile2"/>
+            </neighbors>
+            <lanes>
+                <lane id="Lane1"/>
+            </lanes>
+        </tile>
+        <tile id="Tile2" type="Blocked">
+            <neighbors>
+                <neighbor id="Tile1"/>
+                <neighbor id="Tile3"/>
+            </neighbors>
+            <lanes>
+                <lane id="Lane1"/>
+            </lanes>
+        </tile>
+        <tile id="Tile3" type="Blocked">
+            <neighbors>
+                <neighbor id="Tile2"/>
+                <neighbor id="Tile4"/>
+            </neighbors>
+            <lanes>
+                <lane id="Lane1"/>
+            </lanes>
+        </tile>
+        <tile id="Tile4" type="Blocked">
+            <neighbors>
+                <neighbor id="Tile3"/>
+            </neighbors>
+            <lanes>
+                <lane id="Lane1"/>
+            </lanes>
+        </tile>
+    </map>
+    <NPCDriver id="Autotulaj1"/>
+</game>

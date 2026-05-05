@@ -1,0 +1,5 @@
+A(z)tests/npcdriver/crash/carcrash1/arrange/car_crash_four_tiles_car.xmlnevű játékállás sikeresen betöltve. Belépés a játszma fázisba.
+A játékállás sikeresen elmentve a(z) tests/npcdriver/crash/carcrash1/output.xmlfájlba. A játék folytatódik.
+Sikeresen kiléptél az aktuális játszmából. A program visszatért a tétlen fázisba.
+=== XML Fájl Összehasonlítás ===
+✓ A fájlok azonosak!

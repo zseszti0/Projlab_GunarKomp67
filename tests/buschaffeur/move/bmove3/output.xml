@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<game>
+    <config randomized="false">
+        <currentActor ap="1" id="Buszsofor1"/>
+        <actorQueue>
+            <actor id="Buszsofor1"/>
+        </actorQueue>
+    </config>
+    <map>
+        <tile id="Tile1" type="Icy">
+            <neighbors>
+                <neighbor id="Tile2"/>
+            </neighbors>
+            <lanes>
+                <lane id="Lane1"/>
+            </lanes>
+        </tile>
+        <tile id="Tile2" type="Clean">
+            <neighbors>
+                <neighbor id="Tile1"/>
+                <neighbor id="Tile3"/>
+            </neighbors>
+            <lanes>
+                <lane id="Lane1"/>
+            </lanes>
+        </tile>
+        <tile id="Tile3" type="Clean">
+            <neighbors>
+                <neighbor id="Tile2"/>
+            </neighbors>
+            <lanes>
+                <lane id="Lane1"/>
+            </lanes>
+        </tile>
+    </map>
+    <busChauffeur id="Buszsofor1">
+        <bus id="1">
+            <position id="Tile2"/>
+            <landMarks>
+                <landMark id="Tile1"/>
+                <landMark id="Tile3"/>
+            </landMarks>
+            <destination id="Tile3"/>
+        </bus>
+    </busChauffeur>
+</game>

@@ -1,0 +1,5 @@
+A(z)tests/npcdriver/turn/carturn/arrange/turn_car_three_tiles.xmlnevű játékállás sikeresen betöltve. Belépés a játszma fázisba.
+A játékállás sikeresen elmentve a(z) tests/npcdriver/turn/carturn/output.xmlfájlba. A játék folytatódik.
+Sikeresen kiléptél az aktuális játszmából. A program visszatért a tétlen fázisba.
+=== XML Fájl Összehasonlítás ===
+✓ A fájlok azonosak!

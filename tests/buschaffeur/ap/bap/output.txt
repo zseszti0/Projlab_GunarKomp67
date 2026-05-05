@@ -1,0 +1,6 @@
+A(z)tests/buschaffeur/ap/bap/arrange/bus_4tiles.xmlnevű játékállás sikeresen betöltve. Belépés a játszma fázisba.
+A(z)1 Számú hókotró/busz sikeresen átlépett a(z)Tile2 mezőre.
+A játékállás sikeresen elmentve a(z) tests/buschaffeur/ap/bap/output.xmlfájlba. A játék folytatódik.
+Sikeresen kiléptél az aktuális játszmából. A program visszatért a tétlen fázisba.
+=== XML Fájl Összehasonlítás ===
+✓ A fájlok azonosak!
