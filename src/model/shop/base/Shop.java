@@ -6,22 +6,29 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 /**
- * A bolt osztaly, amely tarolja a takarito altal megvasarolhato arukat.
- * Felelossege az elerheto termekek katalogusanak fenntartasa.
- * Asszociaciok: StoreListing (az arucikkek factory reprezentacioi).
+ * A bolt osztály, amely tárolja a takarító által megvásárolható árukat.
+ * Felelőssége az elérhető termékek katalógusának fenntartása és a vásárlási folyamat kiszolgálása.
+ * Asszociációk: StoreListing (az árucikkek factory reprezentációi).
  */
 public class Shop {
     /**
-     * A boltban elerheto aruk listajat tarolja nev alapjan.
+     * A boltban elérhető áruk listáját tárolja név alapján.
      */
     private final Map<String, StoreListing> itemRegistry;
 
     /**
-     * Konstruktor, amely letrehozza a bolt katalogusat a megadott nevek, aruk es arak alapjan.
-     * @param purchasablesNames az arucikkek neveit tartalmazo lista
-     * @param purchasables maguk az arucikkek (Purchasable objektumok)
-     * @param purchasablesPrices az arucikkek arai
-     * @throws IllegalArgumentException ha a listak meretei nem egyeznek meg
+     * Konstruktor, amely létrehozza a bolt katalógusát a megadott nevek, áruk és árak alapján.
+     * Lépései:
+     * 1. Ellenőrzi, hogy a kapott három lista (nevek, factory-k, árak) mérete megegyezik-e.
+     * 2. Ha nem egyezik, kivételt dob (IllegalArgumentException).
+     * 3. Példányosítja az itemRegistry szótárat (HashMap).
+     * 4. Végigiterál a listákon, és minden elemből létrehoz egy StoreListing objektumot,
+     * majd a névvel mint kulccsal elmenti azt a szótárba.
+     *
+     * @param purchasablesNames Az árucikkek neveit tartalmazó lista.
+     * @param purchasables Maguk az árucikkek legyártásáért felelős Supplier objektumok (factory-k).
+     * @param purchasablesPrices Az árucikkek árai.
+     * @throws IllegalArgumentException ha a listák méretei nem egyeznek meg.
      */
     public Shop(List<String> purchasablesNames, List<Supplier<Purchasable>> purchasables, List<Integer> purchasablesPrices) throws IllegalArgumentException {
         if(purchasablesNames.size() != purchasables.size() || purchasables.size() != purchasablesPrices.size())
@@ -35,9 +42,13 @@ public class Shop {
     }
 
     /**
-     * Visszaadja a boltban elerheto arucikket a neve alapjan.
-     * @param name a keresett arucikk neve
-     * @return a nevhez tartozo StoreListing objektum, ami majd legyartja a kert targyat
+     * Visszaadja a boltban elérhető árucikket a neve alapján.
+     * Lépései:
+     * 1. Kikeresi a belső szótárból (itemRegistry) az adott névhez tartozó bolti bejegyzést (StoreListing).
+     * 2. Visszatér ezzel az objektummal, ami tartalmazza az árat és a gyártási metódust.
+     *
+     * @param name A keresett árucikk neve.
+     * @return A névhez tartozó StoreListing objektum, vagy null, ha a boltban nem található ilyen nevű árucikk.
      */
     public StoreListing getListing(String name){
         return itemRegistry.get(name);
