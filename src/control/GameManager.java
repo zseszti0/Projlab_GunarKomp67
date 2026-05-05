@@ -60,8 +60,9 @@ public class GameManager {
         for(int i = 0; i < items.size(); i++)
             prices.add(10);
         prices.set(0,60);
+        prices.set(3,70);
         prices.set(5,50);
-        prices.set(9, 100);
+        prices.set(9,100);
 
         shop = new Shop(items, purchasables, prices);
     }
