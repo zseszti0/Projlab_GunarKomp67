@@ -25,7 +25,7 @@
         <inventory>
             <money amount="20"/>
             <attachments>
-                <attachment id="Attachment2" type="CobbleStoneHead"/>
+                <attachment id="CobbleStoneHead" type="CobblestoneHead"/>
             </attachments>
         </inventory>
     </cleaner>
