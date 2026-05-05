@@ -1,4 +1,4 @@
 load tests/npcdriver/compress/carcompress/arrange/move_car_three_tiles_compress.xml
-tick
+carTick
 save
 exit

@@ -1,4 +1,4 @@
 load tests/npcdriver/turn/carturn/arrange/turn_car_three_tiles.xml
-tick
+carTick
 save
 exit

@@ -1,4 +1,4 @@
 load tests/npcdriver/crash/carcrash1/arrange/car_crash_four_tiles_car.xml
-tick
+carTick
 save
 exit

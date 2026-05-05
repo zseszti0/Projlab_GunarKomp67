@@ -1,4 +1,4 @@
 load tests/npcdriver/move/carmove2/arrange/move_car_three_tiles_shallow.xml
-tick
+carTick
 save
 exit
