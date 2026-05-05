@@ -27,7 +27,7 @@
     </map>
     <cleaner id="Takarito1">
         <snowShovel id="1">
-            <position id="Tile_Start"/>
+            <position id="Tile_Icy"/>
             <attachment id="Att1" type="CobblestoneHead"/>
         </snowShovel>
         <inventory>
