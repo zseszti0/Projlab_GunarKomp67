@@ -16,12 +16,12 @@
     <cleaner id="Takarito1">
         <snowShovel id="1">
             <position id="Tile1"/>
-            <attachment id="Attachment2" type="IceBreakerHead"/>
+            <attachment id="IcebreakerHead" type="IcebreakerHead"/>
         </snowShovel>
         <inventory>
             <money amount="100"/>
             <attachments>
-                <attachment id="Attachment1" type="SalterHead"/>
+                <attachment id="SalterHead" type="SalterHead"/>
             </attachments>
         </inventory>
     </cleaner>

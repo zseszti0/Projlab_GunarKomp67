@@ -347,7 +347,7 @@ public class GameManager {
      */
     public boolean switchAttachment(String ss, String newAttachment){
         Cleaner currentActor = cleaners.stream().filter(cleaner -> cleaner.getName().equals(currentActorId)).findFirst().orElse(null);
-        if(currentActor == null){
+        if(currentActor != null){       //javítva
             SnowShovel snowShovel = currentActor.getVehicles().stream().filter(s -> s.getName().equals(ss)).findFirst().orElse(null);
             currentActor.changeAttachment(snowShovel,newAttachment);
         }
