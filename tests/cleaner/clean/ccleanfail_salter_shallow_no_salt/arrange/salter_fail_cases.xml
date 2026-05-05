@@ -35,7 +35,7 @@
         <inventory>
             <money amount="0"/>
             <consumables>
-                <consumable id="Salt1" type="Salt" amount="1"/>
+                <consumable id="Salt1" type="Salt" amount="0"/>
             </consumables>
         </inventory>
     </cleaner>

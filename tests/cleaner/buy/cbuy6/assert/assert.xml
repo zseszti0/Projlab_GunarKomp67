@@ -23,9 +23,9 @@
             <attachment id="Attachment1" type="SweeperHead"/>
         </snowShovel>
         <inventory>
-            <money amount="50"/>
+            <money amount="40"/>
             <attachments>
-                <attachment id="Attachment2" type="BlowerHead"/>
+                <attachment id="BlowerHead" type="BlowerHead"/>
             </attachments>
         </inventory>
     </cleaner>
