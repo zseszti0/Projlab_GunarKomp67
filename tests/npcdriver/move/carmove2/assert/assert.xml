@@ -1,7 +1,7 @@
 <game>
     <config>
-        <currentActor id="Autotulaj1" ap="1"/>
-        <actorQueue><actor id="Autotulaj1"/></actorQueue>
+        <currentActor ap="0" id=""/>
+        <actorQueue/>
     </config>
     <map>
         <tile id="Tile1" type="ShallowSnowy" compressionIndex="0">
