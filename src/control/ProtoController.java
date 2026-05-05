@@ -50,9 +50,6 @@ public class ProtoController {
      * args[1]: a kimeneti (output) txt fájl elérési útja.
      */
     public static void main(String[] args) {
-        System.out.println("TEST ARG!!: "+args[0] + "/act/act.txt");
-        String currentDir = System.getProperty("user.dir");
-        System.out.println("TEST DIR!!: " + currentDir);
         state = ProgramStates.IDLE;
         InputStream inputStream = System.in;
         OutputStream outputStream = System.out;

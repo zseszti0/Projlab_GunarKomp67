@@ -16,16 +16,21 @@ A program forráskódjának lefordításához a 2. Követelmények című dokume
 11. Navigáljunk a 9. lépésben kiválasztott mappának gyökérmappáján belül az `src` könyvtárba.
 12. Adjuk ki az alábbi parancsokat:
     ```cmd
-    dir /s /B *.java > sources.txt
-    javac -g @sources.txt
+    mkdir bin
+    dir /s /b src\*.java > sources.txt & javac -d bin @sources.txt & del sources.txt
     ```
-
-## Futtatás
 
 A sikeres fordítást követően a futtatható kód elindítása szintén a megadott parancssori környezetből történik. A futtatás lépései:
 
-1. Győződjünk meg róla, hogy a terminál továbbra is az `src` mappában áll (ahol a fordítást az előző lépésben elvégeztük).
-2. A program elindításához adjuk ki az alábbi parancsot:
+1. A program elindításához adjuk ki az alábbi parancsot:
     ```cmd
-    java logger.SkeletonTracer
+    java test.TestOracle
+    ```
+   A parancs, az összes tesztesetet lefuttatja, majd a gyökérmappába egy output.txt file-ba összegzi az eredményt. Illetve minden tesztmappába egy output.txc-ben látható a pontos futássi output és az asserttel való összehasonlítási eredmény. Az output.xml-ben pedig maga az elért játékállapot a futás végére.
+
+2. Ha egy specifikus tesztet szeretnénk futtatni, a futtatási argumentumokhoz írjuk ba a teszt mappa elérési útját (a gyökérmappából)
+   Például:
+    ```cmd
+    java test.TestOracle tests/buschaffeur/ap/bap
+    ```
     ```
