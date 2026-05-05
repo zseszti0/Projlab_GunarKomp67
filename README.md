@@ -2,14 +2,14 @@
 
 A program forráskódjának lefordításához a 2. Követelmények című dokumentumban rögzített Java környezet (JDK) és egy Bash-kompatibilis terminál szükséges. A fordítás lépései:
 
-1.Indítsuk el a tárgy oldalán a 6. feladatban leírt virtuális gépet.
-2.Nyissuk meg a https://github.com/zseszti0/Projlab_GunarKomp67 oldalt.
-3.Kattintsunk a zöld “Code” gombra
-4.Válasszunk ki a “Download ZIP”
-5.Tömörítsük ki a letöltött fájlt egy gyökérmappába.
-6.Nyissunk egy Command Prompt-ot
-7.Navigáljunk az 5. lépésben létrehozott gyökérmappába.
-8.Adjuk ki az alábbi parancsokat:
+1. Indítsuk el a tárgy oldalán a 6. feladatban leírt virtuális gépet.
+2. Nyissuk meg a https://github.com/zseszti0/Projlab_GunarKomp67 oldalt.
+3. Kattintsunk a zöld “Code” gombra
+4. Válasszunk ki a “Download ZIP”
+5. Tömörítsük ki a letöltött fájlt egy gyökérmappába.
+6. Nyissunk egy Command Prompt-ot
+7. Navigáljunk az 5. lépésben létrehozott gyökérmappába.
+8. Adjuk ki az alábbi parancsokat:
 
     ```cmd
     mkdir bin
