@@ -1,4 +1,0 @@
-load tests/cleaner/change/cchangefail2/arrange/two_tile_map.xml
-switchattachment 1 BlowerHead
-save
-exit

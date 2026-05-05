@@ -1,4 +1,0 @@
-load tests/cleaner/change/cchangefail5/arrange/two_tile_map.xml
-switchattachment 1 DragonHead
-save
-exit

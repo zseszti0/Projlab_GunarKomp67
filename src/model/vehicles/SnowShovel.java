@@ -6,7 +6,6 @@ import model.shop.attachements.Attachment;
 import model.shop.attachements.SweeperHead;
 import model.shop.base.Purchasable;
 
-import java.util.List;
 
 /**
  * Hókotró jármű osztály, amelyet a takarító játékos irányít.
@@ -99,7 +98,8 @@ public class SnowShovel extends Vehicle implements Purchasable {
      * @param attachment Az új kotrófej, amelyet fel szeretnénk szerelni
      */
     public void setEquippedAttachment(Attachment attachment){
-        this.currentAttachment=attachment;
+        if(attachment != null)  //javítás
+            this.currentAttachment=attachment;
     }
 
     /**

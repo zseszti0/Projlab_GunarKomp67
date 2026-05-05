@@ -1,4 +1,0 @@
-load tests/cleaner/change/cchangefail1/arrange/two_tile_map_equipped_blower.xml
-switchattachment 1 SweeperHead
-save
-exit
