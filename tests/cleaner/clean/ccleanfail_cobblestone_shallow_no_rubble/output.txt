@@ -1,6 +1,0 @@
-A(z)tests/cleaner/clean/ccleanfail_cobblestone_shallow_no_rubble/arrange/cobblestone_full_fail.xmlnevű játékállás sikeresen betöltve. Belépés a játszma fázisba.
-A(z)1 Számú hókotró/busz sikeresen átlépett a(z)Tile_Shallow mezőre.
-A játékállás sikeresen elmentve a(z) tests/cleaner/clean/ccleanfail_cobblestone_shallow_no_rubble/output.xmlfájlba. A játék folytatódik.
-Sikeresen kiléptél az aktuális játszmából. A program visszatért a tétlen fázisba.
-=== XML Fájl Összehasonlítás ===
-✓ A fájlok azonosak!

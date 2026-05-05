@@ -1,6 +1,0 @@
-A(z)tests/cleaner/buy/cbuy9/arrange/buy_test_3tiles_rich.xmlnevű játékállás sikeresen betöltve. Belépés a játszma fázisba.
-A vásárlás sikeres. DragonHead vásárolva.
-A játékállás sikeresen elmentve a(z) tests/cleaner/buy/cbuy9/output.xmlfájlba. A játék folytatódik.
-Sikeresen kiléptél az aktuális játszmából. A program visszatért a tétlen fázisba.
-=== XML Fájl Összehasonlítás ===
-✓ A fájlok azonosak!

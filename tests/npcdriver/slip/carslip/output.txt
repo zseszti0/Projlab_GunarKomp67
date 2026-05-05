@@ -1,5 +1,0 @@
-A(z)tests/npcdriver/slip/carslip/arrange/slip_car_four_tiles_icy.xmlnevű játékállás sikeresen betöltve. Belépés a játszma fázisba.
-A játékállás sikeresen elmentve a(z) tests/npcdriver/slip/carslip/output.xmlfájlba. A játék folytatódik.
-Sikeresen kiléptél az aktuális játszmából. A program visszatért a tétlen fázisba.
-=== XML Fájl Összehasonlítás ===
-✓ A fájlok azonosak!

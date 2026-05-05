@@ -1,5 +1,0 @@
-A(z)tests/npcdriver/find/carfind/arrange/find_car_eight_tiles.xmlnevű játékállás sikeresen betöltve. Belépés a játszma fázisba.
-A játékállás sikeresen elmentve a(z) tests/npcdriver/find/carfind/output.xmlfájlba. A játék folytatódik.
-Sikeresen kiléptél az aktuális játszmából. A program visszatért a tétlen fázisba.
-=== XML Fájl Összehasonlítás ===
-✓ A fájlok azonosak!

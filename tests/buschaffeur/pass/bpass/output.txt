@@ -1,6 +1,0 @@
-A(z)tests/buschaffeur/pass/bpass/arrange/bus_two_tile_map.xmlnevű játékállás sikeresen betöltve. Belépés a játszma fázisba.
-A körödet sikeresen befejezted (passzoltál). A következő játékos jön.
-A játékállás sikeresen elmentve a(z) tests/buschaffeur/pass/bpass/output.xmlfájlba. A játék folytatódik.
-Sikeresen kiléptél az aktuális játszmából. A program visszatért a tétlen fázisba.
-=== XML Fájl Összehasonlítás ===
-✓ A fájlok azonosak!

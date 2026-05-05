@@ -1,6 +1,0 @@
-A(z)tests/cleaner/clean/sweeper/ccleanfail1/arrange/sweeper_fail_cases.xmlnevű játékállás sikeresen betöltve. Belépés a játszma fázisba.
-A(z)1 Számú hókotró/busz sikeresen átlépett a(z)Tile_IcyTest mezőre.
-A játékállás sikeresen elmentve a(z) tests/cleaner/clean/sweeper/ccleanfail1/output.xmlfájlba. A játék folytatódik.
-Sikeresen kiléptél az aktuális játszmából. A program visszatért a tétlen fázisba.
-=== XML Fájl Összehasonlítás ===
-✓ A fájlok azonosak!

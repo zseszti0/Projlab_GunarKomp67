@@ -1,6 +1,0 @@
-A(z)tests/cleaner/buy/cbuy1/arrange/buy_test_3tiles_rich.xmlnevű játékállás sikeresen betöltve. Belépés a játszma fázisba.
-A vásárlás sikeres. Salt vásárolva.
-A játékállás sikeresen elmentve a(z) tests/cleaner/buy/cbuy1/output.xmlfájlba. A játék folytatódik.
-Sikeresen kiléptél az aktuális játszmából. A program visszatért a tétlen fázisba.
-=== XML Fájl Összehasonlítás ===
-✓ A fájlok azonosak!

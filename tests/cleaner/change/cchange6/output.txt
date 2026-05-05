@@ -1,6 +1,0 @@
-A(z)tests/cleaner/change/cchange6/arrange/switch_test_2tiles_cobblestonehead.xmlnevű játékállás sikeresen betöltve. Belépés a játszma fázisba.
-A(z)1. Számú hókotró feje sikeresen lecserélve a következőre: CobblestoneHead.
-A játékállás sikeresen elmentve a(z) tests/cleaner/change/cchange6/output.xmlfájlba. A játék folytatódik.
-Sikeresen kiléptél az aktuális játszmából. A program visszatért a tétlen fázisba.
-=== XML Fájl Összehasonlítás ===
-✓ A fájlok azonosak!
