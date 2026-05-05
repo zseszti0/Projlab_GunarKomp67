@@ -1,4 +1,4 @@
 load tests/cleaner/buy/cbuy9/arrange/buy_test_3tiles_rich.xml
-buy dragonhead
+buy DragonHead
 save
 exit

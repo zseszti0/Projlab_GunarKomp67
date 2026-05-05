@@ -25,7 +25,7 @@
         <inventory>
             <money amount="20"/>
             <attachments>
-                <attachment id="Attachment2" type="SalterHead"/>
+                <attachment id="SalterHead" type="SalterHead"/>
             </attachments>
         </inventory>
     </cleaner>

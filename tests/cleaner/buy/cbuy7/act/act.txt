@@ -1,4 +1,4 @@
 load tests/cleaner/buy/cbuy7/arrange/buy_test_3tiles_rich.xml
-buy icebreakerhead
+buy IcebreakerHead
 save
 exit

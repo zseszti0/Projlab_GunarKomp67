@@ -1,4 +1,4 @@
 load tests/cleaner/buy/cbuy8/arrange/buy_test_3tiles_rich.xml
-buy salterhead
+buy SalterHead
 save
 exit
