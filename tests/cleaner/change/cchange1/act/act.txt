@@ -1,4 +1,4 @@
 load tests/cleaner/change/cchange1/arrange/switch_test_2tiles_sweeper.xml
-switchattachment 1 sweeperhead
+switchattachment 1 SweeperHead
 save
 exit
