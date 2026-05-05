@@ -1,0 +1,5 @@
+A(z)tests/npcdriver/compress/carcompress/arrange/move_car_three_tiles_compress.xmlnevű játékállás sikeresen betöltve. Belépés a játszma fázisba.
+A játékállás sikeresen elmentve a(z) tests/npcdriver/compress/carcompress/output.xmlfájlba. A játék folytatódik.
+Sikeresen kiléptél az aktuális játszmából. A program visszatért a tétlen fázisba.
+=== XML Fájl Összehasonlítás ===
+✓ A fájlok azonosak!

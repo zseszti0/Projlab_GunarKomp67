@@ -1,4 +1,4 @@
 load tests/cleaner/change/cchange2/arrange/switch_test_2tiles_blowerhead.xml
-switchattachment 1 blowerhead
+switchattachment 1 BlowerHead
 save
 exit

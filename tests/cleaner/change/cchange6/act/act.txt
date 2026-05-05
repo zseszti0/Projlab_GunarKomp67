@@ -1,4 +1,4 @@
 load tests/cleaner/change/cchange6/arrange/switch_test_2tiles_cobblestonehead.xml
-switchattachment 1 cobblestonehead
+switchattachment 1 CobblestoneHead
 save
 exit

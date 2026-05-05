@@ -1,4 +1,0 @@
-load tests/cleaner/change/cchangefail4/arrange/two_tile_map.xml
-switchattachment 1 SalterHead
-save
-exit
