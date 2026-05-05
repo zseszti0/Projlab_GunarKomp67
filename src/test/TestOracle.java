@@ -90,7 +90,7 @@ public class TestOracle {
      */
     private static List<String> gatherTestSourceFolders(){
         List<String> result = new ArrayList<>();
-        Path testsRoot = Paths.get("tests/cleaner/clean");
+        Path testsRoot = Paths.get("tests/");
         if (!Files.exists(testsRoot) || !Files.isDirectory(testsRoot)) {
             return result;
         }

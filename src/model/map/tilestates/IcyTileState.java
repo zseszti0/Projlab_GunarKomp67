@@ -116,4 +116,7 @@ public class IcyTileState extends TileState {
      */
     @Override
     public boolean acceptVehicle(Car v) {return false;}
+
+    @Override
+    public boolean isSlippery(Tile tile){return true;}
 }

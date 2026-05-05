@@ -328,6 +328,13 @@ public class Tile implements IAutomatic {
      */
     public Vehicle moveToNeighbor(Tile t, Vehicle v) {
         boolean valid = neighbors.contains(t);
+
+        //A következő 4 sor a javítás
+        boolean isSlipping = state.isSlippery(this) && !isSalted && !isRubbled;
+        if(isSlipping && getSlipTarget().equals(t)){
+            valid = true;
+        }
+
         if(valid){                  //HIBA, amikor megcsúszik, akkor valid = false, mert nincs benne a szomszédsági listájában
             Vehicle collided = t.acceptVehicle(v);
             if(collided == null){

@@ -1,7 +1,7 @@
 <game>
     <config randomized="false">
-        <currentActor id="Autotulaj1" ap="2"/>
-        <actorQueue><actor id="Autotulaj1"/><actor id="Takarito1"/></actorQueue>
+        <currentActor id="Takarito1" ap="2"/>
+        <actorQueue><actor id="Takarito1"/></actorQueue>
     </config>
     <map>
         <tile id="Tile1" type="Icy">
@@ -21,6 +21,15 @@
             <lanes><lane id="Lane1"/></lanes>
         </tile>
     </map>
+    <cleaner id="Takarito1">
+        <snowShovel id="2">
+            <position id="Tile3"/>
+            <attachment id="Att1" type="SweeperHead"/>
+        </snowShovel>
+        <inventory>
+            <money amount="100"/>
+        </inventory>
+    </cleaner>
     <NPCDriver id="Autotulaj1">
         <car id="1">
             <position id="Tile1"/>
@@ -31,13 +40,4 @@
             <destination id="Tile4"/>
         </car>
     </NPCDriver>
-    <cleaner id="Takarito1">
-        <snowShovel id="2">
-            <position id="Tile3"/>
-            <attachment id="Att1" type="SweeperHead"/>
-        </snowShovel>
-        <inventory>
-            <money amount="100"/>
-        </inventory>
-    </cleaner>
 </game>

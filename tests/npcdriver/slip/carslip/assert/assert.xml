@@ -1,7 +1,7 @@
 <game>
     <config>
-        <currentActor id="Autotulaj1" ap="1"/>
-        <actorQueue><actor id="Autotulaj1"/><actor id="Buszsofor1"/></actorQueue>
+        <currentActor ap="0" id=""/>
+        <actorQueue/>
     </config>
     <map>
         <tile id="Tile1" type="Icy">
@@ -31,14 +31,4 @@
             <destination id="Tile4"/>
         </car>
     </NPCDriver>
-    <busChauffeur id="Buszsofor1">
-        <bus id="2">
-            <position id="Tile4"/>
-            <landMarks>
-                <landMark id="Tile1"/>
-                <landMark id="Tile4"/>
-            </landMarks>
-            <destination id="Tile1"/>
-        </bus>
-    </busChauffeur>
 </game>

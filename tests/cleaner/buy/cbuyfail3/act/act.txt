@@ -1,4 +1,4 @@
 load tests/cleaner/buy/cbuyfail3/arrange/buy_test_3tiles_poor.xml
-buy SnowShovel Tile2
+buysnowshovel Tile2
 save
 exit

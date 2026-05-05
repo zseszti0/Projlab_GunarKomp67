@@ -139,4 +139,6 @@ public abstract class TileState {
      */
     public void sweepSnowToSide(Tile tile){    }
 
+    //A SLIP hibájának javítása:
+    public boolean isSlippery(Tile tile){return false;}
 }
