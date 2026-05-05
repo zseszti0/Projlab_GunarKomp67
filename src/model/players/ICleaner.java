@@ -27,14 +27,27 @@ public interface ICleaner {
 
     /**
      * Hozzáad egy új hókotrót a takarító flottájához a megadott helyen.
+     * Lépései:
+     * 1. Elhelyezi a táblán és felveszi a birtokolt járművek listájára.
      * @param ss A hozzáadandó hókotró
      * @param where A mező, ahová a hókotrót le kell helyezni
      */
     void addToFleet(SnowShovel ss, Tile where);
 
-
+    /**
+     * Lehetővé teszi járművek vásárlását a boltból, megadott célmezőre helyezve.
+     * @param item A vásárolandó tárgy (jármű) neve.
+     * @param shop A bolt referencia.
+     * @param where A mező, ahová a vásárolt jármű kerül.
+     * @return true, ha a tranzakció sikeres volt.
+     */
     boolean shop(String item, Shop shop, Tile where);
 
-
+    /**
+     * Lehetővé teszi tárgyak (kotrófejek, fogyóeszközök) vásárlását a boltból az eszköztárba.
+     * @param item A vásárolandó tárgy neve.
+     * @param shop A bolt referencia.
+     * @return true, ha a tranzakció sikeres volt.
+     */
     boolean shop(String item, Shop shop);
 }
