@@ -26,18 +26,12 @@ tests/cleaner/buy/cbuyfail6 FAIL
 tests/cleaner/buy/cbuyfail7 FAIL
 tests/cleaner/buy/cbuyfail8 FAIL
 tests/cleaner/buy/cbuyfail9 FAIL
-tests/cleaner/change/cchange1 FAIL
-tests/cleaner/change/cchange2 FAIL
-tests/cleaner/change/cchange3 FAIL
-tests/cleaner/change/cchange4 FAIL
-tests/cleaner/change/cchange5 FAIL
-tests/cleaner/change/cchange6 FAIL
-tests/cleaner/change/cchangefail1 FAIL
-tests/cleaner/change/cchangefail2 FAIL
-tests/cleaner/change/cchangefail3 FAIL
-tests/cleaner/change/cchangefail4 FAIL
-tests/cleaner/change/cchangefail5 FAIL
-tests/cleaner/change/cchangefail6 FAIL
+tests/cleaner/change/cchange1 OK
+tests/cleaner/change/cchange2 OK
+tests/cleaner/change/cchange3 OK
+tests/cleaner/change/cchange4 OK
+tests/cleaner/change/cchange5 OK
+tests/cleaner/change/cchange6 OK
 tests/cleaner/clean/blower/cclean3 OK
 tests/cleaner/clean/blower/ccleanfail2 OK
 tests/cleaner/clean/blower/ccleanfail_blower_clean OK
@@ -114,7 +108,7 @@ tests/cleaner/clean/sweeper/ccleanfail_sweeper_clean OK
 tests/cleaner/clean/sweeper/cclean_sweeper_shallow FAIL
 tests/cleaner/move/cmove OK
 tests/cleaner/pass/cpass OK
-tests/environment/snowfall/snowfall FAIL
+tests/environment/snowfall/snowfall OK
 tests/npcdriver/compress/carcompress OK
 tests/npcdriver/crash/carcrash1 OK
 tests/npcdriver/crash/carcrash2 OK
@@ -126,4 +120,4 @@ tests/npcdriver/slip/carslip OK
 tests/npcdriver/turn/carturn OK
 
 
-76 test(s) passed.
+83 test(s) passed.
