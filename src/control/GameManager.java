@@ -262,10 +262,13 @@ public class GameManager {
         if(currentActor == null)
             return false;
 
+        boolean succsess = false;
         for(int i = 0; i < amount; i++)
-            currentActor.shop(s, shop);
+            if(currentActor.shop(s, shop)){
+                succsess = true;
+            }
 
-        turnEnd();
+        if(succsess) turnEnd();
         return true;
     }
 
