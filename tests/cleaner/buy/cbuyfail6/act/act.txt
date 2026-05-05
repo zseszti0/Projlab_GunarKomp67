@@ -1,4 +1,4 @@
 load tests/cleaner/buy/cbuyfail6/arrange/buy_test_3tiles_poor.xml
-buy blowerhead
+buy BlowerHead
 save
 exit

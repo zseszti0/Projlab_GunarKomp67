@@ -1,4 +1,4 @@
 load tests/cleaner/buy/cbuyfail5/arrange/buy_test_3tiles_poor.xml
-buy biokerosene
+buy Biokerosene
 save
 exit
