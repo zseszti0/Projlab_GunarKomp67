@@ -203,7 +203,11 @@ public class Tile implements IAutomatic {
      */
     public void update() {
         if (isSalted) {
-            state = state.snowMelt();
+            saltMeltingIndex = (saltMeltingIndex + 1) % 2;
+            if (saltMeltingIndex == 0){
+                isSalted = false;
+                state = state.snowMelt();
+            }
         } else {
             state = state.snowFall();
 
@@ -407,6 +411,7 @@ public class Tile implements IAutomatic {
      */
     public boolean cleanTile(SalterHead a) {
         this.isSalted = true;
+        saltMeltingIndex = 0;
         return false;
     }
 

@@ -122,6 +122,14 @@ public class GameManager {
         automata.forEach(IAutomatic::update);
     }
 
+    public void tickSnowTimer(){
+        tiles.forEach(Tile :: update);
+    }
+
+    public void tickCarTimer(){
+        npcDrivers.forEach(NPCDriver::update);
+    }
+
     /**
      * Elindítja a játékot.
      * Lépései: Beállítja a lépési sorrend (actorQueue) első elemét aktuális cselekvőnek (currentActorId).

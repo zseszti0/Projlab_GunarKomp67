@@ -76,6 +76,8 @@ public class ProtoController {
         configCommands.put("snowshovel", new SnowShovel());
         gameCommands.put("switchattachment", new SwitchAttachment());
         gameCommands.put("tick", new Tick());
+        gameCommands.put("snowTick", new SnowTick());
+        gameCommands.put("carTick", new CarTick());
 
 
         Scanner scanner = new Scanner(inputStream);
