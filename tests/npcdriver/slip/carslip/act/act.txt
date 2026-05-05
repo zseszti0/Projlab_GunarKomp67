@@ -1,0 +1,4 @@
+load tests/npcdriver/slip/carslip/arrange/slip_car_four_tiles_icy.xml
+tick
+save
+exit

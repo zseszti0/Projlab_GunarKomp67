@@ -1,0 +1,50 @@
+<game>
+    <config>
+        <currentActor id="Autotulaj1" ap="2"/>
+        <actorQueue><actor id="Autotulaj1"/></actorQueue>
+    </config>
+    <map>
+        <tile id="Tile1" type="Clean">
+            <neighbors><neighbor id="Tile2"/><neighbor id="Tile8"/></neighbors>
+            <lanes><lane id="Lane1"/></lanes>
+        </tile>
+        <tile id="Tile2" type="Clean">
+            <neighbors><neighbor id="Tile1"/><neighbor id="Tile3"/></neighbors>
+            <lanes><lane id="Lane1"/></lanes>
+        </tile>
+        <tile id="Tile3" type="Clean">
+            <neighbors><neighbor id="Tile2"/><neighbor id="Tile4"/></neighbors>
+            <lanes><lane id="Lane1"/></lanes>
+        </tile>
+        <tile id="Tile4" type="DeepSnowy">
+            <neighbors><neighbor id="Tile3"/><neighbor id="Tile5"/></neighbors>
+            <lanes><lane id="Lane1"/></lanes>
+        </tile>
+        <tile id="Tile5" type="Clean">
+            <neighbors><neighbor id="Tile4"/><neighbor id="Tile6"/></neighbors>
+            <lanes><lane id="Lane1"/></lanes>
+        </tile>
+        <tile id="Tile6" type="Clean">
+            <neighbors><neighbor id="Tile5"/><neighbor id="Tile7"/></neighbors>
+            <lanes><lane id="Lane1"/></lanes>
+        </tile>
+        <tile id="Tile7" type="Clean">
+            <neighbors><neighbor id="Tile6"/><neighbor id="Tile8"/></neighbors>
+            <lanes><lane id="Lane1"/></lanes>
+        </tile>
+        <tile id="Tile8" type="Clean">
+            <neighbors><neighbor id="Tile7"/><neighbor id="Tile1"/></neighbors>
+            <lanes><lane id="Lane1"/></lanes>
+        </tile>
+    </map>
+    <NPCDriver id="Autotulaj1">
+        <car id="1">
+            <position id="Tile5"/>
+            <landMarks>
+                <landMark id="Tile1"/>
+                <landMark id="Tile5"/>
+            </landMarks>
+            <destination id="Tile5"/>
+        </car>
+    </NPCDriver>
+</game>

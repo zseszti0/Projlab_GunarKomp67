@@ -1,0 +1,4 @@
+load tests/npcdriver/move/carmove1/arrange/move_car_three_tiles_clean.xml
+tick
+save
+exit

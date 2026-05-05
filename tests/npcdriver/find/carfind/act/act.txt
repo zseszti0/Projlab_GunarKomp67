@@ -1,0 +1,9 @@
+load tests/npcdriver/find/carfind/arrange/find_car_eight_tiles.xml
+tick
+tick
+tick
+tick
+tick
+tick
+save
+exit

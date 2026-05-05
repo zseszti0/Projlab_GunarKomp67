@@ -1,0 +1,44 @@
+<game>
+    <config randomized="false">
+        <currentActor id="Autotulaj1" ap="2"/>
+        <actorQueue><actor id="Autotulaj1"/><actor id="Buszsofor1"/></actorQueue>
+    </config>
+    <map>
+        <tile id="Tile1" type="Icy">
+            <neighbors><neighbor id="Tile2"/></neighbors>
+            <lanes><lane id="Lane1"/></lanes>
+        </tile>
+        <tile id="Tile2" type="Clean">
+            <neighbors><neighbor id="Tile1"/><neighbor id="Tile3"/></neighbors>
+            <lanes><lane id="Lane1"/></lanes>
+        </tile>
+        <tile id="Tile3" type="Clean">
+            <neighbors><neighbor id="Tile2"/><neighbor id="Tile4"/></neighbors>
+            <lanes><lane id="Lane1"/></lanes>
+        </tile>
+        <tile id="Tile4" type="Clean">
+            <neighbors><neighbor id="Tile3"/></neighbors>
+            <lanes><lane id="Lane1"/></lanes>
+        </tile>
+    </map>
+    <NPCDriver id="Autotulaj1">
+        <car id="1">
+            <position id="Tile1"/>
+            <landMarks>
+                <landMark id="Tile1"/>
+                <landMark id="Tile4"/>
+            </landMarks>
+            <destination id="Tile4"/>
+        </car>
+    </NPCDriver>
+    <busChauffeur id="Buszsofor1">
+        <bus id="2">
+            <position id="Tile4"/>
+            <landMarks>
+                <landMark id="Tile1"/>
+                <landMark id="Tile4"/>
+            </landMarks>
+            <destination id="Tile1"/>
+        </bus>
+    </busChauffeur>
+</game>
