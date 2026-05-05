@@ -2,19 +2,15 @@
 
 A program forráskódjának lefordításához a 2. Követelmények című dokumentumban rögzített Java környezet (JDK) és egy Bash-kompatibilis terminál szükséges. A fordítás lépései:
 
-1. Indítsuk el a tárgy oldalán a 6. feladatban leírt virtuális gépet!
-2. Töltsük le a Circle Client-et (ha még nem lenne) és csatlakozzunk!
-3. Az asztalon nyissuk meg az Eclipse-t!
-4. **Window** -> **Show View** -> **Other…**
-5. **Git** -> **Git Repositories**
-6. Bal alsó sarokban kattintsunk a **“Clone a Git repository”**-ra
-7. Az URL mezőbe a következő repository linkjét írjuk:
-   `https://github.com/zseszti0/Projlab_GunarKomp67`
-8. Kattintsunk a **“Next”** gombra
-9. Válasszunk ki egy mappát (vagy maradhat az alapértelmezett)
-10. Nyissunk egy Command Prompt-ot
-11. Navigáljunk a 9. lépésben kiválasztott mappának gyökérmappájába.
-12. Adjuk ki az alábbi parancsokat:
+1.Indítsuk el a tárgy oldalán a 6. feladatban leírt virtuális gépet.
+2.Nyissuk meg a https://github.com/zseszti0/Projlab_GunarKomp67 oldalt.
+3.Kattintsunk a zöld “Code” gombra
+4.Válasszunk ki a “Download ZIP”
+5.Tömörítsük ki a letöltött fájlt egy gyökérmappába.
+6.Nyissunk egy Command Prompt-ot
+7.Navigáljunk az 5. lépésben létrehozott gyökérmappába.
+8.Adjuk ki az alábbi parancsokat:
+
     ```cmd
     mkdir bin
     dir /s /b src\*.java > sources.txt & javac -d bin @sources.txt & del sources.txt
