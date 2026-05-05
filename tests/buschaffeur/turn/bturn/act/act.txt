@@ -1,5 +1,4 @@
 load tests/buschaffeur/turn/bturn/arrange/bus_two_tile_map.xml
 drive 1 Tile2
-pass
 save
 exit

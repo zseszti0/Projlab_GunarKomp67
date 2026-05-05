@@ -1,6 +1,6 @@
 <game>
     <config>
-        <currentActor id="Buszsofor1" ap="0"/>
+        <currentActor id="Buszsofor1" ap="1"/>
         <actorQueue><actor id="Buszsofor1"/></actorQueue>
     </config>
     <map>
