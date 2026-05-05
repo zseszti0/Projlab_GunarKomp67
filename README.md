@@ -13,7 +13,7 @@ A program forráskódjának lefordításához a 2. Követelmények című dokume
 8. Kattintsunk a **“Next”** gombra
 9. Válasszunk ki egy mappát (vagy maradhat az alapértelmezett)
 10. Nyissunk egy Command Prompt-ot
-11. Navigáljunk a 9. lépésben kiválasztott mappának gyökérmappáján belül az `src` könyvtárba.
+11. Navigáljunk a 9. lépésben kiválasztott mappának gyökérmappájába.
 12. Adjuk ki az alábbi parancsokat:
     ```cmd
     mkdir bin
@@ -26,7 +26,7 @@ A sikeres fordítást követően a futtatható kód elindítása szintén a mega
     ```cmd
     java test.TestOracle
     ```
-   A parancs, az összes tesztesetet lefuttatja, majd a gyökérmappába egy output.txt file-ba összegzi az eredményt. Illetve minden tesztmappába egy output.txc-ben látható a pontos futássi output és az asserttel való összehasonlítási eredmény. Az output.xml-ben pedig maga az elért játékállapot a futás végére.
+   A parancs, az összes tesztesetet lefuttatja, majd a gyökérmappába egy output.txt file-ba összegzi az eredményt. Illetve minden tesztmappába egy output.txt-ben látható a pontos futássi output és az asserttel való összehasonlítási eredmény. Az output.xml-ben pedig maga az elért játékállapot a futás végére.
 
 2. Ha egy specifikus tesztet szeretnénk futtatni, a futtatási argumentumokhoz írjuk ba a teszt mappa elérési útját (a gyökérmappából)
    Például:
