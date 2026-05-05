@@ -1,4 +1,4 @@
 load tests/environment/snowfall/snowfall/arrange/snowfall.xml
-wait 20
+snowTick
 save
 exit

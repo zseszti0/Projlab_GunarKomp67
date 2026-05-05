@@ -306,8 +306,10 @@ public class Tile implements IAutomatic {
                 TileState newState = state.compressionReached();
                 if(oldState != newState){
                     compressionIndex = 0;
+                    state = newState; //ez is javítás
                 }
             }
+            return true; //ez javítás volt
         }
         return false;
     }
@@ -326,7 +328,7 @@ public class Tile implements IAutomatic {
      */
     public Vehicle moveToNeighbor(Tile t, Vehicle v) {
         boolean valid = neighbors.contains(t);
-        if(valid){
+        if(valid){                  //HIBA, amikor megcsúszik, akkor valid = false, mert nincs benne a szomszédsági listájában
             Vehicle collided = t.acceptVehicle(v);
             if(collided == null){
                 vehicle = null;
