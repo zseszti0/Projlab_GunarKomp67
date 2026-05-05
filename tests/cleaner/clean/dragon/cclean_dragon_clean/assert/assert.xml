@@ -38,7 +38,7 @@
     <inventory>
         <money amount="0" />
         <consumables>
-            <consumable id="Bio1" type="Biokerosene" amount="1" />
+            <consumable id="Bio1" type="Biokerosene" amount="0" />
         </consumables>
     </inventory>
 </cleaner>

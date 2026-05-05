@@ -16,8 +16,8 @@
     </tile>
     <tile id="Tile_Deep" type="DeepSnowy" isRubbled="false" isSalted="false">
         <neighbors>
-            <neighbor id="Tile_Start" />
             <neighbor id="Tile_Deep_End" />
+            <neighbor id="Tile_Start" />
         </neighbors>
         <lanes><lane id="Lane1"/></lanes>
     </tile>

@@ -18,7 +18,7 @@ tests/cleaner/buy/cbuy8 OK
 tests/cleaner/buy/cbuy9 OK
 tests/cleaner/buy/cbuyfail1 OK
 tests/cleaner/buy/cbuyfail10 OK
-tests/cleaner/buy/cbuyfail2 FAIL
+tests/cleaner/buy/cbuyfail2 OK
 tests/cleaner/buy/cbuyfail3 OK
 tests/cleaner/buy/cbuyfail4 OK
 tests/cleaner/buy/cbuyfail5 OK
@@ -65,7 +65,7 @@ tests/cleaner/clean/cclean_dragon_clean OK
 tests/cleaner/clean/cclean_dragon_deep OK
 tests/cleaner/clean/cclean_dragon_icy OK
 tests/cleaner/clean/cclean_dragon_shallow FAIL
-tests/cleaner/clean/cclean_icebreaker_icy FAIL
+tests/cleaner/clean/cclean_icebreaker_icy OK
 tests/cleaner/clean/cclean_salter_clean OK
 tests/cleaner/clean/cclean_salter_deep OK
 tests/cleaner/clean/cclean_salter_icy OK
@@ -86,7 +86,7 @@ tests/cleaner/clean/dragon/ccleanfail5 OK
 tests/cleaner/clean/dragon/ccleanfail_dragon_clean_no_fuel OK
 tests/cleaner/clean/dragon/ccleanfail_dragon_icy_no_fuel OK
 tests/cleaner/clean/dragon/ccleanfail_dragon_shallow_no_fuel OK
-tests/cleaner/clean/dragon/cclean_dragon_clean FAIL
+tests/cleaner/clean/dragon/cclean_dragon_clean OK
 tests/cleaner/clean/dragon/cclean_dragon_icy OK
 tests/cleaner/clean/dragon/cclean_dragon_shallow OK
 tests/cleaner/clean/icebreaker/cclean4 OK
@@ -101,11 +101,11 @@ tests/cleaner/clean/salter/ccleanfail_slater_shallow_no_salt OK
 tests/cleaner/clean/salter/cclean_salter_clean OK
 tests/cleaner/clean/salter/cclean_salter_deep OK
 tests/cleaner/clean/salter/cclean_salter_icy OK
-tests/cleaner/clean/sweeper/cclean1 FAIL
-tests/cleaner/clean/sweeper/cclean2 FAIL
+tests/cleaner/clean/sweeper/cclean1 OK
+tests/cleaner/clean/sweeper/cclean2 OK
 tests/cleaner/clean/sweeper/ccleanfail1 OK
 tests/cleaner/clean/sweeper/ccleanfail_sweeper_clean OK
-tests/cleaner/clean/sweeper/cclean_sweeper_shallow FAIL
+tests/cleaner/clean/sweeper/cclean_sweeper_shallow OK
 tests/cleaner/move/cmove OK
 tests/cleaner/pass/cpass OK
 tests/environment/snowfall/snowfall OK
@@ -120,4 +120,4 @@ tests/npcdriver/slip/carslip OK
 tests/npcdriver/turn/carturn OK
 
 
-112 test(s) passed.
+118 test(s) passed.

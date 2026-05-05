@@ -7,7 +7,7 @@
         </actorQueue>
     </config>
     <map>
-        <tile id="Tile_Start" isRubbled="true" type="Clean">
+        <tile id="Tile_Start" type="Clean">
             <neighbors>
                 <neighbor id="Tile_Deep"/>
                 <neighbor id="Tile_Shallow"/>
@@ -53,14 +53,14 @@
         </tile>
         <tile id="Tile_Rubble" type="Clean">
             <neighbors>
-                <neighbor id="Tile_Start"/>
                 <neighbor id="Tile_Rubble_End"/>
+                <neighbor id="Tile_Start"/>
             </neighbors>
             <lanes>
                 <lane id="Lane1"/>
             </lanes>
         </tile>
-        <tile id="Tile_Rubble_End" type="Clean">
+        <tile id="Tile_Rubble_End" isRubbled="true" type="Clean">
             <neighbors>
                 <neighbor id="Tile_Rubble"/>
             </neighbors>
