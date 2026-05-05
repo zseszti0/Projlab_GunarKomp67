@@ -1,7 +1,7 @@
 <game>
     <config>
-        <currentActor id="Autotulaj1" ap="2"/>
-        <actorQueue><actor id="Autotulaj1"/></actorQueue>
+        <currentActor ap="0" id=""/>
+        <actorQueue/>
     </config>
     <map>
         <tile id="Tile1" type="Clean">
@@ -44,7 +44,7 @@
                 <landMark id="Tile1"/>
                 <landMark id="Tile5"/>
             </landMarks>
-            <destination id="Tile5"/>
+            <destination id="Tile1"/>
         </car>
     </NPCDriver>
 </game>
