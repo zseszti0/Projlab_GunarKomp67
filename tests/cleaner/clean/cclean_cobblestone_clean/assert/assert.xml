@@ -32,9 +32,6 @@
         </snowShovel>
         <inventory>
             <money amount="0"/>
-            <consumables>
-                <consumable id="Rubble1" type="Rubble" amount="0"/>
-            </consumables>
         </inventory>
     </cleaner>
 </game>

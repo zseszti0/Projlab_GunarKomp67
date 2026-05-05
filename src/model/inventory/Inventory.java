@@ -160,9 +160,9 @@ public class Inventory {
     public boolean useHead(Attachment head){
         for(Consumable c : consumables){
             if(!head.use(c))
-                return false;
+                return true;    //javított
         }
-        return true;
+        return false;   //javított
     }
 
     /**
