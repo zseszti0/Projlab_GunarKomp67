@@ -63,6 +63,7 @@ public class GameManager {
         prices.set(2,90);
         prices.set(3,70);
         prices.set(4,80);
+        prices.set(1,80);
         prices.set(5,50);
         prices.set(9,100);
 

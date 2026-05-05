@@ -1,4 +1,4 @@
 load tests/cleaner/buy/cbuyfail2/arrange/buy_test_3tiles_rich.xml
-buy rubble -a 11
+buy Rubble -a 11
 save
 exit
