@@ -34,7 +34,7 @@
                 <lane id="Lane1"/>
             </lanes>
         </tile>
-        <tile id="Tile_Deep" type="DeepSnowy">
+        <tile id="Tile_Deep" isRubbled="true" type="DeepSnowy">
             <neighbors>
                 <neighbor id="Tile_Start"/>
             </neighbors>

@@ -18,7 +18,7 @@
                 <lane id="Lane1"/>
             </lanes>
         </tile>
-        <tile id="Tile_Icy" type="Icy">
+        <tile id="Tile_Icy" isSalted="true" type="Icy">
             <neighbors>
                 <neighbor id="Tile_Start"/>
             </neighbors>

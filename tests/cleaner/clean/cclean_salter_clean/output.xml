@@ -42,7 +42,7 @@
                 <lane id="Lane1"/>
             </lanes>
         </tile>
-        <tile id="Tile_CleanTest" type="Clean">
+        <tile id="Tile_CleanTest" isSalted="true" type="Clean">
             <neighbors>
                 <neighbor id="Tile_Start"/>
             </neighbors>

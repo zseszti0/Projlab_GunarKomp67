@@ -713,6 +713,11 @@ public class XMLParser {
             return false;
         }
 
+        // Special handling for inventory elements
+        if ("inventory".equals(outputElement.getTagName())) {
+            return compareInventoryElements(outputElement, assertElement, currentPath);
+        }
+
         isEqual = compareAttributes(outputElement, assertElement, currentPath) && isEqual;
 
         NodeList outputChildren = outputElement.getChildNodes();
@@ -772,6 +777,196 @@ public class XMLParser {
                 try {
                     outputStream.write(("✗ HIBA: " + currentPath + " id:" +tagIdAttribute+ " - Hiányzó elem a kimenetből: <" +
                             missing.getTagName() + ">\n").getBytes());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                isEqual = false;
+            }
+        }
+
+        return isEqual;
+    }
+
+    /**
+     * Összehasonlít két inventory elemet speciális kezeléssel a consumables-hez.
+     * Ha az output-ban nincs consumables tag, azt 0 mennyiségű consumables-ként kezeli.
+     * @param outputElement a kimeneti inventory elem
+     * @param assertElement az elvárt inventory elem
+     * @param path az aktuális elem útvonala
+     * @return true, ha az elemek azonosak, false, ha különböznek
+     */
+    private boolean compareInventoryElements(Element outputElement, Element assertElement, String path) {
+        boolean isEqual = true;
+
+        isEqual = compareAttributes(outputElement, assertElement, path) && isEqual;
+
+        NodeList outputChildren = outputElement.getChildNodes();
+        NodeList assertChildren = assertElement.getChildNodes();
+
+        java.util.List<Element> outputElementChildren = new ArrayList<>();
+        java.util.List<Element> assertElementChildren = new ArrayList<>();
+
+        for (int i = 0; i < outputChildren.getLength(); i++) {
+            if (outputChildren.item(i).getNodeType() == org.w3c.dom.Node.ELEMENT_NODE) {
+                outputElementChildren.add((Element) outputChildren.item(i));
+            }
+        }
+
+        for (int i = 0; i < assertChildren.getLength(); i++) {
+            if (assertChildren.item(i).getNodeType() == org.w3c.dom.Node.ELEMENT_NODE) {
+                assertElementChildren.add((Element) assertChildren.item(i));
+            }
+        }
+
+        Element outputConsumablesTag = null;
+        Element assertConsumablesTag = null;
+
+        java.util.List<Element> outputNonConsumables = new ArrayList<>();
+        java.util.List<Element> assertNonConsumables = new ArrayList<>();
+
+        for (Element child : outputElementChildren) {
+            if ("consumables".equals(child.getTagName())) {
+                outputConsumablesTag = child;
+            } else {
+                outputNonConsumables.add(child);
+            }
+        }
+
+        for (Element child : assertElementChildren) {
+            if ("consumables".equals(child.getTagName())) {
+                assertConsumablesTag = child;
+            } else {
+                assertNonConsumables.add(child);
+            }
+        }
+
+        // Compare non-consumables children normally
+        if (outputNonConsumables.size() != assertNonConsumables.size()) {
+            String tagIdAttribute = outputElement.getAttribute("id");
+            try {
+                outputStream.write(("✗ HIBA: " + path + " id:" + tagIdAttribute + " - Gyermek elemek száma különbözik (consumables nélkül)\n" + "  Kimenet: " + outputNonConsumables.size() + " elem\n" + "  Elvárt:  " + assertNonConsumables.size() + " elem\n").getBytes());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            isEqual = false;
+        }
+
+        int minChildren = Math.min(outputNonConsumables.size(), assertNonConsumables.size());
+        for (int i = 0; i < minChildren; i++) {
+            if (!compareElements(outputNonConsumables.get(i), assertNonConsumables.get(i), path)) {
+                isEqual = false;
+            }
+        }
+
+        for (int i = minChildren; i < outputNonConsumables.size(); i++) {
+            Element extra = outputNonConsumables.get(i);
+            String tagIdAttribute = extra.getAttribute("id");
+            try {
+                outputStream.write(("✗ HIBA: " + path + " id:" + tagIdAttribute + " - Extra elem a kimenetben: <" +
+                        extra.getTagName() + ">\n").getBytes());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            isEqual = false;
+        }
+
+        for (int i = minChildren; i < assertNonConsumables.size(); i++) {
+            Element missing = assertNonConsumables.get(i);
+            String tagIdAttribute = missing.getAttribute("id");
+            try {
+                outputStream.write(("✗ HIBA: " + path + " id:" + tagIdAttribute + " - Hiányzó elem a kimenetből: <" +
+                        missing.getTagName() + ">\n").getBytes());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            isEqual = false;
+        }
+
+        // Special handling for consumables
+        isEqual = compareConsumablesTags(outputConsumablesTag, assertConsumablesTag, path) && isEqual;
+
+        return isEqual;
+    }
+
+    /**
+     * Összehasonlít két consumables taget speciális logikával.
+     * Ha az output-ban nincs consumables tag, az összes consumable 0 mennyiségűnek számít.
+     * @param outputConsumablesTag a kimeneti consumables elem (lehet null)
+     * @param assertConsumablesTag az elvárt consumables elem (lehet null)
+     * @param path az aktuális elem útvonala
+     * @return true, ha az összehasonlítás sikeres, false, ha különböznek
+     */
+    private boolean compareConsumablesTags(Element outputConsumablesTag, Element assertConsumablesTag, String path) {
+        boolean isEqual = true;
+
+        // Get consumable elements from both tags
+        java.util.List<Element> outputConsumables = new ArrayList<>();
+        java.util.List<Element> assertConsumables = new ArrayList<>();
+
+        if (outputConsumablesTag != null) {
+            NodeList outputConsumableNodes = outputConsumablesTag.getElementsByTagName("consumable");
+            for (int i = 0; i < outputConsumableNodes.getLength(); i++) {
+                outputConsumables.add((Element) outputConsumableNodes.item(i));
+            }
+        }
+
+        if (assertConsumablesTag != null) {
+            NodeList assertConsumableNodes = assertConsumablesTag.getElementsByTagName("consumable");
+            for (int i = 0; i < assertConsumableNodes.getLength(); i++) {
+                assertConsumables.add((Element) assertConsumableNodes.item(i));
+            }
+        }
+
+        // Create maps by id for easier lookup
+        java.util.Map<String, Element> outputConsumableMap = new java.util.HashMap<>();
+        java.util.Map<String, Element> assertConsumableMap = new java.util.HashMap<>();
+
+        for (Element cons : outputConsumables) {
+            outputConsumableMap.put(cons.getAttribute("id"), cons);
+        }
+
+        for (Element cons : assertConsumables) {
+            assertConsumableMap.put(cons.getAttribute("id"), cons);
+        }
+
+        // Check all consumables from assert
+        for (String consumableId : assertConsumableMap.keySet()) {
+            Element assertConsumable = assertConsumableMap.get(consumableId);
+            int assertAmount = getIntAttribute(assertConsumable, "amount", 0);
+
+            if (outputConsumableMap.containsKey(consumableId)) {
+                Element outputConsumable = outputConsumableMap.get(consumableId);
+                int outputAmount = getIntAttribute(outputConsumable, "amount", 0);
+
+                if (outputAmount != assertAmount) {
+                    try {
+                        outputStream.write(("✗ HIBA: " + path + " consumable id:" + consumableId + " - amount attribútum különbözik\n" + "  Kimenet: " + outputAmount + "\n" + "  Elvárt:  " + assertAmount + "\n").getBytes());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    isEqual = false;
+                }
+            } else {
+                // Consumable not in output - treat as 0 amount
+                if (assertAmount != 0) {
+                    try {
+                        outputStream.write(("✗ HIBA: " + path + " consumable id:" + consumableId + " - hiányzik a kimenetből (elvárt amount: " + assertAmount + ")\n").getBytes());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    isEqual = false;
+                }
+                // If assertAmount is 0, it's ok (treated as implicit 0)
+            }
+        }
+
+        // Check for extra consumables in output
+        for (String consumableId : outputConsumableMap.keySet()) {
+            if (!assertConsumableMap.containsKey(consumableId)) {
+                Element outputConsumable = outputConsumableMap.get(consumableId);
+                int outputAmount = getIntAttribute(outputConsumable, "amount", 0);
+                try {
+                    outputStream.write(("✗ HIBA: " + path + " consumable id:" + consumableId + " - extra elem a kimenetben (amount: " + outputAmount + ")\n").getBytes());
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

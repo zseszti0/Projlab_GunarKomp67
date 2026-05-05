@@ -37,8 +37,8 @@
     </tile>
     <tile id="Tile_Rubble" type="Clean" isRubbled="true" isSalted="false">
         <neighbors>
-            <neighbor id="Tile_Start" />
             <neighbor id="Tile_Rubble_End" />
+            <neighbor id="Tile_Start" />
         </neighbors>
         <lanes><lane id="Lane1"/></lanes>
     </tile>

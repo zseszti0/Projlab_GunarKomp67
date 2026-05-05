@@ -7,7 +7,7 @@
         </actorQueue>
     </config>
     <map>
-        <tile id="Tile_Start" type="ShallowSnowy">
+        <tile id="Tile_Start" type="Clean">
             <neighbors>
                 <neighbor id="Tile_Deep"/>
                 <neighbor id="Tile_Shallow"/>
@@ -36,14 +36,14 @@
         </tile>
         <tile id="Tile_Shallow" type="Clean">
             <neighbors>
-                <neighbor id="Tile_Start"/>
                 <neighbor id="Tile_Shallow_End"/>
+                <neighbor id="Tile_Start"/>
             </neighbors>
             <lanes>
                 <lane id="Lane1"/>
             </lanes>
         </tile>
-        <tile id="Tile_Shallow_End" type="Clean">
+        <tile id="Tile_Shallow_End" type="ShallowSnowy">
             <neighbors>
                 <neighbor id="Tile_Shallow"/>
             </neighbors>

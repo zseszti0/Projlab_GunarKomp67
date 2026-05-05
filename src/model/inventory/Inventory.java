@@ -26,12 +26,33 @@ public class Inventory {
     private List<Consumable> consumables = new ArrayList<>();
 
     private void setupConsumables(){
-        Salt s = new Salt(0, "Salt");
-        Biokerosene b = new Biokerosene(0, "Biokerosene");
-        Rubble r = new Rubble(0, "Rubble");
-        consumables.add(s);
-        consumables.add(b);
-        consumables.add(r);
+        boolean hasSalt = false;
+        boolean hasBiokerosene = false;
+        boolean hasRubble = false;
+        for(Consumable c : consumables){
+            if(c instanceof Salt){
+                hasSalt = true;
+            }
+            if(c instanceof Biokerosene){
+                hasBiokerosene = true;
+            }
+            if(c instanceof Rubble){
+                hasRubble = true;
+            }
+        }
+
+        if(!hasSalt) {
+            Salt s = new Salt(0, "Salt");
+            consumables.add(s);
+        }
+        if(!hasBiokerosene) {
+            Biokerosene b = new Biokerosene(0, "Biokerosene");
+            consumables.add(b);
+        }
+        if(!hasRubble) {
+            Rubble r = new Rubble(0, "Rubble");
+            consumables.add(r);
+        }
     }
 
     /**
@@ -160,9 +181,9 @@ public class Inventory {
     public boolean useHead(Attachment head){
         for(Consumable c : consumables){
             if(!head.use(c))
-                return true;    //javított
+                return false;    //javított
         }
-        return false;   //javított
+        return true;   //javított
     }
 
     /**

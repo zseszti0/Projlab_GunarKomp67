@@ -26,7 +26,7 @@
                 <lane id="Lane1"/>
             </lanes>
         </tile>
-        <tile id="Tile_Shallow" type="ShallowSnowy">
+        <tile id="Tile_Shallow" isRubbled="true" type="ShallowSnowy">
             <neighbors>
                 <neighbor id="Tile_Start"/>
             </neighbors>
